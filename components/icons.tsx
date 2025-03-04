@@ -186,4 +186,4 @@ export const SearchIcon = (props: IconSvgProps) => (
   </svg>
 );
 
-export const SouhaitLogo= () => <Image src={"/logo2.png"} alt={"Souhait"} width={40} height={40} className={"rounded-xl"} />
+export const SouhaitLogo= () => <Image src={"/logo2.png"} alt={"Souhait"} width={50} height={50} className={"rounded-xl"} />
