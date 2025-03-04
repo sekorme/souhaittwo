@@ -60,7 +60,7 @@ const WhyChooseUs = () => {
 
                     className="text-gray-400 text-lg mb-12"
                 >
-                    We make your dreams of working and traveling abroad a reality with affordable, expert consultations.
+                    We make your dreams of working and traveling abroad a reality with affordable, expert consultation.
                 </motion.p>
 
                 {/* Feature Cards */}
