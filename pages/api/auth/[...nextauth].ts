@@ -3,9 +3,9 @@ import { AuthOptions } from "next-auth";
 import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "../../../../ultimateyouth/ultimate/utils/prismadb";
+import prisma from "../../../utils/prismadb";
 
-const isDevelopment = process.env.NODE_ENV === "development";
+
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
