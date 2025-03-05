@@ -1,9 +1,10 @@
 
 import Hero from "@/components/Hero";
 import WhyChooseUs from "@/components/WhyChooseUs";
-import ThanksComponent from "@/components/Thanks";
+
 import Appreciation from "@/components/Appreciation";
 import Faqs from "@/components/Faqs";
+import HowItWorks from "@/components/HowItWorks";
 
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
     <Hero/>
       <WhyChooseUs/>
      <Appreciation/>
+        <HowItWorks/>
       <Faqs/>
     </div>
   );

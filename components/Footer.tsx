@@ -19,10 +19,10 @@ const Footer = () => {
                 <div>
                     <h3 className="text-xl font-semibold ">Quick Links</h3>
                     <ul className="mt-3 space-y-2">
-                        <li><a href="#" className="hover:text-blue-500">Home</a></li>
-                        <li><a href="#" className="hover:text-blue-500">About Us</a></li>
-                        <li><a href="#" className="hover:text-blue-500">Services</a></li>
-                        <li><a href="#" className="hover:text-blue-500">Contact</a></li>
+                        <li><a href="/" className="hover:text-blue-500">Home</a></li>
+                        <li><a href="/" className="hover:text-blue-500">About Us</a></li>
+                        <li><a href="/" className="hover:text-blue-500">Services</a></li>
+                        <li><a href="/" className="hover:text-blue-500">Contact</a></li>
                     </ul>
                 </div>
 
@@ -41,9 +41,9 @@ const Footer = () => {
             {/* Social Media & Copyright */}
             <div className="mt-10 border-t border-gray-700 pt-6 text-center">
                 <div className="flex justify-center space-x-6 mb-4">
-                    <a href="#" className="text-gray-400 hover:text-blue-500"><Facebook size={24} /></a>
-                    <a href="#" className="text-gray-400 hover:text-blue-500"><Twitter size={24} /></a>
-                    <a href="#" className="text-gray-400 hover:text-blue-500"><Instagram size={24} /></a>
+                    <a href="/" className="text-gray-400 hover:text-blue-500"><Facebook size={24} /></a>
+                    <a href="/" className="text-gray-400 hover:text-blue-500"><Twitter size={24} /></a>
+                    <a href="/" className="text-gray-400 hover:text-blue-500"><Instagram size={24} /></a>
                 </div>
                 <p className="text-gray-500 text-sm">© {new Date().getFullYear()} Souhait Travel Advisors. All rights reserved.</p>
             </div>

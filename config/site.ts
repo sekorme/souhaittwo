@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Souhait Travel Advisors",
+  description: "Get expert guidance for visas and job applications in the USA, Canada, and Europe. Save money by avoiding middlemen and secure your future",
   navItems: [
     {
       label: "Home",
