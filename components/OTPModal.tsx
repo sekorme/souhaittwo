@@ -9,7 +9,7 @@ import {
     ModalBody,
     ModalFooter,
 
-    useDisclosure,
+
 } from "@heroui/react";
 
 
@@ -66,7 +66,9 @@ const OtpModal = ({
                         className={" text-[14px] leading-[20px] font-semibold text-center text-light-100"}
                     >
                         we&#39;ve sent an OTP to your email address
-                        <span className={"pl-1 absolute -right-1 -top-7 cursor-pointer sm:-right-2 sm:-top-4 "}>{email}</span>
+                        <span className={"text-[#ff3d57]"}>
+                            {email}
+                    </span>
                     </ModalBody>
                 </ModalHeader>
                 <div className={"flex items-center gap-1 sm:gap-2 justify-center"}>

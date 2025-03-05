@@ -35,8 +35,8 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
                 </div>
             </section>
 
-            <section className="flex flex-1 flex-col   items-center  p-4 py-20 lg:justify-center lg:p-10 lg:py-10">
-                <div className={"mb-16 lg:hidden"}>
+            <section className="flex flex-1 w-full flex-col   items-center justify-center ">
+                <div className={"mb-5 lg:hidden"}>
                     <Image
                         src={"/pnglogo.png"}
                         alt={"logo"}
