@@ -35,7 +35,7 @@ const OtpModal = ({
             const sessionId = await verifySecret({ accountId, password });
             if (sessionId) {
                 setIsOpen(false);
-                router.push("/");
+                router.push("/dashboard");
             }
         } catch (error) {
             console.log(error);
