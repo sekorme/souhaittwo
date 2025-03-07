@@ -92,7 +92,7 @@ export const verifySecret = async ({
 
         const session = await account.createSession(accountId, password);
 
-        (await cookies()).set("appwrite-session", session.secret, {
+        (await cookies()).set("sekorme-session", session.secret, {
             path: "/",
             httpOnly: true,
             sameSite: "strict",
@@ -130,7 +130,7 @@ export const signOutUser = async () => {
 
     try {
         await account.deleteSession("current");
-        (await cookies()).delete("appwrite-session");
+        (await cookies()).delete("sekorme-session");
     } catch (error) {
         handleError(error, "Failed to sign out user");
     } finally {

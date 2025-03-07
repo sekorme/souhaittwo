@@ -7,7 +7,7 @@ const Dashboard = () => {
 
     const handleSignOut = async () => {
         await signOutUser();
-        window.location.reload()
+
     };
     return (
         <div className={"md:mt-20 mt-5"}>
