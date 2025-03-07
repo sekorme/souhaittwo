@@ -77,7 +77,7 @@ const OtpModal = ({
 
                 <ModalFooter>
                     <div className={"flex w-full flex-col gap-4"}>
-                        <Button
+                        <button
                             onClick={handleSubmit}
                             className={"w-full h-12"}
                             type={"button"}
@@ -92,7 +92,7 @@ const OtpModal = ({
                                     className={"ml-2 animate-spin"}
                                 />
                             )}
-                        </Button>
+                        </button>
 
                         <div className={"text-[14px] leading-[20px] font-semibold; mt-2 text-center text-light-100"}>
                             Didn&#39;t get a code ? &nbsp;
