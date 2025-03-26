@@ -24,12 +24,12 @@ import {
   SearchIcon,
 
 } from "@/components/icons";
-import Image from "next/image";
+import { Image } from "@heroui/image";
 
 
 
 import * as React from "react";
-import { FaFacebookSquare } from "react-icons/fa";
+import { FaFacebookSquare, FaLock } from "react-icons/fa";
 
 export const Navbar = () => {
   const searchInput = (
@@ -59,7 +59,7 @@ export const Navbar = () => {
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Image
-              src={"/logo.png"}
+              src={"/logo2.PNG"}
               alt={"Souhait"}
               width={50}
               height={50}
@@ -89,9 +89,12 @@ export const Navbar = () => {
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden sm:flex gap-2">
+        <NavbarItem className="hidden sm:flex gap-3">
             <Link isExternal aria-label="Github" href={siteConfig.links.facebook}>
                 <FaFacebookSquare className="text-default-500" size={26} />
+            </Link>
+            <Link isExternal aria-label="Github" href={siteConfig.links.lock}>
+                <FaLock className="text-default-500" size={26} />
             </Link>
           <ThemeSwitch />
         </NavbarItem>
@@ -114,6 +117,10 @@ export const Navbar = () => {
         <Link isExternal aria-label="Github" href={siteConfig.links.facebook}>
         <FaFacebookSquare className="text-default-500" size={26} />
       </Link>
+
+          <Link isExternal aria-label="Github" href={siteConfig.links.lock}>
+              <FaLock className="text-default-500" size={26} />
+          </Link>
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
