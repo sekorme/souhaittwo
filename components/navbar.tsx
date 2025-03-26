@@ -24,7 +24,7 @@ import {
   SearchIcon,
 
 } from "@/components/icons";
-import { Image } from "@heroui/image";
+import Image from "next/image";
 
 
 
@@ -59,7 +59,7 @@ export const Navbar = () => {
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Image
-              src={"/logo2.PNG"}
+              src={"/logo.png"}
               alt={"Souhait"}
               width={50}
               height={50}
