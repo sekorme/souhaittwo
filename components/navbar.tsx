@@ -93,9 +93,7 @@ export const Navbar = () => {
             <Link isExternal aria-label="Github" href={siteConfig.links.facebook}>
                 <FaFacebookSquare className="text-default-500" size={26} />
             </Link>
-            <Link isExternal aria-label="Github" href={siteConfig.links.lock}>
-                <FaLock className="text-default-500" size={26} />
-            </Link>
+
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
@@ -104,11 +102,11 @@ export const Navbar = () => {
             isExternal
             as={Link}
             className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            startContent={<HeartFilledIcon className="text-danger" />}
+            href={siteConfig.links.lock}
+            startContent={ <FaLock className="text-[#00d346]" size={26} />}
             variant="flat"
           >
-            Sponsor
+            Login
           </Button>
         </NavbarItem>
       </NavbarContent>
@@ -119,7 +117,7 @@ export const Navbar = () => {
       </Link>
 
           <Link isExternal aria-label="Github" href={siteConfig.links.lock}>
-              <FaLock className="text-default-500" size={26} />
+              <FaLock className="text-[#00d346]" size={26} />
           </Link>
         <ThemeSwitch />
         <NavbarMenuToggle />
