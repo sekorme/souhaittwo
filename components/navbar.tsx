@@ -1,3 +1,4 @@
+'use client'
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -18,14 +19,23 @@ import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
+
   HeartFilledIcon,
   SearchIcon,
 
 } from "@/components/icons";
-import Image from "next/image";
+import { Image } from "@heroui/react";
+
+export default function App() {
+    return (
+        <Image
+            alt="HeroUI hero Image"
+            src="https://heroui.com/images/hero-card-complete.jpeg"
+            width={300}
+        />
+    );
+}
+
 import * as React from "react";
 import { FaFacebookSquare } from "react-icons/fa";
 
@@ -56,8 +66,13 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Image src={"/logo2.png"} alt={"Souhait"} width={50} height={50} className={"rounded-xl"} />
-
+            <Image
+              src={"/logo2.png"}
+              alt={"Souhait"}
+              width={50}
+              height={50}
+              className={"rounded-xl"}
+            />
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
