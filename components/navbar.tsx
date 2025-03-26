@@ -26,15 +26,7 @@ import {
 } from "@/components/icons";
 import { Image } from "@heroui/react";
 
-export default function App() {
-    return (
-        <Image
-            alt="HeroUI hero Image"
-            src="https://heroui.com/images/hero-card-complete.jpeg"
-            width={300}
-        />
-    );
-}
+
 
 import * as React from "react";
 import { FaFacebookSquare } from "react-icons/fa";
