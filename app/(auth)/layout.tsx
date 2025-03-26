@@ -10,7 +10,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
         <div className={`flex min-h-screen`}>
             <section
                 className={
-                    "dark:bg-black p-10 hidden w-1/2  items-center justify-center lg:flex xl:w-2/5  rounded-t-r-full"
+                    " p-10 hidden w-1/2  items-center justify-center lg:flex xl:w-2/5  rounded-t-r-full"
                 }
             >
                 <div
