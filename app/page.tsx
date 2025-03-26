@@ -7,6 +7,8 @@ import Faqs from "@/components/Faqs";
 import HowItWorks from "@/components/HowItWorks";
 import {getCurrentUser} from "@/lib/actions/users.actions";
 import {redirect} from "next/navigation";
+import Testimonials from "@/components/Testimonials";
+import {AnimatedTestimonialsDemo} from "@/components/AnimatedTes";
 
 
 export default async function Home() {
@@ -18,6 +20,8 @@ export default async function Home() {
       <WhyChooseUs/>
      <Appreciation/>
         <HowItWorks/>
+        <Testimonials/>
+        <AnimatedTestimonialsDemo/>
       <Faqs/>
     </div>
   );
