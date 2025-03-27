@@ -92,11 +92,11 @@ const AuthForm = ({ type }: { type: FormType }) => {
     <div className="w-full md:w-[566px] bg-white/60 dark:bg-black/70 shadow-xl p-4 rounded-2xl">
         <Form
             action=""
-            className="flex  w-full  flex-col justify-center  transition-all lg:h-full "
+            className="flex  w-full  flex-col items-center justify-center  transition-all lg:h-full "
         >
             <h1
                 className={
-                    "text-[34px] leading-[42px] font-bold text-center text-light-100  "
+                    " text-[34px]  font-bold text-center text-light-100  "
                 }
             >
                 {type === "sign-in" ? "Sign In" : "Sign Up"}
@@ -161,12 +161,12 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 </>
             )}
             <Button
-                className={"w-full mt-10"}
+                className={"w-full bg-green-500/70  mt-10 p-3"}
                 disabled={isLoading}
                 type="submit"
                 onClick={handleSubmit(onSubmit)}
             >
-                {type === "sign-in" ? "Sign In" : "Sign Up"}
+                <p className={"text-white"}>{type === "sign-in" ? "Sign In" : "Sign Up"}</p>
                 {isLoading && (
                     <Image
                         alt={"loader"}
@@ -178,7 +178,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 )}
             </Button>
             {errorMessage && <p className={"error-message"}>{errorMessage}</p>}
-            <div className={"body-2 flex justify-center"}>
+            <div className={" flex justify-center"}>
                 <p className={"text-light-100"}>
                     {type === "sign-in"
                         ? "Don't have an account?"
