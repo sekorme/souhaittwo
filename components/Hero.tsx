@@ -16,6 +16,12 @@ const Hero = () => {
         "We provide expert guidance and support to secure your future",
         "We are dedicated to helping you achieve your dreams"
     ]
+
+    const description =[
+        "Navigating the complexities of visa applications and securing the right job abroad can be overwhelming. Let our experienced team of experts guide you every step of the way",
+        "Your future abroad starts with the right guidance. Our team of specialists is committed to helping you with visa applications, job searches, and all the necessary steps to secure your place in a new country.",
+        "At Souhait Travel Advisors, we believe that every dream is achievable with the right support. Whether you’re looking to advance your career, start a new life, or pursue educational opportunities abroad, our team is dedicated to helping you make it happen. "
+    ]
     const handleVideoEnd = () => {
         setCurrentVideo((prevIndex) => (prevIndex + 1) % videoSource.length);
     };
@@ -78,10 +84,9 @@ const Hero = () => {
                     initial={{opacity: 0, y: 30}}
                     animate={{opacity: 1, y: 0}}
                     transition={{duration: 1, delay: 0.3}}
-                    className="mt-4 text-lg md:text-xl max-w-2xl"
+                    className="mt-4 text-sm md:text-xl max-w-2xl"
                 >
-                    Let Souhait Travel Advisors guide you towards a successful journey abroad with expert visa and job
-                    consultation.
+                    {description[currentVideo]}
                 </motion.p>
 
                 {/* CTA Buttons with Fade-in Effect */}
@@ -106,7 +111,7 @@ const Hero = () => {
                         onClick={handlePrevVideo}
                         whileHover={{scale: 1.2}}
                         whileTap={{scale: 0.9}}
-                        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white p-3 rounded-full"
+                        className="absolute left-4 top-1/2  bg-white/30 hover:bg-white/50 text-white p-3 rounded-full"
                     >
                         <ChevronLeft className="w-8 h-8"/>
                     </motion.button>
@@ -115,7 +120,7 @@ const Hero = () => {
                         onClick={handleNextVideo}
                         whileHover={{scale: 1.2}}
                         whileTap={{scale: 0.9}}
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white p-3 rounded-full"
+                        className="absolute right-4 top-1/2  bg-white/30 hover:bg-white/50 text-white p-3 rounded-full"
                     >
                         <ChevronRight className="w-8 h-8"/>
                     </motion.button>

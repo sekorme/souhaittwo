@@ -32,7 +32,7 @@ const Footer = () => {
                     <ul className="mt-3 space-y-2">
                         <li className="flex items-center gap-2"><MapPin size={18} /> 123 Main Street, Accra, Ghana</li>
                         <li className="flex items-center gap-2"><Phone size={18} /> +233 553-143-196</li>
-                        <li className="flex items-center gap-2"><Mail size={18} /> contact@souhaittravel.com</li>
+                        <li className="flex items-center gap-2"><Mail size={18} /> contact@souhaittraveladvisors.com</li>
                     </ul>
                 </div>
 

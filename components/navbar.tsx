@@ -103,7 +103,7 @@ export const Navbar = () => {
             as={Link}
             className="text-sm font-normal text-default-600 bg-default-100"
             href={siteConfig.links.lock}
-            startContent={ <FaLock className="text-[#00d346]" size={26} />}
+            startContent={ <FaLock className="text-[#00d346]" size={20} />}
             variant="flat"
           >
             Login
@@ -117,7 +117,7 @@ export const Navbar = () => {
       </Link>
 
           <Link isExternal aria-label="Github" href={siteConfig.links.lock}>
-              <FaLock className="text-[#00d346]" size={26} />
+              <FaLock className="text-[#00d346]" size={20} />
           </Link>
         <ThemeSwitch />
         <NavbarMenuToggle />

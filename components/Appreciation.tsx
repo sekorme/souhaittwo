@@ -20,7 +20,7 @@ const images = [
 
 const Appreciation = () => {
     return (
-        <div className={"px-4 py-10 bg-gray-200 dark:bg-neutral-900  rounded-2xl"}>
+        <div className={"px-4 py-10 bg-gray-200/40 dark:bg-neutral-900/10  rounded-2xl"}>
             <div className={"mb-10 px-5"}>
                 <h1 className={"font-bold text-2xl text-center "}>Souhait simply means <span className={"text-[#00d346]"}>Wish</span> :</h1>
                 <p className={"italic text-center text-[#00d346]"}>Your wish, our desire to make it come true</p>
