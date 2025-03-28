@@ -144,8 +144,8 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
         <div className="w-full">
           <Input
-              startContent={
-                <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+              endContent={
+                <MailIcon className="text-2xl rounded-full text-default-400 pointer-events-none flex-shrink-0" />
               }
             label="Email"
             labelPlacement="outside"
@@ -200,7 +200,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 style={{ fontSize: "16px" }}
                 type="text"
                 {...register("name")}
-                startContent={
+                endContent={
                   <User className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                 }
               />
@@ -218,7 +218,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 style={{ fontSize: "16px" }}
                 type="tel"
                 {...register("phone")}
-                startContent={
+                endContent={
                   <Phone className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                 }
               />
@@ -236,7 +236,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 style={{ fontSize: "16px" }}
                 type="text"
                 {...register("country")}
-                startContent={
+                endContent={
                   <MapPin className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                 }
               />
