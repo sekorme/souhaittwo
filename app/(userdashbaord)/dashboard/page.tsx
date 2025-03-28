@@ -9,7 +9,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className={"md:mt-20 mt-5"}>
+    <div className={"md:mt-10 mt-5"}>
       <h1>Dashboard</h1>
       <button onClick={handleSignOut}>SignOut</button>
     </div>

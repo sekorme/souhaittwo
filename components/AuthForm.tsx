@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 
 import { auth } from "@/firebase/client";
 import { signIn, signUp } from "@/lib/actions/auth.actions";
+import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
 
 type FormType = "sign-in" | "sign-up";
 
@@ -39,9 +40,10 @@ const authFormSchema = ({ formType }: { formType: FormType }) =>
     password: z.string().min(6).max(50),
   });
 
+
 const AuthForm = ({ type }: { type: FormType }) => {
   const [isLoading, setIsLoading] = useState(false);
-
+  const [showConfetti, setShowConfetti] = useState(false);
   const router = useRouter();
 
   const formSchema = authFormSchema({ formType: type });
@@ -85,6 +87,8 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
           return;
         }
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 5000);
         toast.success("Account created successfully. Please sign in.");
         router.push("/sign-in");
       } else {
@@ -107,8 +111,12 @@ const AuthForm = ({ type }: { type: FormType }) => {
           idToken,
         });
 
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 5000);
+
         toast.success("Signed in successfully.");
         router.push("/dashboard");
+
       }
     } catch (error) {
       console.error(error);
@@ -119,7 +127,10 @@ const AuthForm = ({ type }: { type: FormType }) => {
   };
 
   return (
-    <div className="w-full md:w-[566px] bg-white/60 dark:bg-black/70 shadow-xl p-4 rounded-2xl">
+    <div className="w-full md:w-[566px] bg-white/60 dark:bg-black/70 shadow-xl p-4 m-5 backdrop-blur rounded-2xl">
+      {showConfetti && <div className="absolute left-0 top-0 z-0 w-full size-full">
+        <Fireworks autorun={{ speed: 1 }} />
+      </div> }
       <Form
         action=""
         className="flex w-full flex-col items-center justify-center transition-all lg:h-full"

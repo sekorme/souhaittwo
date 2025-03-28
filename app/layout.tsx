@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
-
 import clsx from "clsx";
 
 import { Providers } from "./providers";
@@ -10,6 +9,8 @@ import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/Footer";
 import ToasterProvider from "@/providers/ToastProvider";
+import { isAuthenticated } from "@/lib/actions/auth.actions";
+import BottomNavbar from "@/components/BottomNavbar";
 
 export const metadata: Metadata = {
   title: {
@@ -34,8 +35,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
-
+  const isUserAuthenticated = await isAuthenticated();
 
   return (
     <html suppressHydrationWarning lang="en">
@@ -47,15 +47,16 @@ export default async function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <ToasterProvider/>
+          <ToasterProvider />
           <div className="relative flex flex-col ">
-            <Navbar />
-            <main className="w-full flex-grow">
-              {children}
-            </main>
-            <footer className="w-full  ">
-                 <Footer/>
-            </footer>
+            {!isUserAuthenticated && <Navbar />}
+
+            <main className="w-full flex-grow">{children}</main>
+            {!isUserAuthenticated ? (
+              <footer className="w-full  ">
+                <Footer />
+              </footer>
+            ) : (<BottomNavbar/>)}
           </div>
         </Providers>
       </body>
