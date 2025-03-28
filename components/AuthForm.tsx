@@ -15,10 +15,12 @@ import {
 } from "firebase/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
 
 import { auth } from "@/firebase/client";
 import { signIn, signUp } from "@/lib/actions/auth.actions";
-import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
+import { EyeFilledIcon, EyeSlashFilledIcon } from "@/components/icons";
+import {MailIcon, MapPin, Phone, User} from "lucide-react";
 
 type FormType = "sign-in" | "sign-up";
 
@@ -40,12 +42,13 @@ const authFormSchema = ({ formType }: { formType: FormType }) =>
     password: z.string().min(6).max(50),
   });
 
-
 const AuthForm = ({ type }: { type: FormType }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const router = useRouter();
+  const [isVisible, setIsVisible] = React.useState(false);
 
+  const toggleVisibility = () => setIsVisible(!isVisible);
   const formSchema = authFormSchema({ formType: type });
   const {
     register,
@@ -79,7 +82,6 @@ const AuthForm = ({ type }: { type: FormType }) => {
           phone: values.phone,
           country: values.country,
           email: values.email,
-
         });
 
         if (!results.success) {
@@ -116,11 +118,10 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
         toast.success("Signed in successfully.");
         router.push("/dashboard");
-
       }
     } catch (error) {
       console.error(error);
-     toast.error(`There was an error,Please try again`);
+      toast.error(`There was an error,Please try again`);
     } finally {
       setIsLoading(false);
     }
@@ -128,9 +129,11 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
   return (
     <div className="w-full md:w-[566px] bg-white/60 dark:bg-black/70 shadow-xl p-4 m-5 backdrop-blur rounded-2xl">
-      {showConfetti && <div className="absolute left-0 top-0 z-0 w-full size-full">
-        <Fireworks autorun={{ speed: 1 }} />
-      </div> }
+      {showConfetti && (
+        <div className="absolute left-0 top-0 z-0 w-full size-full">
+          <Fireworks autorun={{ speed: 1 }} />
+        </div>
+      )}
       <Form
         action=""
         className="flex w-full flex-col items-center justify-center transition-all lg:h-full"
@@ -141,6 +144,9 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
         <div className="w-full">
           <Input
+              startContent={
+                <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+              }
             label="Email"
             labelPlacement="outside"
             type="text"
@@ -158,9 +164,23 @@ const AuthForm = ({ type }: { type: FormType }) => {
           <Input
             label="Password"
             labelPlacement="outside"
-            type="password"
+            type={isVisible ? "text" : "password"}
             {...register("password")}
             className="w-full shadow-2xl placeholder:text-light-200"
+            endContent={
+              <button
+                aria-label="toggle password visibility"
+                className="focus:outline-none"
+                type="button"
+                onClick={toggleVisibility}
+              >
+                {isVisible ? (
+                  <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                ) : (
+                  <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                )}
+              </button>
+            }
             size="lg"
             style={{ fontSize: "16px" }}
           />
@@ -180,6 +200,9 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 style={{ fontSize: "16px" }}
                 type="text"
                 {...register("name")}
+                startContent={
+                  <User className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                }
               />
               {errors.name && (
                 <p className="text-red-500">{errors.name.message}</p>
@@ -195,6 +218,9 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 style={{ fontSize: "16px" }}
                 type="tel"
                 {...register("phone")}
+                startContent={
+                  <Phone className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                }
               />
               {errors.phone && (
                 <p className="text-red-500">{errors.phone.message}</p>
@@ -210,6 +236,9 @@ const AuthForm = ({ type }: { type: FormType }) => {
                 style={{ fontSize: "16px" }}
                 type="text"
                 {...register("country")}
+                startContent={
+                  <MapPin className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                }
               />
               {errors.country && (
                 <p className="text-red-500">{errors.country.message}</p>
@@ -237,8 +266,6 @@ const AuthForm = ({ type }: { type: FormType }) => {
             />
           )}
         </Button>
-
-
 
         <div className="flex justify-center">
           <p className="text-light-100">
