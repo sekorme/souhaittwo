@@ -1,13 +1,14 @@
-import React from 'react'
-import {getCurrentUser} from "@/lib/actions/users.actions";
-import {redirect} from "next/navigation";
+import React from "react";
+import { redirect } from "next/navigation";
 
-const Layout = async({children}:{children:React.ReactNode}) => {
-    const currentUser = await getCurrentUser();
+import { isAuthenticated } from "@/lib/actions/auth.actions";
 
-    if (!currentUser) return redirect("/sign-in");
-    return (
-        <div className={""}>{children}</div>
-    )
-}
-export default Layout
+const Layout = async ({ children }: { children: React.ReactNode }) => {
+  const isUserAuthenticated = await isAuthenticated();
+
+  if (!isUserAuthenticated) redirect("/sign-in");
+
+  return <div className={""}>{children}</div>;
+};
+
+export default Layout;

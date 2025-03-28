@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/Footer";
+import ToasterProvider from "@/providers/ToastProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -28,11 +29,14 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
+
+
   return (
     <html suppressHydrationWarning lang="en">
       <head />
@@ -43,6 +47,7 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+          <ToasterProvider/>
           <div className="relative flex flex-col ">
             <Navbar />
             <main className="w-full flex-grow">

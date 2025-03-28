@@ -1,6 +1,13 @@
-import { title } from "@/components/primitives";
+import { redirect } from "next/navigation";
 
-export default function DocsPage() {
+import { title } from "@/components/primitives";
+import { isAuthenticated } from "@/lib/actions/auth.actions";
+
+export default async function DocsPage() {
+  const isUserAuthenticated = await isAuthenticated();
+
+  if (isUserAuthenticated) redirect("/dashboard");
+
   return (
     <div>
       <h1 className={title()}>Docs</h1>
