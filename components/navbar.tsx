@@ -116,7 +116,7 @@ export const Navbar = () => {
         <FaFacebookSquare className="text-default-500" size={26} />
       </Link>
 
-          <Link isExternal aria-label="Github" href={siteConfig.links.lock}>
+          <Link  aria-label="login" href={siteConfig.links.lock}>
               <FaLock className="text-[#00d346]" size={20} />
           </Link>
         <ThemeSwitch />
