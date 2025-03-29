@@ -194,7 +194,7 @@ export const SouhaitLogo= () =>{
 
 
 
-export const EyeSlashFilledIcon = (props) => {
+export const EyeSlashFilledIcon = (props: IconSvgProps) => {
   return (
       <svg
           aria-hidden="true"
@@ -230,7 +230,7 @@ export const EyeSlashFilledIcon = (props) => {
   );
 };
 
-export const EyeFilledIcon = (props) => {
+export const EyeFilledIcon = (props: IconSvgProps) => {
   return (
       <svg
           aria-hidden="true"
