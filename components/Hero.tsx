@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/button";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@heroui/link";
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -97,11 +97,11 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
         >
-          <Link href={"/sign-up"}>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full">
+
+            <Button as={Link} href={"/sign-up"} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full">
               Get Started
             </Button>
-          </Link>
+
 
           <Button className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-full">
             Learn More
