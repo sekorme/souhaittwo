@@ -164,7 +164,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           <Input
             label="Password"
             labelPlacement="outside"
-            type={isVisible ? "text" : "password"}
+            type={isVisible ? "password" : "password"}
             {...register("password")}
             className="w-full shadow-2xl placeholder:text-light-200"
             endContent={
