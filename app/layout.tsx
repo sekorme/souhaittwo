@@ -11,6 +11,7 @@ import Footer from "@/components/Footer";
 import ToasterProvider from "@/providers/ToastProvider";
 import { isAuthenticated } from "@/lib/actions/auth.actions";
 import BottomNavbar from "@/components/BottomNavbar";
+import {ToastProvider} from "@heroui/toast";
 
 export const metadata: Metadata = {
   title: {
@@ -48,6 +49,7 @@ export default async function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <ToasterProvider />
+          <ToastProvider placement={"top-center"}/>
           <div className="relative flex flex-col ">
             {!isUserAuthenticated && <Navbar />}
 

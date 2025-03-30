@@ -16,12 +16,19 @@ import {
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
+import {
+  MailIcon,
+  MapPin,
+  Phone,
+  User,
+  TriangleAlert,
+  CircleCheck,
+} from "lucide-react";
+import { addToast } from "@heroui/toast";
 
 import { auth } from "@/firebase/client";
 import { signIn, signUp } from "@/lib/actions/auth.actions";
 import { EyeFilledIcon, EyeSlashFilledIcon } from "@/components/icons";
-import {MailIcon, MapPin, Phone, User} from "lucide-react";
-
 type FormType = "sign-in" | "sign-up";
 
 const authFormSchema = ({ formType }: { formType: FormType }) =>
@@ -91,7 +98,13 @@ const AuthForm = ({ type }: { type: FormType }) => {
         }
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 5000);
-        toast.success("Account created successfully. Please sign in.");
+
+
+        addToast({
+          title: "Accounted Created",
+          icon: <CircleCheck  color={"green"} />,
+          description: "Account created successfully. redirecting to sign in page.",
+        });
         router.push("/sign-in");
       } else {
         const { email, password } = values;
@@ -103,7 +116,12 @@ const AuthForm = ({ type }: { type: FormType }) => {
         const idToken = await userCredential.user.getIdToken();
 
         if (!idToken) {
-          toast.error("Sign in Failed. Please try again.");
+
+          addToast({
+            title: "Failed to sign in",
+            icon: <TriangleAlert className="text-red-500" color={"red"} />,
+            description: "Please try again.....",
+          });
 
           return;
         }
@@ -116,17 +134,28 @@ const AuthForm = ({ type }: { type: FormType }) => {
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 5000);
 
-        toast.success("Signed in successfully.");
+
+        addToast({
+          title: "Success",
+          icon: <CircleCheck className="text-green-500" color={"green"} />,
+          description: "Signed in successfully.",
+        });
         router.push("/dashboard");
       }
-    } catch (error:any) {
+    } catch (error: any) {
       if (error.code === "auth/email-already-in-use") {
-        toast.error("Email already in use");
-      }
-      else if (error.code === "auth/invalid-credential"){
-        toast.error("Wrong email or password, try again");
-      }
-      else {
+        addToast({
+          title: "Email already in use",
+          icon: <TriangleAlert  color={"red"} />,
+          description: "Please use a different email address.",
+        });
+      } else if (error.code === "auth/invalid-credential") {
+        addToast({
+          title: "Invalid credentials",
+          icon: <TriangleAlert className="text-red-500" color={"red"} />,
+          description: "Your email or password is incorrect. Please try again.",
+        });
+      } else {
         console.error(error);
         toast.error(`${(error as Error).message}`);
       }
@@ -152,9 +181,9 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
         <div className="w-full">
           <Input
-              endContent={
-                <MailIcon className="text-2xl rounded-full text-default-400 pointer-events-none flex-shrink-0" />
-              }
+            endContent={
+              <MailIcon className="text-2xl rounded-full text-default-400 pointer-events-none flex-shrink-0" />
+            }
             label="Email"
             labelPlacement="outside"
             type="text"
