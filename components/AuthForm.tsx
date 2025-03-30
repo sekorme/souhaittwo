@@ -119,9 +119,17 @@ const AuthForm = ({ type }: { type: FormType }) => {
         toast.success("Signed in successfully.");
         router.push("/dashboard");
       }
-    } catch (error) {
-      console.error(error);
-      toast.error(`There was an error,Please try again`);
+    } catch (error:any) {
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("Email already in use");
+      }
+      else if (error.code === "auth/invalid-credential"){
+        toast.error("Wrong email or password, try again");
+      }
+      else {
+        console.error(error);
+        toast.error(`${(error as Error).message}`);
+      }
     } finally {
       setIsLoading(false);
     }
