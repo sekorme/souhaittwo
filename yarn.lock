@@ -890,7 +890,7 @@
     "@types/lodash.debounce" "^4.0.7"
     scroll-into-view-if-needed "3.0.10"
 
-"@heroui/card@2.2.15":
+"@heroui/card@2.2.15", "@heroui/card@^2.2.15":
   version "2.2.15"
   resolved "https://registry.yarnpkg.com/@heroui/card/-/card-2.2.15.tgz#be4cd65efbfe039c140cc7bc13d20c79d4acaefc"
   integrity sha512-WBW0FaPcjoRpsrLmS7A9i+/LTkC0jY6iEsG1QL7+RtEf/hHkVF9xO8HbsBlPZAEVIotWeZbmP0lbIJUFkYaGsA==
