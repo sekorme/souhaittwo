@@ -123,7 +123,7 @@ const router = useRouter()
     setCallStatus(CallStatus.CONNECTING);
 
     if (type === "generate") {
-      await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
+      await vapi.start("055a490e-006d-46b5-9129-edb39d90209c",{
         variableValues: {
           username: userName,
           userid: userId,
