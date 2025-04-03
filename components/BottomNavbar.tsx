@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Home, Briefcase, MessageSquare, User, Mic } from "lucide-react";
 import Link from "next/link";
-import {ThemeSwitch} from "@/components/theme-switch";
-
+import { usePathname } from "next/navigation"; // Import Next.js usePathname
+import { ThemeSwitch } from "@/components/theme-switch";
 
 const navItems = [
   { name: "Home", href: "/dashboard", icon: Home },
@@ -13,65 +13,48 @@ const navItems = [
   { name: "Messages", href: "/messages", icon: MessageSquare },
   { name: "Profile", href: "/profile", icon: User },
   { name: "Interview", href: "/interview", icon: Mic },
-
 ];
 
 const BottomNavbar = () => {
-  const [active, setActive] = useState("/");
-
-  useEffect(() => {
-    // Get last active tab from localStorage
-    const savedTab = localStorage.getItem("activeTab");
-
-    if (savedTab) {
-      setActive(savedTab);
-    }
-  }, []);
-
-  const handleTabClick = (href: string) => {
-    setActive(href);
-    localStorage.setItem("activeTab", href); // Save active tab to localStorage
-  };
+  const pathname = usePathname(); // Get the current path dynamically
 
   return (
-    <nav className="fixed bottom-0 bg-white left-0 w-full dark:bg-neutral-800 border-t-4 rounded-t-2xl border-[#00D748] shadow-lg  flex justify-around py-3 z-100">
-      {navItems.map((item) => {
-        const isActive = active === item.href;
+      <nav className="fixed bottom-0 bg-white left-0 w-full dark:bg-neutral-800 border-t-4 rounded-t-2xl border-[#00D748] shadow-lg flex justify-around py-3 z-100">
+        {navItems.map((item) => {
+          const isActive = pathname === item.href;
 
-        return (
-          <Link
-            key={item.name}
-            className="relative flex flex-col items-center text-gray-500 hover:text-[#ff3d57] transition"
-            href={item.href}
-            onClick={() => handleTabClick(item.href)}
-          >
-            <motion.div
-              animate={{ y: isActive ? -5 : 0, scale: isActive ? 1.2 : 1 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <item.icon
-                className={`w-6 h-6 ${isActive ? "text-[#ff3d57]" : "text-gray-500"}`}
-              />
-            </motion.div>
-            <span
-              className={`text-xs mt-1 ${isActive ? "text-[#ff3d57]" : "text-gray-500"}`}
-            >
+          return (
+              <Link
+                  key={item.name}
+                  className="relative flex flex-col items-center text-gray-500 hover:text-[#ff3d57] transition"
+                  href={item.href}
+              >
+                <motion.div
+                    animate={{ y: isActive ? -5 : 0, scale: isActive ? 1.2 : 1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <item.icon
+                      className={`w-6 h-6 ${isActive ? "text-[#ff3d57]" : "text-gray-500"}`}
+                  />
+                </motion.div>
+                <span
+                    className={`text-xs mt-1 ${isActive ? "text-[#ff3d57]" : "text-gray-500"}`}
+                >
               {item.name}
             </span>
-            {isActive && (
-              <motion.div
-                animate={{ opacity: 1 }}
-                className="absolute bottom-[-2px] w-4 h-1 bg-[#ff3d57] rounded-full"
-                initial={{ opacity: 0 }}
-                layoutId="activeIndicator"
-              />
-            )}
-          </Link>
-
-        );
-      })}
-        <ThemeSwitch/>
-    </nav>
+                {isActive && (
+                    <motion.div
+                        animate={{ opacity: 1 }}
+                        className="absolute bottom-[-2px] w-4 h-1 bg-[#ff3d57] rounded-full"
+                        initial={{ opacity: 0 }}
+                        layoutId="activeIndicator"
+                    />
+                )}
+              </Link>
+          );
+        })}
+        <ThemeSwitch />
+      </nav>
   );
 };
 

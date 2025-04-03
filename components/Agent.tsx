@@ -1,13 +1,13 @@
-'use client'
-import React, {useEffect, useState} from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@heroui/button";
+import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import {useRouter} from "next/navigation";
-import {vapi} from "@/lib/vapi.sdk";
-import {createFeedback} from "@/lib/actions/general.actioin";
-import {interviewer} from "@/constants";
+import { vapi } from "@/lib/vapi.sdk";
+import { createFeedback } from "@/lib/actions/general.actioin";
+import { interviewer } from "@/constants";
 
 interface AgentProps {
   userName: string;
@@ -29,15 +29,20 @@ interface SavedMessage {
   content: string;
 }
 
-const Agent = ({ userName, userId, interviewId, feedbackId, type, questions }: AgentProps) => {
-
-const router = useRouter()
+const Agent = ({
+  userName,
+  userId,
+  interviewId,
+  feedbackId,
+  type,
+  questions,
+}: AgentProps) => {
+  const router = useRouter();
 
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [lastMessage, setLastMessage] = useState<string>("");
-
 
   useEffect(() => {
     const onCallStart = () => {
@@ -51,6 +56,7 @@ const router = useRouter()
     const onMessage = (message: Message) => {
       if (message.type === "transcript" && message.transcriptType === "final") {
         const newMessage = { role: message.role, content: message.transcript };
+
         setMessages((prev) => [...prev, newMessage]);
       }
     };
@@ -86,7 +92,6 @@ const router = useRouter()
     };
   }, []);
 
-
   useEffect(() => {
     if (messages.length > 0) {
       setLastMessage(messages[messages.length - 1].content);
@@ -118,30 +123,47 @@ const router = useRouter()
       }
     }
   }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
-
   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
 
-    if (type === "generate") {
-      await vapi.start("055a490e-006d-46b5-9129-edb39d90209c",{
-        variableValues: {
-          username: userName,
-          userid: userId,
-        },
-      });
-    } else {
-      let formattedQuestions = "";
-      if (questions) {
-        formattedQuestions = questions
-            .map((question) => `- ${question}`)
-            .join("\n");
+    try {
+      if (!vapi || typeof vapi.start !== "function") {
+        throw new Error("Vapi is not initialized properly.");
       }
 
-      await vapi.start(interviewer, {
-        variableValues: {
-          questions: formattedQuestions,
-        },
-      });
+      let callOptions: any;
+
+      if (type === "generate") {
+        callOptions = {
+          variableValues: {
+            username: userName || "Guest",
+            userid: userId || "unknown",
+            account: "five",
+            category: "Travel Advisory",
+            focus: "Visa Applications",
+          },
+        };
+
+        const callId = "055a490e-006d-46b5-9129-edb39d90209c"; // Ensure this call ID is correct
+
+         vapi.start(callId, callOptions);
+      } else {
+        let formattedQuestions =
+          questions?.map((q) => `- ${q}`).join("\n") || "";
+
+        callOptions = {
+          variableValues: {
+            questions: formattedQuestions,
+          },
+        };
+
+        await vapi.start(interviewer, callOptions);
+      }
+
+      setCallStatus(CallStatus.ACTIVE);
+    } catch (error) {
+      console.error("Error starting the call:", error);
+      setCallStatus(CallStatus.INACTIVE);
     }
   };
 
@@ -149,7 +171,6 @@ const router = useRouter()
     setCallStatus(CallStatus.FINISHED);
     vapi.stop();
   };
-
 
   return (
     <>
@@ -204,26 +225,28 @@ const router = useRouter()
         </div>
       </div>
 
-
       {messages.length > 0 && (
-          <div className="bg-gradient-to-b from-[#4B4D4F] to-[#4B4D4F33] p-0.5 rounded-2xl w-full">
-            <div className="bg-gradient-to-b from-[#1A1C20] to-[#08090D] rounded-2xl  min-h-12 px-5 py-3 flex items-center justify-center">
-              <p
-                  key={lastMessage}
-                  className={cn(
-                      "transition-opacity duration-500 opacity-0",
-                      "animate-fadeIn opacity-100"
-                  )}
-              >
-                {lastMessage}
-              </p>
-            </div>
+        <div className="bg-gradient-to-b from-[#4B4D4F] to-[#4B4D4F33] p-0.5 rounded-2xl w-full">
+          <div className="bg-gradient-to-b from-[#1A1C20] to-[#08090D] rounded-2xl  min-h-12 px-5 py-3 flex items-center justify-center">
+            <p
+              key={lastMessage}
+              className={cn(
+                "transition-opacity duration-500 opacity-0",
+                "animate-fadeIn opacity-100",
+              )}
+            >
+              {lastMessage}
+            </p>
           </div>
+        </div>
       )}
 
       <div className={"w-full flex justify-center"}>
         {callStatus !== "ACTIVE" ? (
-          <Button className="relative inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-green-700 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-green-600 hover:bg-green-500 min-w-28 cursor-pointer items-center justify-center overflow-visible" onClick={()=> handleCall()}>
+          <Button
+            className="relative inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-green-700 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-green-600 hover:bg-green-500 min-w-28 cursor-pointer items-center justify-center overflow-visible"
+            onClick={() => handleCall()}
+          >
             <span
               className={cn(
                 "absolute animate-ping rounded-full opacity-75",
@@ -238,7 +261,10 @@ const router = useRouter()
             </span>
           </Button>
         ) : (
-          <Button className="inline-block px-7 py-3 text-sm font-bold leading-5 text-white transition-colors duration-150 bg-red-400 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-red-300 hover:bg-red-500 min-w-28" onClick={() => handleDisconnect()}>
+          <Button
+            className="inline-block px-7 py-3 text-sm font-bold leading-5 text-white transition-colors duration-150 bg-red-400 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-red-300 hover:bg-red-500 min-w-28"
+            onClick={() => handleDisconnect()}
+          >
             End
           </Button>
         )}
@@ -246,6 +272,5 @@ const router = useRouter()
     </>
   );
 };
-
 
 export default Agent;

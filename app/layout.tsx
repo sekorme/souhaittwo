@@ -12,6 +12,7 @@ import ToasterProvider from "@/providers/ToastProvider";
 import { isAuthenticated } from "@/lib/actions/auth.actions";
 import BottomNavbar from "@/components/BottomNavbar";
 import {ToastProvider} from "@heroui/toast";
+import LayoutTrans from "@/components/LayoutTrans";
 
 export const metadata: Metadata = {
   title: {
@@ -53,7 +54,12 @@ export default async function RootLayout({
           <div className="relative flex flex-col ">
             {!isUserAuthenticated && <Navbar />}
 
-            <main className="w-full flex-grow">{children}</main>
+            <main className="w-full flex-grow">
+              <LayoutTrans>
+
+              {children}
+              </LayoutTrans>
+            </main>
             {!isUserAuthenticated ? (
               <footer className="w-full  ">
                 <Footer />
