@@ -6,6 +6,8 @@ import { User } from "@heroui/user";
 import Image from "next/image";
 import SignOut from "@/components/SignOut";
 import ActivityCard from "@/components/ActivityCard";
+import {AuroraText} from "@/components/magicui/aurora-text";
+import Loader from "@/components/Loader";
 
 const Dashboard = async() => {
 
@@ -27,10 +29,16 @@ const Dashboard = async() => {
                 <SignOut/>
             </div>
         </div>
+        <div className={"flex items-center mt-10"}>
+            <h1 className="text-4xl font-bold tracking-tighter md:text-5xl lg:text-7xl">
+                Hi, <AuroraText>Welcome </AuroraText>
+            </h1>
+            <Image src={"/loader.gif"} alt={"loader"} width={150} height={150} className={""} />
+        </div>
         <ActivityCard/>
-      <div className={" w-full h-full mt-4 flex bg-gray-200 dark:bg-neutral-900 shadow-2xl rounded-2xl"}>
+        <div className={" w-full h-full mt-4 flex bg-gray-200 dark:bg-neutral-900 shadow-2xl rounded-2xl"}>
 
-      </div>
+        </div>
 
     </div>
   );

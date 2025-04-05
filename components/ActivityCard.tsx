@@ -2,6 +2,7 @@
 import React from "react";
 import { Card, CardHeader, Avatar, Button } from "@heroui/react";
 import { Mic, FileText, FileCheck2, CalendarClock } from "lucide-react";
+import {BorderBeam} from "@/components/magicui/border-beam";
 
 export default function ActivityCard() {
   const activityData = [
@@ -27,7 +28,7 @@ export default function ActivityCard() {
       action: "Review",
     },
     {
-      id: 2,
+      id: 4,
       title: "Appointment",
       description: "Schedule an Appointment",
       avatarUrl: <CalendarClock  size={24} />,
@@ -44,7 +45,7 @@ export default function ActivityCard() {
       }
     >
       {activityData.map((activity) => (
-        <Card className="w-full bg-white dark:bg-neutral-900 shadow-lg rounded-2xl">
+        <Card key={activity.id} className="w-full  dark:bg-neutral-900 shadow-lg rounded-2xl">
           <CardHeader className=" justify-between gap-2">
             <div className="flex gap-5">
               <Avatar
@@ -52,6 +53,7 @@ export default function ActivityCard() {
                 icon={activity.avatarUrl}
                 radius="full"
                 size="md"
+                className={"animate-aurora"}
               />
               <div className="flex flex-col gap-1 items-start justify-center">
                 <h4 className="text-small font-semibold leading-none text-default-600">
@@ -64,7 +66,7 @@ export default function ActivityCard() {
             </div>
             <Button
               className={
-                "w-[100px]"
+                "w-[100px] shadow-2xl"
               }
               color="primary"
               radius="full"
@@ -73,6 +75,17 @@ export default function ActivityCard() {
               {activity.action}
             </Button>
           </CardHeader>
+          <BorderBeam
+              duration={6}
+              size={400}
+              className="from-transparent via-amber-500 to-transparent"
+          />
+          <BorderBeam
+              duration={6}
+              delay={3}
+              size={400}
+              className="from-transparent via-blue-500 to-transparent"
+          />
         </Card>
       ))}
     </div>
