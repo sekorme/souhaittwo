@@ -5,6 +5,7 @@ import {getCurrentUser, signOut} from "@/lib/actions/auth.actions";
 import { User } from "@heroui/user";
 import Image from "next/image";
 import SignOut from "@/components/SignOut";
+import ActivityCard from "@/components/ActivityCard";
 
 const Dashboard = async() => {
 
@@ -26,8 +27,9 @@ const Dashboard = async() => {
                 <SignOut/>
             </div>
         </div>
+        <ActivityCard/>
       <div className={" w-full h-full mt-4 flex bg-gray-200 dark:bg-neutral-900 shadow-2xl rounded-2xl"}>
-     hi
+
       </div>
 
     </div>

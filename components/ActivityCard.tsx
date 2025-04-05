@@ -1,0 +1,80 @@
+"use client";
+import React from "react";
+import { Card, CardHeader, Avatar, Button } from "@heroui/react";
+import { Mic, FileText, FileCheck2, CalendarClock } from "lucide-react";
+
+export default function ActivityCard() {
+  const activityData = [
+    {
+      id: 1,
+      title: "Voice Assistant",
+      description: "Interview Coach",
+      avatarUrl: <Mic  size={24} />,
+      action: "Start Practice",
+    },
+    {
+      id: 2,
+      title: "Draft",
+      description: "Draft Your Documents",
+      avatarUrl: <FileText  size={24} />,
+      action: "Draft",
+    },
+    {
+      id: 3,
+      title: "Documents",
+      description: "Review Your Documents",
+      avatarUrl: <FileCheck2  size={24} />,
+      action: "Review",
+    },
+    {
+      id: 2,
+      title: "Appointment",
+      description: "Schedule an Appointment",
+      avatarUrl: <CalendarClock  size={24} />,
+      action: "Schedule",
+    },
+  ];
+
+  const [isFollowed, setIsFollowed] = React.useState(false);
+
+  return (
+    <div
+      className={
+        "w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-5 gap-4 p-4"
+      }
+    >
+      {activityData.map((activity) => (
+        <Card className="w-full bg-white dark:bg-neutral-900 shadow-lg rounded-2xl">
+          <CardHeader className=" justify-between gap-2">
+            <div className="flex gap-5">
+              <Avatar
+                isBordered
+                icon={activity.avatarUrl}
+                radius="full"
+                size="md"
+              />
+              <div className="flex flex-col gap-1 items-start justify-center">
+                <h4 className="text-small font-semibold leading-none text-default-600">
+                  {activity.title}
+                </h4>
+                <h5 className="text-small tracking-tight text-default-400">
+                  {activity.description}
+                </h5>
+              </div>
+            </div>
+            <Button
+              className={
+                "w-[100px]"
+              }
+              color="primary"
+              radius="full"
+              size="sm"
+            >
+              {activity.action}
+            </Button>
+          </CardHeader>
+        </Card>
+      ))}
+    </div>
+  );
+}
