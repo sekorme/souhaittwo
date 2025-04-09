@@ -116,35 +116,35 @@ export async function signOut() {
 }
 
 // Get current user from session cookie
+// Get current user from session cookie
 export async function getCurrentUser(): Promise<User | null> {
   const cookieStore = await cookies();
-
   const sessionCookie = cookieStore.get("session")?.value;
 
   if (!sessionCookie) return null;
 
   try {
     const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
+    const uid = decodedClaims.uid;
 
-    // get user info from db
-    const userRecord = await db
-      .collection("users")
-      .doc(decodedClaims.uid)
-      .get();
+    const userDoc = await db.collection("users").doc(uid).get();
 
-    if (!userRecord.exists) return null;
+    if (!userDoc.exists) return null;
 
+    const userData = userDoc.data();
+
+    // Ensure we have all required fields for Firebase file functions
     return {
-      ...userRecord.data(),
-      id: userRecord.id,
-    } as User;
+      id: uid,
+      email: userData?.email ?? decodedClaims.email ?? "",
+      name: userData?.name ?? "",
+    };
   } catch (error) {
-    console.log(error);
-
-    // Invalid or expired session
+    console.error("Error verifying session:", error);
     return null;
   }
 }
+
 
 // Check if user is authenticated
 export async function isAuthenticated() {
