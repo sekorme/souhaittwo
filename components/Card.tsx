@@ -6,9 +6,9 @@ import { convertFileSize } from "@/lib/utils";
 import FormattedDateTime from "@/components/FormattedDateTime";
 
 
-const Card = ({ file }: { file: Models.Document }) => {
+const Card = ({ file }: { file:  any }) => {
     return (
-        <Link href={file.url} target="_blank" className="file-card">
+        <Link href={`${file?.url}`} target="_blank" className="file-card">
             <div className="flex justify-between">
                 <Thumbnail
                     type={file.type}
@@ -19,7 +19,7 @@ const Card = ({ file }: { file: Models.Document }) => {
                 />
                 <div className="flex flex-col items-end justify-between">
 
-                    <p className="body-1">{convertFileSize(file.size)}</p>
+                    <p className="body-1">{convertFileSize(file?.size)}</p>
                 </div>
             </div>
 
@@ -27,7 +27,7 @@ const Card = ({ file }: { file: Models.Document }) => {
                 <p className={"subtitle-2 line-clamp-1"}>{file.name}</p>
                 <FormattedDateTime date={file.$createdAt} />
                 <p className={"caption line-clamp-1 text-light-200"}>
-                    By: {file.owner.fullName}
+                    By: {file.sharedBy}
                 </p>
             </div>
         </Link>

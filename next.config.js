@@ -20,6 +20,26 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
+                hostname: 'firebasestorage.googleapis.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'i.imgur.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'cdn.discordapp.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'github.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'avatars.githubusercontent.com',
+            },
+            {
+                protocol: 'https',
                 hostname: 'avatar.vercel.sh',
                 port: '',
                 pathname: '/**',

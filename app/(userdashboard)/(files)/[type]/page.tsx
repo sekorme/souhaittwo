@@ -5,8 +5,9 @@ import { useEffect, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 
 import {Input} from "@heroui/input";
-import {Card, CardBody} from "@heroui/react";
 
+import Image from "next/image"
+import Card from "@/components/Card";
 
 
 export default function FileManager() {
@@ -48,7 +49,7 @@ export default function FileManager() {
   };
 
   const getPreview = (type: string, url: string) => {
-    if (type === "image") return <img src={url} alt="preview" className="h-32 object-contain" />;
+    if (type === "image") return <Image src={url} alt="preview" className="h-32 object-contain" width={100} height={100}/>;
     if (type === "video") return <video src={url} controls className="h-32" />;
     if (type === "audio") return <audio src={url} controls />;
     return <p className="text-sm">Document</p>;
@@ -65,17 +66,7 @@ export default function FileManager() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {files.map((f) => (
-              <Card key={f.id} className="p-2">
-                <CardBody>
-                  <div className="font-semibold">{f.fileName}</div>
-                  <div className="text-sm text-gray-500">Shared by: {f.sharedBy}</div>
-                  <div className="my-2">{getPreview(f.type, `https://firebasestorage.googleapis.com/v0/b/YOUR_BUCKET/o/${encodeURIComponent(f.storagePath)}?alt=media`)}</div>
-                  <div className="flex gap-2 mt-2">
-                    <Button variant="destructive" onClick={() => handleDelete(f.id)}>Delete</Button>
-                    <Button variant="outline" onClick={() => setSelectedFileId(f.id)}>Share</Button>
-                  </div>
-                </CardBody>
-              </Card>
+              <Card key={f.id} file={f} />
           ))}
         </div>
 
