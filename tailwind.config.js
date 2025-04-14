@@ -1,5 +1,5 @@
 import {heroui} from "@heroui/theme"
-
+import tailwindcssAnimate from "tailwindcss-animate";
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -25,6 +25,23 @@ export default {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+			brand: {
+				'100': '#00D630',
+				DEFAULT: '#00D748'
+			},
+			red: '#FF7474',
+			error: '#b80000',
+			green: '#3DD9B3',
+			blue: '#56B8FF',
+			pink: '#EEA8FD',
+			orange: '#F9AB72',
+			light: {
+				'100': '#333F4E',
+				'200': '#A3B2C7',
+				'300': '#F2F5F9',
+				'400': '#F2F4F8'
+			},
+
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -64,6 +81,12 @@ export default {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
+		boxShadow: {
+			'drop-1': '0px 10px 30px 0px rgba(66, 71, 97, 0.1)',
+			'drop-2': '0 8px 30px 0 rgba(65, 89, 214, 0.3)',
+			'drop-3': '0 8px 30px 0 rgba(65, 89, 214, 0.1)'
+		},
+
   		keyframes: {
   			marquee: {
   				from: {
@@ -111,6 +134,6 @@ export default {
   		}
   	}
   },
-  darkMode: ["class", 'class'],
-  plugins: [heroui()],
+  darkMode: ["class"],
+  plugins: [heroui(),],
 }

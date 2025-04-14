@@ -3,6 +3,7 @@ import React from "react";
 import { Card, CardHeader, Avatar, Button } from "@heroui/react";
 import { Mic, FileText, FileCheck2, CalendarClock } from "lucide-react";
 import {BorderBeam} from "@/components/magicui/border-beam";
+import Link from "next/link";
 
 export default function ActivityCard() {
   const activityData = [
@@ -12,6 +13,7 @@ export default function ActivityCard() {
       description: "Interview Coach",
       avatarUrl: <Mic  size={24} />,
       action: "Start Practice",
+      path: "/interview",
     },
     {
       id: 2,
@@ -19,6 +21,7 @@ export default function ActivityCard() {
       description: "Draft Your Documents",
       avatarUrl: <FileText  size={24} />,
       action: "Draft",
+      path: "/draft",
     },
     {
       id: 3,
@@ -26,6 +29,7 @@ export default function ActivityCard() {
       description: "Review Your Documents",
       avatarUrl: <FileCheck2  size={24} />,
       action: "Review",
+      path: "/files",
     },
     {
       id: 4,
@@ -33,6 +37,7 @@ export default function ActivityCard() {
       description: "Schedule an Appointment",
       avatarUrl: <CalendarClock  size={24} />,
       action: "Schedule",
+      path: "/schedule",
     },
   ];
 
@@ -64,16 +69,20 @@ export default function ActivityCard() {
                 </h5>
               </div>
             </div>
+          <Link href={activity.path} className="">
             <Button
-              className={
-                "w-[100px] shadow-2xl"
-              }
-              color="primary"
-              radius="full"
-              size="sm"
+
+                className={
+                  "w-[100px] shadow-2xl"
+                }
+                color="primary"
+                radius="full"
+                size="sm"
+                href={activity.path}
             >
               {activity.action}
             </Button>
+          </Link>
           </CardHeader>
           <BorderBeam
               duration={6}
