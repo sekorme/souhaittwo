@@ -10,8 +10,10 @@ import { MAX_FILE_SIZE } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
 import { usePathname } from "next/navigation";
 import { toast as te } from "react-hot-toast";
-import { storage } from "@/firebase/client"; // Ensure Firebase is initialized and storage is imported
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {db, storage} from "@/firebase/client"; // Ensure Firebase is initialized and storage is imported
+import {ref, uploadBytesResumable, getDownloadURL, uploadBytes} from "firebase/storage";
+import {addDoc, collection, serverTimestamp} from "firebase/firestore";
+import {getCurrentUser} from "@/lib/actions/auth.actions";
 
 interface Props {
     ownerId: string;
@@ -25,9 +27,10 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
     const [files, setFiles] = useState<File[]>([]);
 
     const uploadFile = async (file: File) => {
+
         const storageRef = ref(storage, `uploads/${ownerId}/${file.name}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
-
+        const user = await getCurrentUser();
         return new Promise((resolve, reject) => {
             uploadTask.on(
                 "state_changed",
@@ -38,7 +41,25 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
                     reject(error);
                 },
                 async () => {
+
+
+                    const snapshot = await uploadBytes(storageRef, file);
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                    const fileType = file.type.split("/")[0];
+
+
+                    const docRef = await addDoc(collection(db, "files"), {
+                        ownerId: user?.id,
+                        fileName: file.name,
+                        storagePath: snapshot.ref.fullPath,
+                        type: fileType,
+                        sharedWith: [],
+                        url:downloadURL,
+                        createdAt: serverTimestamp(),
+                        updatedAt: serverTimestamp(),
+                    });
+
+                    return { success: true, id: docRef.id };
                     resolve(downloadURL);
                 }
             );
@@ -64,10 +85,11 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
                         ),
                         className: "error-toast",
                     });
+
                 }
 
                 try {
-                    const uploadedFileURL = await uploadFile(file);
+                     await uploadFile(file);
                     // Handle the uploaded file URL as needed
                     setFiles((prevFiles) =>
                         prevFiles.filter((f) => f.name !== file.name)
