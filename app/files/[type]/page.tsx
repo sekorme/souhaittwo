@@ -1,86 +1,69 @@
 'use client'
-import { useState } from "react";
-import { uploadFileAction, deleteFileAction, shareFileWithUsername, getUserFiles } from "@/lib/actions/fire.files.actions";
-import { useEffect, useTransition } from "react";
+import { useEffect, useState } from "react";
+
+
+import { Input } from "@/components/ui/input";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-
-import {Input} from "@heroui/input";
-
-import Image from "next/image"
+import { Loader2 } from "lucide-react";
+import {getUserFiles} from "@/lib/actions/fire.files.actions";
 import Card from "@/components/Card";
 
-
-export default function FileManager() {
+type FileType = "document" | "image" | "video" | "audio" | "other";
+export default function Page() {
   const [files, setFiles] = useState<any[]>([]);
-  const [file, setFile] = useState<File | null>(null);
-  const [username, setUsername] = useState("");
-  const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState("");
+  const [typeFilter, setTypeFilter] = useState<any[]>([]);
+  const [sort, setSort] = useState("createdAt-desc");
 
   useEffect(() => {
-    refreshFiles();
-  }, []);
-
-  const refreshFiles = async () => {
-    const data = await getUserFiles();
-    setFiles(data);
-  };
-
-  const handleUpload = async () => {
-    if (!file) return;
-    const formData = new FormData();
-    formData.append("file", file);
-    await uploadFileAction(formData);
-    setFile(null);
-    refreshFiles();
-  };
-
-  const handleDelete = async (fileId: string) => {
-    await deleteFileAction(fileId);
-    refreshFiles();
-  };
-
-  const handleShare = async () => {
-    if (!selectedFileId || !username) return;
-    await shareFileWithUsername(selectedFileId, username);
-    setUsername("");
-    setSelectedFileId(null);
-    refreshFiles();
-  };
-
-  const getPreview = (type: string, url: string) => {
-    if (type === "image") return <Image src={url} alt="preview" className="h-32 object-contain" width={100} height={100}/>;
-    if (type === "video") return <video src={url} controls className="h-32" />;
-    if (type === "audio") return <audio src={url} controls />;
-    return <p className="text-sm">Document</p>;
-  };
+    const loadFiles = async () => {
+      setLoading(true);
+      const data = await getUserFiles({
+        searchText,
+        types: typeFilter,
+        sort,
+      });
+      setFiles(data);
+      setLoading(false);
+    };
+    loadFiles();
+  }, [searchText, typeFilter, sort]);
 
   return (
-      <div className="max-w-3xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">My Files</h1>
+      <div className="p-4 space-y-6">
+        <div className="flex flex-col md:flex-row gap-4 items-center">
+          <Input
+              placeholder="Search files by name..."
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+          />
 
-        <div className="flex items-center gap-4 mb-6">
-          <Input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-          <Button onClick={handleUpload} disabled={isPending}>Upload</Button>
+          <Select onValueChange={(val) => setSort(val)} defaultValue={sort}>
+            <SelectTrigger className="w-[200px]">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="createdAt-desc">Newest</SelectItem>
+              <SelectItem value="createdAt-asc">Oldest</SelectItem>
+              <SelectItem value="name-asc">Name A-Z</SelectItem>
+              <SelectItem value="name-desc">Name Z-A</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {files.map((f) => (
-              <Card key={f.id} file={f} />
-          ))}
-        </div>
-
-        {selectedFileId && (
-            <div className="mt-6">
-              <h2 className="text-lg font-medium mb-2">Share File</h2>
-              <div className="flex items-center gap-2">
-                <Input
-                    placeholder="Enter username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <Button onClick={handleShare}>Share</Button>
-              </div>
+        {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="h-8 w-8 animate-spin" />
+            </div>
+        ) : files.length === 0 ? (
+            <div className="text-center text-muted-foreground">No files found.</div>
+        ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {files.map((file) => (
+                  <Card key={file.id} file={file} />
+              ))}
             </div>
         )}
       </div>

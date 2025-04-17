@@ -95,3 +95,393 @@ export default function FileManager() {
       </div>
   );
 }
+
+
+
+
+
+'use client'
+import { useState } from "react";
+import { uploadFileAction, deleteFileAction, shareFileWithUsername, getUserFiles } from "@/lib/actions/fire.files.actions";
+import { useEffect, useTransition } from "react";
+import { Button } from "@/components/ui/button";
+
+import {Input} from "@heroui/input";
+
+import Image from "next/image"
+import Card from "@/components/Card";
+
+
+export default function FileManager() {
+  const [files, setFiles] = useState<any[]>([]);
+  const [file, setFile] = useState<File | null>(null);
+  const [username, setUsername] = useState("");
+  const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    refreshFiles();
+  }, []);
+
+  const refreshFiles = async () => {
+    const data = await getUserFiles();
+    setFiles(data);
+  };
+
+  const handleUpload = async () => {
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("file", file);
+    await uploadFileAction(formData);
+    setFile(null);
+    refreshFiles();
+  };
+
+  const handleDelete = async (fileId: string) => {
+    await deleteFileAction(fileId);
+    refreshFiles();
+  };
+
+  const handleShare = async () => {
+    if (!selectedFileId || !username) return;
+    await shareFileWithUsername(selectedFileId, username);
+    setUsername("");
+    setSelectedFileId(null);
+    refreshFiles();
+  };
+
+  const getPreview = (type: string, url: string) => {
+    if (type === "image") return <Image src={url} alt="preview" className="h-32 object-contain" width={100} height={100}/>;
+    if (type === "video") return <video src={url} controls className="h-32" />;
+    if (type === "audio") return <audio src={url} controls />;
+    return <p className="text-sm">Document</p>;
+  };
+
+  return (
+      <div className="max-w-3xl mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">My Files</h1>
+
+        <div className="flex items-center gap-4 mb-6">
+          <Input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
+          <Button onClick={handleUpload} disabled={isPending}>Upload</Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {files.map((f) => (
+              <Card key={f.id} file={f} />
+          ))}
+        </div>
+
+        {selectedFileId && (
+            <div className="mt-6">
+              <h2 className="text-lg font-medium mb-2">Share File</h2>
+              <div className="flex items-center gap-2">
+                <Input
+                    placeholder="Enter username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+                <Button onClick={handleShare}>Share</Button>
+              </div>
+            </div>
+        )}
+      </div>
+  );
+}
+
+
+import { ref, uploadBytes, deleteObject, getDownloadURL } from "firebase/storage";
+
+import { storage, db } from "@/firebase/client";
+import {getFileType} from "@/lib/utils";
+import {FileType} from "@/types";
+import {getCurrentUser} from "@/lib/actions/auth.actions";
+import {
+    collection,
+    addDoc,
+    query,
+    where,
+    deleteDoc,
+    getDocs,
+    orderBy,
+    limit as limitDocs,
+    updateDoc,
+    doc,
+    serverTimestamp, getDoc
+} from "firebase/firestore";
+
+declare interface UpdateFileUsersProps {
+    fileId: string;
+    emails: string[];
+    path: string;
+}
+declare interface UploadFileProps {
+    file: File;
+    ownerId: string;
+    accountId: string;
+    path: string;
+}
+
+declare interface GetFilesProps {
+    types: FileType[];
+    searchText?: string;
+    sort?: string;
+    limit?: number;
+}
+declare interface RenameFileProps {
+    fileId: string;
+    name: string;
+    extension: string;
+    path: string;
+}
+
+
+declare interface DeleteFileProps {
+    fileId: string;
+    bucketField: string;
+    path: string;
+}
+
+
+
+
+export const getFiles = async ({ types = [], searchText = "", sort = "createdAt-desc", limit }: GetFilesProps) => {
+    try {
+        const currentUser = await getCurrentUser();
+        const filesRef = collection(db, "files");
+
+        const q = query(
+            filesRef,
+            where("owner", "==", currentUser?.id),
+            ...(types.length > 0 ? [where("type", "in", types)] : []),
+            ...(searchText ? [where("name", ">=", searchText)] : []),
+            orderBy(sort.split("-")[0], sort.split("-")[1] === "asc" ? "asc" : "desc"),
+            ...(limit ? [limitDocs(limit)] : [])
+        );
+
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    } catch (err) {
+        console.error("Failed to fetch files", err);
+        throw err;
+    }
+};
+
+
+
+
+export const renameFile = async ({ fileId, name, extension }: RenameFileProps) => {
+    try {
+        const newName = `${name}.${extension}`;
+        const fileDoc = doc(db, "files", fileId);
+        await updateDoc(fileDoc, { name: newName });
+        return { id: fileId, name: newName };
+    } catch (err) {
+        console.error("Rename failed", err);
+        throw err;
+    }
+};
+
+
+export const updateFileUsers = async ({ fileId, emails }: UpdateFileUsersProps) => {
+    try {
+        const fileDoc = doc(db, "files", fileId);
+        await updateDoc(fileDoc, { users: emails });
+        return { id: fileId, users: emails };
+    } catch (err) {
+        console.error("Failed to update users", err);
+        throw err;
+    }
+};
+
+
+
+
+
+export const deleteFile = async ({ fileId, bucketField }: DeleteFileProps) => {
+    try {
+        const fileDoc = doc(db, "files", fileId);
+        await deleteDoc(fileDoc);
+
+        const fileRef = ref(storage, bucketField);
+        await deleteObject(fileRef);
+
+        return { status: "success" };
+    } catch (err) {
+        console.error("Delete failed", err);
+        throw err;
+    }
+};
+
+
+export async function getTotalSpaceUsed() {
+    const currentUser = await getCurrentUser();
+    const filesRef = collection(db, "files");
+    const q = query(filesRef, where("owner", "==", currentUser?.id));
+    const snapshot = await getDocs(q);
+
+    const totalSpace: {
+        all: number;
+        image: { latestDate: string; size: number };
+        other: { latestDate: string; size: number };
+        document: { latestDate: string; size: number };
+        video: { latestDate: string; size: number };
+        audio: { latestDate: string; size: number };
+        used: number;
+        [key: string]: { latestDate: string; size: number } | number;
+    } = {
+        image: { size: 0, latestDate: "" },
+        document: { size: 0, latestDate: "" },
+        video: { size: 0, latestDate: "" },
+        audio: { size: 0, latestDate: "" },
+        other: { size: 0, latestDate: "" },
+        used: 0,
+        all: 2 * 1024 * 1024 * 1024,
+    };
+
+    snapshot.docs.forEach((docSnap) => {
+        const file = docSnap.data();
+        const type = file.type || "other";
+
+        if (type in totalSpace && typeof totalSpace[type] === 'object') {
+            (totalSpace[type] as { size: number; latestDate: string }).size += file.size;
+            totalSpace.used += file.size;
+
+            if (
+                !(totalSpace[type] as { latestDate: string }).latestDate ||
+                new Date(file.updatedAt || file.createdAt) > new Date((totalSpace[type] as { latestDate: string }).latestDate)
+            ) {
+                (totalSpace[type] as { latestDate: string }).latestDate = file.updatedAt || file.createdAt;
+            }
+        }
+    });
+
+    return totalSpace;
+}
+
+
+
+export async function uploadFileAction(formData: FormData) {
+    const user = await getCurrentUser();
+    if (!user) throw new Error("Not authenticated");
+
+    const file = formData.get("file") as File;
+    const storageRef = ref(storage, `uploads/${user.id}/${file.name}`);
+    const snapshot = await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(snapshot.ref);
+
+
+
+    const docRef = await addDoc(collection(db, "files"), {
+        ownerId: user.id,
+        fileName: file.name,
+        storagePath: snapshot.ref.fullPath,
+        type: getFileType(file.name),
+        sharedWith: [],
+        url:url,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+    });
+
+    return { success: true, id: docRef.id };
+}
+
+
+
+export async function getUserFiles() {
+    const user = await getCurrentUser();
+    if (!user) throw new Error("Unauthorized");
+
+    const q = query(
+        collection(db, "files"),
+        where("ownerId", "==", user.id)
+    );
+    const sharedQuery = query(
+        collection(db, "files"),
+        where("sharedWith", "array-contains", user.id)
+    );
+
+    const [ownSnap, sharedSnap] = await Promise.all([
+        getDocs(q),
+        getDocs(sharedQuery),
+    ]);
+
+    const allFiles = await Promise.all(
+        [...ownSnap.docs, ...sharedSnap.docs].map(async (docSnap) => {
+            const data = docSnap.data();
+            const ownerDoc = await getDoc(doc(db, "users", data.ownerId));
+            return {
+                id: docSnap.id,
+                ...data,
+                sharedBy: ownerDoc.data()?.name || "Unknown",
+            };
+        })
+    );
+
+    return allFiles;
+}
+export async function updateFileAction(fileId: string, newFile: File) {
+    const user = await getCurrentUser();
+    const docRef = doc(db, "files", fileId);
+    const fileSnap = await getDoc(docRef);
+    const fileData = fileSnap.data();
+
+    if (fileData?.ownerId !== user?.id) throw new Error("Unauthorized");
+
+    const oldRef = ref(storage, fileData?.storagePath);
+    await deleteObject(oldRef);
+
+    const newPath = `uploads/${user?.id}/${newFile.name}`;
+    const newRef = ref(storage, newPath);
+    await uploadBytes(newRef, newFile);
+
+    await updateDoc(docRef, {
+        fileName: newFile.name,
+        storagePath: newPath,
+        updatedAt: serverTimestamp(),
+    });
+
+    return { success: true };
+}
+
+
+export async function deleteFileAction(fileId: string) {
+    const user = await getCurrentUser();
+    const docRef = doc(db, "files", fileId);
+    const snap = await getDoc(docRef);
+    const data = snap.data();
+
+    if (data?.ownerId !== user?.id) throw new Error("Unauthorized");
+
+    const fileRef = ref(storage, data?.storagePath);
+    await deleteObject(fileRef);
+    await deleteDoc(docRef);
+
+    return { success: true };
+}
+
+export async function shareFileWithUsername(fileId: string, email: string, unshare = false) {
+    const user = await getCurrentUser();
+    const fileDocRef = doc(db, "files", fileId);
+    const fileSnap = await getDoc(fileDocRef);
+    const fileData = fileSnap.data();
+
+    if (fileData?.ownerId !== user?.id) throw new Error("Unauthorized");
+
+    const q = query(collection(db, "users"), where("email", "==", email));
+    const snap = await getDocs(q);
+    if (snap.empty) throw new Error("User not found");
+
+    const recipientId = snap.docs[0].id;
+
+    const sharedWith = fileData?.sharedWith || [];
+    const updatedList = unshare
+        ? sharedWith.filter((id: string) => id !== recipientId)
+        : [...Array.from(new Set([...sharedWith, recipientId]))];
+
+    await updateDoc(fileDocRef, {
+        sharedWith: updatedList,
+    });
+
+    return { success: true };
+}

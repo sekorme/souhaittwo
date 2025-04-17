@@ -7,6 +7,11 @@ import FormattedDateTime from "@/components/FormattedDateTime";
 
 
 const Card = ({ file }: { file:  any }) => {
+    const formatSize = (bytes: number) => {
+        if (bytes < 1024) return `${bytes} B`;
+        else if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+        else return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    };
     return (
         <Link href={`${file?.url}`} target="_blank" className="file-card">
             <div className="flex justify-between">
@@ -19,14 +24,15 @@ const Card = ({ file }: { file:  any }) => {
                 />
                 <div className="flex flex-col items-end justify-between">
 
-                    <p className="body-1">{convertFileSize(file?.size)}</p>
+                    <p className="body-1">{formatSize(file.size)}</p>
                 </div>
             </div>
 
             <div className="file-card-details">
                 <p className={"subtitle-2 line-clamp-1"}>{file.name}</p>
-                <FormattedDateTime date={file.createdAt} />
-                <p className={"caption line-clamp-1 text-light-200"}>
+<p>{file.createdAt?.toDate?.().toLocaleString() || "Unknown"}
+            </p>
+                <p className={"caption line-clamp-1 "}>
                     By: {file.sharedBy}
                 </p>
             </div>
