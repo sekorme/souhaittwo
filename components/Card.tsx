@@ -30,10 +30,10 @@ const Card = ({ file }: { file:  any }) => {
 
             <div className="file-card-details">
                 <p className={"subtitle-2 line-clamp-1"}>{file.name}</p>
-<p>{file.createdAt?.toDate?.().toLocaleString() || "Unknown"}
-            </p>
-                <p className={"caption line-clamp-1 "}>
-                    By: {file.sharedBy}
+ <FormattedDateTime date={file.createdAt?.toDate?.().toLocaleString() || "Unknown"}/>
+
+                <p className={"caption line-clamp-1 text-[#00d700] "}>
+                    Owner: {file.sharedBy}
                 </p>
             </div>
         </Link>
