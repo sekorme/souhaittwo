@@ -244,9 +244,9 @@ export const dummyInterviews: Interview[] = [
 
 export const navItems = [
     {
-        name: "Dashboard",
+        name: "File-Dashboard",
         icon: "/assets/icons/dashboard.svg",
-        url: "/dashboardtwo",
+        url: "/files",
     },
     {
         name: "Documents",

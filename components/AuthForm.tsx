@@ -165,7 +165,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
   };
 
   return (
-    <div className="w-full md:w-[566px] bg-white/60 dark:bg-black/70 shadow-xl p-4 m-5 backdrop-blur rounded-2xl">
+    <div className="w-full md:w-[566px] bg-white/40 dark:bg-black/70 shadow-xl p-4 m-5 backdrop-blur rounded-2xl">
       {showConfetti && (
         <div className="absolute left-0 top-0 z-0 w-full size-full">
           <Fireworks autorun={{ speed: 1 }} />
@@ -285,12 +285,12 @@ const AuthForm = ({ type }: { type: FormType }) => {
         )}
 
         <Button
-          className="w-full bg-green-500/70 mt-10 p-3"
+          className="w-full bg-[#00d346]/50   z-10 mt-10 p-3"
           disabled={isLoading}
           type="submit"
           onClick={handleSubmit(onSubmit)}
         >
-          <p className="text-white">
+          <p className="">
             {type === "sign-in" ? "Sign In" : "Sign Up"}
           </p>
           {isLoading && (
@@ -305,7 +305,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
         </Button>
 
         <div className="flex justify-center">
-          <p className="text-light-100">
+          <p className="">
             {type === "sign-in"
               ? "Don't have an account?"
               : "Already have an account?"}
