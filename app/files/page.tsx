@@ -26,10 +26,12 @@ const Files = async () => {
     }));
 
     // Total used size
-    const totalSize = plainData.reduce((acc, file) => acc + file.size, 0);
-
+    const files = plainData.filter((file: any) => file.size);
+    const totalSize = files.reduce((acc, file) => {
+        return acc + file.size;
+    }, 0);
     // Get breakdown of types
-    const usageSummary = getNewUsageSummary(totalUsedSpace);
+    const usageSummary = getNewUsageSummary(totalSize);
     const formatSize = (bytes: number) => {
         if (bytes < 1024) return `${bytes} B`;
         else if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
@@ -53,7 +55,7 @@ const Files = async () => {
                                         alt="uploaded image"
                                         className="summary-type-icon"
                                     />
-                                    <h4 className="summary-type-size">{formatSize(summary.size || 0)}</h4>
+                                    <h4 className="summary-type-size">{formatSize(totalSize || 0)}</h4>
                                 </div>
                                 <h5 className="summary-type-title">{summary.title}</h5>
                                 <Separator className="bg-light-400" />

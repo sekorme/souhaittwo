@@ -10,14 +10,14 @@ const Header = ({
   accountId,
   userId,
 }: {
-  accountId?: string;
-  userId?: string;
+  accountId: string;
+  userId: string;
 }) => {
   return (
     <header className={"header"}>
       <Search />
       <div className={"header-wrapper"}>
-        <FileUploader  />
+        <FileUploader accountId={accountId} ownerId={userId} />
         <form
           action={async () => {
             "use server";
