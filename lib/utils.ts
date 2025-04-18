@@ -231,32 +231,33 @@ export const getUsageSummary = (totalSpace: any) => {
   return [
     {
       title: "Documents",
-      size: totalSpace.document.size,
-      latestDate: totalSpace.document.latestDate,
+      size: totalSpace.size,
+      latestDate: totalSpace.latestDate,
       icon: "/assets/icons/file-document-light.svg",
+
       url: "/documents",
     },
     {
       title: "Images",
-      size: totalSpace.image.size,
-      latestDate: totalSpace.image.latestDate,
+      size: totalSpace.size,
+      latestDate: totalSpace.latestDate,
       icon: "/assets/icons/file-image-light.svg",
       url: "/images",
     },
     {
       title: "Media",
-      size: totalSpace.video.size + totalSpace.audio.size,
+      size: totalSpace.size + totalSpace.size,
       latestDate:
-          totalSpace.video.latestDate > totalSpace.audio.latestDate
-              ? totalSpace.video.latestDate
-              : totalSpace.audio.latestDate,
+          totalSpace.latestDate > totalSpace.latestDate
+              ? totalSpace.latestDate
+              : totalSpace.latestDate,
       icon: "/assets/icons/file-video-light.svg",
       url: "/media",
     },
     {
       title: "Others",
-      size: totalSpace.other.size,
-      latestDate: totalSpace.other.latestDate,
+      size: totalSpace.size,
+      latestDate: totalSpace.latestDate,
       icon: "/assets/icons/file-other-light.svg",
       url: "/others",
     },
@@ -279,3 +280,42 @@ export const getFileTypesParams = (type: string | Array<string>) => {
 };
 
 
+
+
+
+export const getNewUsageSummary = (totalSpace: any) => {
+  return [
+    {
+      title: "Documents",
+      size: totalSpace.size,
+      updatedAt: totalSpace.updatedAt,
+      icon: "/assets/icons/file-document-light.svg",
+
+      url: "/files/documents",
+    },
+    {
+      title: "Images",
+      size: totalSpace.size,
+      updatedAt: totalSpace.updatedAt,
+      icon: "/assets/icons/file-image-light.svg",
+      url: "/files/images",
+    },
+    {
+      title: "Media",
+      size: totalSpace.size + totalSpace.size,
+      updatedAt:
+          totalSpace.updatedAt > totalSpace.updatedAt
+              ? totalSpace.updatedAt
+              : totalSpace.updatedAt,
+      icon: "/assets/icons/file-video-light.svg",
+      url: "/files/media",
+    },
+    {
+      title: "Others",
+      size: totalSpace.size,
+      updatedAt: totalSpace.updatedAt,
+      icon: "/assets/icons/file-other-light.svg",
+      url: "/files/others",
+    },
+  ];
+};
