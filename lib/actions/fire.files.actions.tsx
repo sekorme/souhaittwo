@@ -235,11 +235,9 @@ export const createFQuery = (
 };
 
 
-
-
-
-
-
+const getFileExtension = (param: any) => {
+    return param.split(".").pop();
+};
 
 export async function getUserFiles({
                                        types = [],
@@ -274,7 +272,8 @@ export async function getUserFiles({
         return {
             id: docSnap.id,
             name: data.name || data.fileName || docSnap.id,
-            size: data.size ,// <-- fallback options
+            size: data.size ,
+            extension: getFileExtension(data.name || data.fileName || docSnap.id), // <-- fallback options
             ...data,
         };
     }) as any[];
@@ -348,19 +347,41 @@ export async function updateFileAction(fileId: string, newFile: File) {
 }
 
 
-export async function deleteFileAction(fileId: string) {
-    const user = await getCurrentUser();
-    const docRef = doc(db, "files", fileId);
-    const snap = await getDoc(docRef);
-    const data = snap.data();
+export async function deleteFileAction(userId: string) {
+    if (!userId) {
+        console.error("Error: userId is undefined or null.");
+        throw new Error("Invalid userId: userId is required.");
+    }
 
-    if (data?.ownerId !== user?.id) throw new Error("Unauthorized");
+    try {
+        // Query all files associated with the user
+        const filesQuery = query(collection(db, "files"), where("ownerId", "==", userId));
+        const filesSnapshot = await getDocs(filesQuery);
 
-    const fileRef = ref(storage, data?.storagePath);
-    await deleteObject(fileRef);
-    await deleteDoc(docRef);
+        const deletePromises = filesSnapshot.docs.map(async (fileDoc) => {
+            const fileData = fileDoc.data();
+            if (!fileData.storagePath) {
+                console.warn(`File document ${fileDoc.id} is missing storagePath.`);
+                return;
+            }
 
-    return { success: true };
+            const fileRef = ref(storage, fileData.storagePath);
+
+            // Delete file from Firebase Storage
+            await deleteObject(fileRef);
+            console.log(`File deleted from storage: ${fileData.storagePath}`);
+
+            // Delete file document from Firestore
+            await deleteDoc(fileDoc.ref);
+            console.log(`File document deleted: ${fileDoc.id}`);
+        });
+
+        await Promise.all(deletePromises);
+        console.log(`All files for user ${userId} deleted.`);
+    } catch (error) {
+        console.error("Error deleting user storage:", error);
+        throw error;
+    }
 }
 
 export async function shareFileWithUsername(fileId: string, email: string, unshare = false) {
@@ -388,3 +409,46 @@ export async function shareFileWithUsername(fileId: string, email: string, unsha
 
     return { success: true };
 }
+
+export async function deleteFileById(fileId: string, userId: string) {
+    if (!fileId || !userId) {
+        throw new Error("fileId and userId are required.");
+    }
+
+    try {
+        const docRef = doc(db, "files", fileId);
+        const snap = await getDoc(docRef);
+
+        if (!snap.exists()) throw new Error("File not found");
+
+        const data = snap.data();
+        if (data.ownerId !== userId) throw new Error("Unauthorized");
+
+        const fileRef = ref(storage, data.storagePath);
+
+        try {
+            // Attempt to delete the storage file
+            await deleteObject(fileRef);
+            console.log("Storage file deleted:", data.storagePath);
+        } catch (error: any) {
+            if (error.code === "storage/object-not-found") {
+                console.warn("Storage file not found, skipping deletion:", data.storagePath);
+            } else {
+                throw error;
+            }
+        }
+
+        // Delete Firestore document regardless of whether the file was found
+        await deleteDoc(docRef);
+        console.log("Firestore document deleted:", fileId);
+
+        return { success: true };
+    } catch (error) {
+        console.error("Failed to delete file:", error);
+        throw new Error("Could not delete file.");
+    }
+}
+
+
+
+

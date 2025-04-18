@@ -32,81 +32,90 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
   const { toast } = useToast();
   const [files, setFiles] = useState<File[]>([]);
 
+
   const uploadFile = async (file: File) => {
-    const storageRef = ref(storage, `uploads/${ownerId}/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    const user = await getCurrentUser();
+    try {
+      const user = await getCurrentUser();
+      if (!user || !user.id) throw new Error("User not authenticated");
 
-    return new Promise((resolve, reject) => {
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Handle progress if needed
-        },
-        (error) => {
-          reject(error);
-        },
-        async () => {
-          const snapshot = await uploadBytes(storageRef, file);
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          const fileType = file.type.split("/")[0];
+      const storageRef = ref(storage, `uploads/${user.id}/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-          const docRef = await addDoc(collection(db, "files"), {
-            ownerId: user?.id,
-            fileName: file.name,
-            storagePath: snapshot.ref.fullPath,
-            type: fileType,
-            sharedWith: [],
-            url: downloadURL,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-          });
+      return new Promise<{ success: boolean; id: string }>((resolve, reject) => {
+        uploadTask.on(
+            "state_changed",
+            // Optional progress handler
+            () => {},
+            (error) => {
+              console.error("Upload error:", error);
+              reject(error);
+            },
+            async () => {
+              try {
+                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                const fileType = file.type.split("/")[0];
 
-          return { success: true, id: docRef.id };
-          resolve(downloadURL);
-        },
-      );
-    });
+                const docRef = await addDoc(collection(db, "files"), {
+                  ownerId: user.id,
+                  fileName: file.name,
+                  storagePath: uploadTask.snapshot.ref.fullPath,
+                  type: fileType,
+                  sharedWith: [],
+                  url: downloadURL,
+                  createdAt: serverTimestamp(),
+                  updatedAt: serverTimestamp(),
+                });
+
+                console.log("File uploaded and saved to Firestore:", docRef.id);
+                resolve({ success: true, id: docRef.id });
+              } catch (metaError) {
+                console.error("Error saving file metadata:", metaError);
+                reject(metaError);
+              }
+            }
+        );
+      });
+    } catch (err) {
+      console.error("Unexpected error in uploadFile:", err);
+      throw err;
+    }
   };
 
+
   const onDrop = useCallback(
-    async (acceptedFiles: File[]) => {
-      setFiles(acceptedFiles);
+      async (acceptedFiles: File[]) => {
+        setFiles(acceptedFiles);
 
-      const uploadPromises = acceptedFiles.map(async (file) => {
-        if (file.size > MAX_FILE_SIZE) {
-          setFiles((prevFiles) =>
-            prevFiles.filter((f) => f.name !== file.name),
-          );
+        const uploadPromises = acceptedFiles.map(async (file) => {
+          if (file.size > MAX_FILE_SIZE) {
+            setFiles((prevFiles) => prevFiles.filter((f) => f.name !== file.name));
 
-          return toast({
-            description: (
-              <p className="body-2 text-white">
-                <span className="font-semibold">{file.name}</span> is too large.
-                Max file size is 50MB.
-              </p>
-            ),
-            className: "error-toast",
-          });
-        }
+            return toast({
+              description: (
+                  <p className="body-2 text-white">
+                    <span className="font-semibold">{file.name}</span> is too large.
+                    Max file size is 50MB.
+                  </p>
+              ),
+              className: "error-toast",
+            });
+          }
 
-        try {
-          await uploadFile(file);
-          // Handle the uploaded file URL as needed
-          setFiles((prevFiles) =>
-            prevFiles.filter((f) => f.name !== file.name),
-          );
-          te.success("File uploaded successfully");
-        } catch (error) {
-          console.error("Error uploading file:", error);
-          te.error("Failed to upload file");
-        }
-      });
+          try {
+            await uploadFile(file);
+            setFiles((prevFiles) => prevFiles.filter((f) => f.name !== file.name));
+            te.success(`✅ ${file.name} uploaded successfully`);
+          } catch (error) {
+            console.error(`❌ Error uploading ${file.name}:`, error);
+            te.error(`Failed to upload ${file.name}`);
+          }
+        });
 
-      await Promise.all(uploadPromises);
-    },
-    [ownerId, accountId, path],
+        await Promise.all(uploadPromises);
+      },
+      [ownerId, accountId, path]
   );
+
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 

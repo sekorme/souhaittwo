@@ -4,6 +4,7 @@ import Link from "next/link";
 import Thumbnail from "@/components/Thumbnail";
 import { convertFileSize } from "@/lib/utils";
 import FormattedDateTime from "@/components/FormattedDateTime";
+import ActionDropdown from "@/components/ActionDropdown";
 
 
 const Card = ({ file }: { file:  any }) => {
@@ -13,7 +14,7 @@ const Card = ({ file }: { file:  any }) => {
         else return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
     };
     return (
-        <Link href={`${file?.url}`} target="_blank" className="file-card">
+        <Link href={`${file?.url}`} target="_blank" className="file-card hover:scale-0.1">
             <div className="flex justify-between">
                 <Thumbnail
                     type={file.type}
@@ -23,7 +24,7 @@ const Card = ({ file }: { file:  any }) => {
                     imageClassName="!size-11"
                 />
                 <div className="flex flex-col items-end justify-between">
-
+                    <ActionDropdown file={file} />
                     <p className="body-1">{formatSize(file.size)}</p>
                 </div>
             </div>
