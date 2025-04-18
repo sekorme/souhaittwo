@@ -1,15 +1,16 @@
-'use client'
-import { useEffect, useState } from "react";
+'use client';
 
-
+import { useEffect, useState, use } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import {getUserFiles} from "@/lib/actions/fire.files.actions";
+import { getUserFiles } from "@/lib/actions/fire.files.actions";
 import Card from "@/components/Card";
-
+import { SearchParamProps } from "@/types";
+import {useParams} from "next/navigation";
+import {getFileTypesParams} from "@/lib/utils";
 type FileType = "document" | "image" | "video" | "audio" | "other";
+
 export default function Page() {
   const [files, setFiles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -17,22 +18,32 @@ export default function Page() {
   const [typeFilter, setTypeFilter] = useState<any[]>([]);
   const [sort, setSort] = useState("createdAt-desc");
 
+  const params = useParams();
+  const type = params?.type || "";
+    const types = getFileTypesParams(type) as FileType[];
+
   useEffect(() => {
     const loadFiles = async () => {
       setLoading(true);
-      const data = await getUserFiles({
-        searchText,
-        types: typeFilter,
-        sort,
-      });
-      setFiles(data);
-      setLoading(false);
+      try {
+        const data = await getUserFiles({
+          searchText,
+          types: types,
+          sort,
+        });
+        setFiles(data);
+      } catch (error) {
+        console.error("Error loading files:", error);
+      } finally {
+        setLoading(false);
+      }
     };
     loadFiles();
   }, [searchText, typeFilter, sort]);
 
   return (
       <div className="p-4 space-y-6">
+        <h1 className="h1 capitalize">{type}</h1>
         <div className="flex flex-col md:flex-row gap-4 items-center">
           <Input
               placeholder="Search files by name..."
@@ -63,7 +74,10 @@ export default function Page() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {files.map((file) => (
                   <Card key={file.id} file={file} />
-              ))}
+
+              ))
+
+              }
             </div>
         )}
       </div>

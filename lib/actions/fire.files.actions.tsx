@@ -269,6 +269,7 @@ export async function getUserFiles({
     const [sortBy = "createdAt", orderDir = "desc"] = sort.split("-");
     let files = allDocs.map((docSnap) => {
         const data = docSnap.data();
+
         return {
             id: docSnap.id,
             name: data.name || data.fileName || docSnap.id,
@@ -452,3 +453,22 @@ export async function deleteFileById(fileId: string, userId: string) {
 
 
 
+export async function downloadFile(storagePath: string) {
+    try {
+        const fileRef = ref(storage, storagePath);
+        const url = await getDownloadURL(fileRef);
+
+        // Trigger browser download
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = storagePath.split("/").pop() || "file";
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+
+        console.log("File download triggered:", url);
+    } catch (error) {
+        console.error("Error downloading file:", error);
+        throw new Error("Failed to download file");
+    }
+}

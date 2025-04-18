@@ -263,10 +263,10 @@ export const getUsageSummary = (totalSpace: any) => {
   ];
 };
 
-export const getFileTypesParams = (type: string) => {
+export const getFileTypesParams = (type: string | Array<string>) => {
   switch (type) {
     case "documents":
-      return ["document"];
+      return ["document", "text", "spreadsheet", "presentation", "pdf", "doc","application","application/pdf"];
     case "images":
       return ["image"];
     case "media":

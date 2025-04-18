@@ -58,6 +58,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
                 const docRef = await addDoc(collection(db, "files"), {
                   ownerId: user.id,
                   fileName: file.name,
+                  size: file.size,
                   storagePath: uploadTask.snapshot.ref.fullPath,
                   type: fileType,
                   sharedWith: [],

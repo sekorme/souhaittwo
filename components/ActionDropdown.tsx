@@ -33,6 +33,7 @@ import { FileDetails, ShareInput } from "@/components/ActionsModalContent";
 import {ActionType, FileType} from "@/types";
 import {deleteFileAction, deleteFileById, getUserFiles, shareFileWithUsername} from "@/lib/actions/fire.files.actions";
 import {getCurrentUser} from "@/lib/actions/auth.actions";
+import {getDownloadURL} from "firebase/storage";
 
 const ActionDropdown = ({ file }: { file: any }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -252,7 +253,7 @@ const ActionDropdown = ({ file }: { file: any }) => {
                         >
                             {actionItem.value === "download" ? (
                                 <Link
-                                    href={constructDownloadUrl(file.bucketField)}
+                                    href={`${file.url}`}
                                     download={file.name}
                                     className="flex items-center gap-2"
                                     onClick={closeAllModals}

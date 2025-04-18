@@ -12,7 +12,9 @@ const Card = ({ file }: { file:  any }) => {
         if (bytes < 1024) return `${bytes} B`;
         else if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
         else return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+
     };
+
     return (
         <Link href={`${file?.url}`} target="_blank" className="file-card hover:scale-0.1">
             <div className="flex justify-between">

@@ -98,12 +98,12 @@ const Hero = () => {
           transition={{ duration: 1, delay: 0.6 }}
         >
 
-            <Button as={Link} href={"/sign-up"} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full">
+            <Button as={Link} href={"/sign-up"} className="bg-[#00D737]/40 hover:bg-blue-700 text-white px-6 py-3 rounded-full">
               Get Started
             </Button>
 
 
-          <Button className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-full">
+          <Button className="bg-gray-800/40 hover:bg-gray-900 text-white px-6 py-3 rounded-full">
             Learn More
           </Button>
         </motion.div>
