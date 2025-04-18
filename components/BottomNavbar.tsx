@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Home, Briefcase, MessageSquare, User, Mic, File } from "lucide-react";
+import { Home, Briefcase, MessageSquare, User, ArchiveRestore, Mic, File } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation"; // Import Next.js usePathname
 import { ThemeSwitch } from "@/components/theme-switch";
@@ -11,7 +11,7 @@ const navItems = [
   { name: "Home", href: "/dashboard", icon: Home },
   { name: "My Jobs", href: "/jobs", icon: Briefcase },
   { name: "Messages", href: "/messages", icon: MessageSquare },
-  { name: "Files", href: "/files", icon: File },
+  { name: "Files", href: "/files", icon: ArchiveRestore },
   { name: "Interview", href: "/interview", icon: Mic },
 ];
 

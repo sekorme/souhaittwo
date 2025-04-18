@@ -48,6 +48,10 @@ export const getRandomInterviewCover = () => {
   const randomIndex = Math.floor(Math.random() * interviewCovers.length);
   return `/covers${interviewCovers[randomIndex]}`;
 };
+export const handleError = (error: unknown, message: string) => {
+  console.log(error, message);
+  throw error;
+};
 
 export const parseStringify = (value: unknown) =>
     JSON.parse(JSON.stringify(value));
@@ -288,7 +292,7 @@ export const getNewUsageSummary = (totalSpace: any) => {
     {
       title: "Documents",
       size: totalSpace.size,
-      updatedAt: totalSpace.updatedAt,
+      createdAt: totalSpace.createdAt,
       icon: "/assets/icons/file-document-light.svg",
 
       url: "/files/documents",
@@ -296,24 +300,24 @@ export const getNewUsageSummary = (totalSpace: any) => {
     {
       title: "Images",
       size: totalSpace.size,
-      updatedAt: totalSpace.updatedAt,
+      createdAt: totalSpace.createdAt,
       icon: "/assets/icons/file-image-light.svg",
       url: "/files/images",
     },
     {
       title: "Media",
       size: totalSpace.size + totalSpace.size,
-      updatedAt:
-          totalSpace.updatedAt > totalSpace.updatedAt
-              ? totalSpace.updatedAt
-              : totalSpace.updatedAt,
+      createdAt:
+          totalSpace.createdAt > totalSpace.createdAt
+              ? totalSpace.createdAt
+              : totalSpace.createdAt,
       icon: "/assets/icons/file-video-light.svg",
       url: "/files/media",
     },
     {
       title: "Others",
       size: totalSpace.size,
-      updatedAt: totalSpace.updatedAt,
+      createdAt: totalSpace.createdAt,
       icon: "/assets/icons/file-other-light.svg",
       url: "/files/others",
     },

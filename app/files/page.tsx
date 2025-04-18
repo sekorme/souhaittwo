@@ -5,13 +5,15 @@ import { Chart } from "@/components/Chart";
 import FormattedDateTime from "@/components/FormattedDateTime";
 import Thumbnail from "@/components/Thumbnail";
 import { Separator } from "@/components/ui/separator";
-import { getUserFiles } from "@/lib/actions/fire.files.actions";
+import {getTotalSpaceUsed, getUserFiles} from "@/lib/actions/fire.files.actions";
 import { convertFileSize, getNewUsageSummary } from "@/lib/utils";
+import {getCurrentUser} from "@/lib/actions/auth.actions";
 
 const Files = async () => {
     // Fetch files
     const data = await getUserFiles({ types: [], sort: "createdAt-desc", limit: 10 });
 
+    const totalUsedSpace = await getTotalSpaceUsed()
     // Convert Firestore timestamps to plain values (ISO strings)
     const plainData = data.map((file: any) => ({
         ...file,
@@ -27,12 +29,17 @@ const Files = async () => {
     const totalSize = plainData.reduce((acc, file) => acc + file.size, 0);
 
     // Get breakdown of types
-    const usageSummary = getNewUsageSummary(plainData);
+    const usageSummary = getNewUsageSummary(totalUsedSpace);
+    const formatSize = (bytes: number) => {
+        if (bytes < 1024) return `${bytes} B`;
+        else if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+        else return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 
+    };
     return (
         <div className="dashboard-container">
             <section>
-                <Chart used={totalSize} />
+                <Chart used={totalSize.used} />
 
                 <ul className="dashboard-summary-list">
                     {usageSummary.map((summary: any) => (
@@ -46,11 +53,11 @@ const Files = async () => {
                                         alt="uploaded image"
                                         className="summary-type-icon"
                                     />
-                                    <h4 className="summary-type-size">{summary.size || 0}</h4>
+                                    <h4 className="summary-type-size">{formatSize(summary.size || 0)}</h4>
                                 </div>
                                 <h5 className="summary-type-title">{summary.title}</h5>
                                 <Separator className="bg-light-400" />
-                                <FormattedDateTime date={summary.createdAt} className="text-center" />
+                                <FormattedDateTime date={summary?.createdAt?.toDate?.toLocaleString()} className="text-center" />
                             </div>
                         </Link>
                     ))}
@@ -83,3 +90,5 @@ const Files = async () => {
 };
 
 export default Files;
+
+
