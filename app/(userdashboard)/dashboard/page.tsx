@@ -14,7 +14,7 @@ const Dashboard = async() => {
     const userDetails = await getCurrentUser();
   return (
     <div className={" mt-5 px-4"}>
-        <div className={"fixed relative flex w-ful items-center justify-between"}>
+        <div className={"fixed relative flex w-ful items-center border-2 shadow-2xl rounded-2xl p-1 justify-between"}>
             <div className={"hidden lg:flex w-full"}>
                 <Image src={"/logo2.png"} alt={"Souhait"} width={50} height={50} className={"rounded-xl"} />
             </div>
@@ -37,7 +37,7 @@ const Dashboard = async() => {
         </div>
         <ActivityCard/>
         <div className={" w-full h-full mt-4 flex bg-gray-200 dark:bg-neutral-900 shadow-2xl rounded-2xl"}>
-
+         hi
         </div>
 
     </div>

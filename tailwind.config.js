@@ -88,6 +88,10 @@ export default {
 		},
 
   		keyframes: {
+  			wave: {
+  				'0%': { transform: 'translateX(0)' },
+  				'100%': { transform: 'translateX(-100%)' }
+  			},
   			marquee: {
   				from: {
   					transform: 'translateX(0)'
@@ -128,6 +132,8 @@ export default {
   			}
   		},
   		animation: {
+  			'wave': 'wave 15s linear infinite',
+  			'wave-delayed': 'wave 15s linear -7.5s infinite',
   			marquee: 'marquee var(--duration) infinite linear',
   			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
   			aurora: 'aurora 8s ease-in-out infinite alternate'
