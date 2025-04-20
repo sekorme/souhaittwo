@@ -8,17 +8,18 @@ import SignOut from "@/components/SignOut";
 import ActivityCard from "@/components/ActivityCard";
 import {AuroraText} from "@/components/magicui/aurora-text";
 import Loader from "@/components/Loader";
+import SettingsDrawer from "@/components/SettingsDrawer";
 
 const Dashboard = async() => {
 
     const userDetails = await getCurrentUser();
   return (
     <div className={" mt-5 px-4"}>
-        <div className={"fixed relative flex w-ful items-center border-2 shadow-2xl rounded-2xl p-1 justify-between"}>
+        <div className={"fixed relative flex w-ful items-center border-2 shadow-xl rounded-2xl p-1 justify-between"}>
             <div className={"hidden lg:flex w-full"}>
                 <Image src={"/logo2.png"} alt={"Souhait"} width={50} height={50} className={"rounded-xl"} />
             </div>
-            <div className={"flex w-full md:w-2/4 lg:w-1/2  gap-2 items-center justify-between "}>
+            <div className={"flex w-full md:w-2/4 lg:w-1/2  gap-5 items-center justify-end "}>
                 <User
                     avatarProps={{
                         src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
@@ -27,6 +28,7 @@ const Dashboard = async() => {
                     name={userDetails?.name}
                 />
                 <SignOut/>
+                <SettingsDrawer/>
             </div>
         </div>
         <div className={"flex items-center mt-10"}>

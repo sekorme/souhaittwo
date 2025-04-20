@@ -138,7 +138,7 @@ export default {
   			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
   			aurora: 'aurora 8s ease-in-out infinite alternate'
   		}
-  	}
+  	},
   },
   darkMode: ["class"],
   plugins: [heroui(),],
