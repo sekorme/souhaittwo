@@ -292,7 +292,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           )}
 
           <Button
-              className="w-full bg-[#00d346]/50 z-10 mt-10 p-3"
+              className="w-full bg-[#00d347]/50 z-10 mt-10 p-3"
               disabled={isLoading}
               type="submit"
               onClick={handleSubmit(onSubmit)}

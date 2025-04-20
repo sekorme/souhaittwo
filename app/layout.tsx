@@ -3,7 +3,6 @@ import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 
 import { Providers } from "./providers";
-
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
@@ -11,8 +10,10 @@ import Footer from "@/components/Footer";
 import ToasterProvider from "@/providers/ToastProvider";
 import { isAuthenticated } from "@/lib/actions/auth.actions";
 import BottomNavbar from "@/components/BottomNavbar";
-import {ToastProvider} from "@heroui/toast";
+import { ToastProvider } from "@heroui/toast";
 import LayoutTrans from "@/components/LayoutTrans";
+
+
 
 export const metadata: Metadata = {
   title: {
@@ -20,10 +21,38 @@ export const metadata: Metadata = {
     template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  metadataBase: new URL("https://souhaittraveladvisors.com"),
   icons: {
     icon: "/favicon.ico",
+    shortcut: "/32.png",
+    apple: "/appstore.png",
+  },
+  manifest: "/manifest.json",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://souhaittraveladvisors.com",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: "/appstore.png",
+        width: 1200,
+        height: 630,
+        alt: "Souhait Travel Advisors",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@souhaittravel",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: ["/og-image.png"],
   },
 };
+
 
 export const viewport: Viewport = {
   themeColor: [
@@ -33,41 +62,45 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({
-  children,
-}: {
+                                           children,
+                                         }: {
   children: React.ReactNode;
 }) {
   const isUserAuthenticated = await isAuthenticated();
 
   return (
-    <html suppressHydrationWarning lang="en">
-      <head />
+      <html suppressHydrationWarning lang="en">
+      <head>
+        {/* 🌐 Web Manifest & Theme Color */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#00d346" />
+      </head>
       <body
-        className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-        )}
+          className={clsx(
+              "min-h-screen bg-background font-sans antialiased",
+              fontSans.variable
+          )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <ToasterProvider />
-          <ToastProvider placement={"top-center"}/>
-          <div className="relative flex flex-col ">
-            {!isUserAuthenticated && <Navbar />}
+      <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+        <ToasterProvider />
+        <ToastProvider placement="top-center" />
+        <div className="relative flex flex-col">
+          {!isUserAuthenticated && <Navbar />}
 
-            <main className="w-full flex-grow">
-              <LayoutTrans>
+          <main className="w-full flex-grow">
+            <LayoutTrans>{children}</LayoutTrans>
+          </main>
 
-              {children}
-              </LayoutTrans>
-            </main>
-            {!isUserAuthenticated ? (
-              <footer className="w-full  ">
+          {!isUserAuthenticated ? (
+              <footer className="w-full">
                 <Footer />
               </footer>
-            ) : (<BottomNavbar/>)}
-          </div>
-        </Providers>
+          ) : (
+              <BottomNavbar />
+          )}
+        </div>
+      </Providers>
       </body>
-    </html>
+      </html>
   );
 }
