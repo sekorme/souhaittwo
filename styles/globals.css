@@ -315,25 +315,25 @@
 
   /* Chart */
   .chart {
-    @apply flex items-center rounded-[20px] bg-brand p-5 text-white md:flex-col xl:flex-row !important;
+    @apply flex items-center rounded-[20px] p-5  md:flex-col xl:flex-row !important;
   }
   .chart-container {
-    @apply mx-auto aspect-square w-[180px] text-white xl:w-[250px] !important;
+    @apply mx-auto aspect-square w-[180px]  xl:w-[250px] !important;
   }
   .polar-grid {
-    @apply first:fill-white/20 last:fill-brand !important;
+    @apply first:fill-white/20 last:fill-white !important;
   }
   .chart-details {
     @apply flex-1 items-start px-3 py-0 sm:px-5 lg:p-3 xl:pr-5 !important;
   }
   .chart-total-percentage {
-    @apply fill-white text-4xl font-bold !important;
+    @apply fill-brand text-4xl font-bold !important;
   }
   .chart-title {
     @apply h3 font-bold md:text-center lg:text-left !important;
   }
   .chart-description {
-    @apply subtitle-1 mt-2 w-full text-white/70 md:text-center lg:text-left !important;
+    @apply subtitle-1 mt-2 w-full  md:text-center lg:text-left !important;
   }
 
   /* FileUploader */

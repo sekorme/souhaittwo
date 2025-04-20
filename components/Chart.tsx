@@ -32,7 +32,7 @@ export const Chart = ({ used = 0 }: { used: number }) => {
     const chartData = [{ storage: "used", 10: used, fill: "white" }];
 
     return (
-        <Card className="chart">
+        <Card className="chart bg-custom-gradient">
             <CardContent className="flex-1 p-0">
                 <ChartContainer config={chartConfig} className="chart-container">
                     <RadialBarChart
@@ -76,7 +76,7 @@ export const Chart = ({ used = 0 }: { used: number }) => {
                                                 <tspan
                                                     x={viewBox.cx}
                                                     y={(viewBox.cy || 0) + 24}
-                                                    className="fill-white/70"
+                                                    className=""
                                                 >
                                                     Space used
                                                 </tspan>

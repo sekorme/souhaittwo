@@ -137,8 +137,12 @@ export default {
   			marquee: 'marquee var(--duration) infinite linear',
   			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
   			aurora: 'aurora 8s ease-in-out infinite alternate'
-  		}
-  	},
+  		},
+		backgroundImage:{
+
+			'custom-gradient': 'linear-gradient(to top right, #ec4899, #fbbf24)',
+		}
+  	}
   },
   darkMode: ["class"],
   plugins: [heroui(),],

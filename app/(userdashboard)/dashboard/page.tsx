@@ -17,10 +17,16 @@ const Dashboard = async() => {
     const userDetails = await getCurrentUser();
   return (
     <div className={" mt-5 px-4"}>
-        <div className={"fixed relative flex w-ful items-center border-2 shadow-xl rounded-2xl p-1 justify-between"}>
+        <div className={"fixed relative flex w-ful items-center border-2 shadow-xl rounded-2xl p-3 justify-between"}>
             <div className={"hidden md:flex w-full"}>
                 <Image src={"/logo2.png"} alt={"Souhait"} width={50} height={50} className={"rounded-xl"} />
             </div>
+
+
+
+
+
+
             <div className={"flex w-full md:w-2/4 lg:w-1/2   items-center justify-between"}>
                <div className={"hidden md:flex "}>
                    <User
@@ -35,7 +41,7 @@ const Dashboard = async() => {
                 <div className={"sm:hidden "}>
                     <Image src={"https://i.pravatar.cc/150?u=a04258114e29026702d"} alt={"User image"} width={40} height={40} className={"rounded-full"} />
                 </div>
-                <div className={"flex items-center w-full justify-end gap-8"}>
+                <div className={"flex items-center w-full justify-end gap-4"}>
 
                 <Notification/>
                 <SignOut/>
