@@ -14,7 +14,7 @@ export default function SettingsDrawer() {
 
     return (
         <>
-            <div onClick={onOpen} className={"bg-[#00D748]/20 p-2 rounded-full "}><Settings color={"green"}/></div>
+            <div onClick={onOpen} className={"bg-[#00D748]/20 p-2 rounded-full "}><Settings color={"green"} size={20}/></div>
             <Drawer
                 size={"3xl"}
                 isOpen={isOpen}

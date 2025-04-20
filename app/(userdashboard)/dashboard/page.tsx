@@ -44,8 +44,8 @@ const Dashboard = async() => {
             </div>
         </div>
         <div className={"flex items-center mt-10"}>
-            <h1 className="text-4xl font-bold tracking-tighter md:text-5xl lg:text-7xl">
-                Hi, <AuroraText>Welcome </AuroraText>
+            <h1 className="text-2xl font-bold tracking-tighter md:text-5xl lg:text-7xl">
+                Hi, <AuroraText>Welcome </AuroraText> <span>{userDetails?.name.split(" ")[0]}</span>
             </h1>
 
         </div>

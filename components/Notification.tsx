@@ -9,7 +9,7 @@ export default function Notification() {
                 <DropdownTrigger>
                   <div className={"bg-brand-100/20 p-1 rounded-full mt-2"}>
                       <Badge color="success" content="25">
-                          <Bell color={"#00D748"}/>
+                          <Bell color={"#00D748"} size={20}/>
                       </Badge>
                   </div>
                 </DropdownTrigger>
