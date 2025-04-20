@@ -14,7 +14,7 @@ export default function SettingsDrawer() {
 
     return (
         <>
-            <Button onPress={onOpen} className={"bg-transparent rounded-full animate-spin"}><Settings color={"green"}/></Button>
+            <div onClick={onOpen} className={"bg-[#00D748]/20 p-2 rounded-full "}><Settings color={"green"}/></div>
             <Drawer
                 size={"3xl"}
                 isOpen={isOpen}

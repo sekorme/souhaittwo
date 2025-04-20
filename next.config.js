@@ -13,6 +13,29 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'pixabay.com',
+            },{
+                protocol: 'https',
+                hostname: 'cdn.pixabay.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'www.gravatar.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 's.gravatar.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'cdn.discordapp.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'i.pravatar.cc',
             },
             {
                 protocol: 'https',
