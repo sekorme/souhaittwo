@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import ActionDropdown from "@/components/ActionDropdown";
-import { Chart } from "@/components/Chart";
-import FormattedDateTime from "@/components/FormattedDateTime";
+import ActionDropdown from "@/components/filecomponent/ActionDropdown";
+import { Chart } from "@/components/filecomponent/Chart";
+import FormattedDateTime from "@/components/filecomponent/FormattedDateTime";
 import Thumbnail from "@/components/Thumbnail";
 import { Separator } from "@/components/ui/separator";
 import {getTotalSpaceUsed, getUserFiles} from "@/lib/actions/fire.files.actions";

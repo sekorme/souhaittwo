@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { navItems } from "@/constants";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import FileUploader from "@/components/FileUploader";
+import FileUploader from "@/components/filecomponent/FileUploader";
 import { signOut } from "@/lib/actions/auth.actions"; // ← use Firebase logout
 
 interface Props {

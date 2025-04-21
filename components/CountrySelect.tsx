@@ -43,11 +43,11 @@ const CountrySelect: React.FC<CountrySelectProps> = ({ value, onChange }) => {
                 formatOptionLabel={fOptionLabel}
                 classNames={{
                     control: () =>
-                        'p-3 border-2 bg-white dark:bg-neutral-800 text-black dark:text-white',
+                        'p-3 border-2 bg-white/40 dark:bg-neutral-800/40 text-black dark:text-white',
                     input: () => 'text-lg text-black dark:text-white',
                     placeholder: () => 'text-gray-400 dark:text-gray-500',
-                    option: () => 'text-lg text-black dark:text-white bg-white dark:bg-neutral-800 hover:bg-gray-100 dark:hover:bg-neutral-700',
-                    menu: () => 'bg-white dark:bg-neutral-800',
+                    option: () => 'text-lg text-black dark:text-white bg-white/70 dark:bg-neutral-800/70 hover:bg-gray-100 dark:hover:bg-neutral-700',
+                    menu: () => 'bg-white/70 dark:bg-neutral-800/70',
                 }}
                 styles={{
                     control: (base) => ({

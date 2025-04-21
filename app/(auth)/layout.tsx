@@ -39,16 +39,8 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
         </div>
       </section>
 
-      <section className="flex flex-1 w-full flex-col bg-[url('/wings.png')] bg-no-repeat bg-contain  bg-center  items-center justify-center ">
-        <div className={"mb-5 lg:hidden"}>
-          <Image
-            alt={"logo"}
-            className={"h-auto "}
-            height={60}
-            src={"/pnglogo.png"}
-            width={60}
-          />
-        </div>
+      <section className="flex flex-1 w-full flex-col bg-[url('/wings.png')] bg-no-repeat bg-cover p-2  bg-center  items-center justify-center ">
+
 
         {children}
       </section>

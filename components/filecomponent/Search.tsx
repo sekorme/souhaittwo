@@ -5,7 +5,7 @@
                 import { usePathname, useRouter, useSearchParams } from "next/navigation";
                 import { Models } from "node-appwrite";
                 import Thumbnail from "@/components/Thumbnail";
-                import FormattedDateTime from "@/components/FormattedDateTime";
+                import FormattedDateTime from "@/components/filecomponent/FormattedDateTime";
                 import { useDebounce } from "use-debounce";
                 import { Input } from "@heroui/input";
                 import { getUserFiles } from "@/lib/actions/fire.files.actions";

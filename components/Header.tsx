@@ -2,8 +2,8 @@ import React from "react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
-import Search from "@/components/Search";
-import FileUploader from "@/components/FileUploader";
+import Search from "@/components/filecomponent/Search";
+import FileUploader from "@/components/filecomponent/FileUploader";
 import { signOutUser } from "@/lib/actions/users.actions";
 
 const Header = ({

@@ -29,7 +29,7 @@ import {
     updateFileUsers,
 } from "@/lib/actions/file.actions";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
-import { FileDetails, ShareInput } from "@/components/ActionsModalContent";
+import { FileDetails, ShareInput } from "@/components/filecomponent/ActionsModalContent";
 import {ActionType, FileType} from "@/types";
 import {deleteFileAction, deleteFileById, getUserFiles, shareFileWithUsername} from "@/lib/actions/fire.files.actions";
 import {getCurrentUser} from "@/lib/actions/auth.actions";
