@@ -1,8 +1,11 @@
 import React from 'react'
+import JobHero from "@/components/jobcomponent/JobHero";
 
 const Jobs = () => {
     return (
-        <div> Jobs</div>
+        <div>
+            <JobHero/>
+        </div>
     )
 }
 export default  Jobs

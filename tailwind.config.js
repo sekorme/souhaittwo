@@ -15,7 +15,8 @@ export default {
   			],
   			mono: [
   				'var(--font-mono)'
-  			]
+  			],
+			jost: ['var(--font-jost)'],
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -141,6 +142,8 @@ export default {
 		backgroundImage:{
 
 			'custom-gradient': 'linear-gradient(to top right, #ec4899, #fbbf24)',
+			'dark-gradient': 'linear-gradient(to right, #000000, #434343)',
+			'white-gradient': 'linear-gradient(to right, #e0eafc, #cfdef3)',
 		}
   	}
   },
