@@ -176,7 +176,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
             action=""
             className="flex w-full flex-col items-center justify-center transition-all lg:h-full"
         >
-          <h1 className="text-[34px] font-bold text-center text-light-100">
+          <h1 className="text-[34px] font-bold text-center dark:text-white text-light-100">
             {type === "sign-in" ? "Sign In" : "Sign Up"}
           </h1>
 
