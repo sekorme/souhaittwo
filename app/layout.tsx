@@ -12,6 +12,7 @@ import { isAuthenticated } from "@/lib/actions/auth.actions";
 import BottomNavbar from "@/components/BottomNavbar";
 import { ToastProvider } from "@heroui/toast";
 import LayoutTrans from "@/components/LayoutTrans";
+import AosProviders from "@/providers/AosProvider";
 
 
 
@@ -82,6 +83,7 @@ export default async function RootLayout({
           )}
       >
       <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+        <AosProviders>
         <ToasterProvider />
         <ToastProvider placement="top-center" />
         <div className="relative flex flex-col">
@@ -99,7 +101,9 @@ export default async function RootLayout({
               <BottomNavbar />
           )}
         </div>
+        </AosProviders>
       </Providers>
+
       </body>
       </html>
   );
