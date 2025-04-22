@@ -53,7 +53,7 @@
   "framer-motion": "12.6.2",
   "intl-messageformat": "^10.5.0",
   "lucide-react": "^0.488.0",
-  "motion": "^12.6.2",
+  "motion": "^12.7.4",
   "next": "15.0.4",
   "next-auth": "^4.24.11",
   "next-pwa": "^5.6.0",
