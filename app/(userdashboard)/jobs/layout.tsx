@@ -9,7 +9,7 @@ const Layout = async({children}: {children: React.ReactNode}) => {
     const user = await getCurrentUser();
     if (!user) return null;
 
-    const isPaid = true
+    const isPaid = false
 
     if(isPaid){
         return (
