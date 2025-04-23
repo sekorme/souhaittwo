@@ -3,7 +3,7 @@ import JobHero from "@/components/jobcomponent/JobHero";
 import JobCategories from "@/components/jobcomponent/JobCategories";
 
 const Jobs = () => {
-    const isPaid = false
+    const isPaid = true
 
     {
         if (isPaid) {
