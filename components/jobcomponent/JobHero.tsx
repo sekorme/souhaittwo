@@ -7,7 +7,7 @@ import {Safari} from "@/components/magicui/safari";
 
 const JobHero = () => {
   return (
-    <div className="w-full  bg-white-gradient dark:bg-dark-gradient grid grid-cols-1 md:grid-cols-2  justify-center items-center" >
+    <div className="w-full  bg-white-gradient dark:bg-dark-gradient grid grid-cols-1 lg:grid-cols-2  justify-center items-center" >
       <div className="w-full flex flex-col  mt-10 p-5 ">
         <h1 className="md:text-4xl text-xl font-semibold sm:text-centr capitalize" data-aos={"fade-up"}>
           There are <span className={"text-[#00d346]"}> <NumberTicker
@@ -61,7 +61,7 @@ const JobHero = () => {
       </div>
 
       {/* Image section */}
-      <div className="hidden md:flex w-full flex justify-center mb-20 p-5 items-center mt-4">
+      <div className="hidden lg:flex w-full flex justify-center mb-20 p-5 items-center mt-4">
         <div className="relative md:mt-10 mt-5" data-aos={"fade-left"} >
           <Safari
               url="wwww.souhaittraveladvisors.com"
