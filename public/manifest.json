@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#00d346",
-  "orientation": "portrait",
+  "orientation": "natural",
   "icons": [
     {
       "src": "/appstore.png",
