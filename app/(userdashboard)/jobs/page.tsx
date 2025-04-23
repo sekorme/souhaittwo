@@ -5,22 +5,28 @@ import JobCategories from "@/components/jobcomponent/JobCategories";
 const Jobs = () => {
     const isPaid = true
 
-    {
+
         if (isPaid) {
+
             return (
-                <div className={"mb-20"}>
-                    <JobHero/>
-                    <JobCategories/>
+                <div className={"mb-20 mt-10"}>
+                    <h1 className={"text-4xl text-center"}>Paid Services activated</h1>
                 </div>
             )
+
         }
-        return (
-            <div className={"mb-20 mt-10"}>
-  <h1 className={"text-4xl text-center text-bold"}> Not Paid</h1>
-            </div>
-        )
+
+
+    return (
+
+        <div className={"mb-20"}>
+            <JobHero/>
+            <JobCategories/>
+        </div>
+    )
+
 
     }
 
-}
+
 export default  Jobs
