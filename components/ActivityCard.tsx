@@ -48,9 +48,10 @@ export default function ActivityCard() {
       className={
         "w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-5 gap-4 p-4"
       }
+
     >
       {activityData.map((activity) => (
-        <Card key={activity.id} className="w-full  dark:bg-neutral-900 shadow-lg rounded-2xl">
+        <Card key={activity.id} className="w-full  dark:bg-neutral-900 shadow-lg rounded-2xl" data-aos={"fade-right"}>
           <CardHeader className=" justify-between gap-2">
             <div className="flex gap-5">
               <Avatar

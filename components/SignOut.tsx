@@ -15,7 +15,7 @@ const SignOut = () => {
 
 
     return (
-    <div onClick={handleSignOut} className={"cursor-pointer bg-[#ff3d57]/20 p-2 rounded-full animate-pulse"}><LockOpen color={"#ff3d57"} size={20}/></div>
+    <div onClick={handleSignOut} className={"cursor-pointer bg-[#ff3d57]/20 p-2 rounded-full animate-pulse"} data-aos={"fade-in"}><LockOpen color={"#ff3d57"} size={20}/></div>
     )
 }
 export default SignOut

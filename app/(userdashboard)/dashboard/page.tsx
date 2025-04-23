@@ -28,7 +28,7 @@ const Dashboard = async() => {
 
 
             <div className={"flex w-full md:w-2/4 lg:w-1/2   items-center justify-between"}>
-               <div className={"hidden md:flex "}>
+               <div className={"hidden md:flex "} data-aos={"fade-left"}>
                    <User
                        avatarProps={{
                            src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
@@ -38,10 +38,10 @@ const Dashboard = async() => {
 
                    />
                </div>
-                <div className={"sm:hidden "}>
+                <div className={"sm:hidden "} data-aos={"fade-right"}>
                     <Image src={"https://i.pravatar.cc/150?u=a04258114e29026702d"} alt={"User image"} width={40} height={40} className={"rounded-full"} />
                 </div>
-                <div className={"flex items-center w-full justify-end gap-4"}>
+                <div className={"flex items-center w-full justify-end gap-4"} data-aos={"fade-right"}>
 
                 <Notification/>
                 <SignOut/>
@@ -49,8 +49,8 @@ const Dashboard = async() => {
                 </div>
             </div>
         </div>
-        <div className={"flex items-center mt-10"}>
-            <h1 className="text-2xl font-bold tracking-tighter md:text-5xl lg:text-7xl">
+        <div className={"flex items-center mt-10"} >
+            <h1 className="text-2xl font-bold tracking-tighter md:text-5xl lg:text-7xl" data-aos={"fade-down"}>
                 Hi, <AuroraText>Welcome </AuroraText> <span>{userDetails?.name.split(" ")[0]}</span>
             </h1>
 

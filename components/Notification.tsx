@@ -4,7 +4,7 @@ import {Bell } from "lucide-react";
 
 export default function Notification() {
     return (
-        <div className="">
+        <div className="" data-aos={"fade-in"}>
             <Dropdown placement="bottom-end">
                 <DropdownTrigger>
                   <div className={"bg-brand-100/20 p-1 rounded-full mt-2"}>
