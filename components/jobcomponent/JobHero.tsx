@@ -4,6 +4,7 @@ import { Input, Button } from "@heroui/react";
 import { Search, MapPin } from "lucide-react";
 import {NumberTicker} from "@/components/magicui/number-ticker";
 import {Safari} from "@/components/magicui/safari";
+import Browser from "@/components/jobcomponent/Browser";
 
 const JobHero = () => {
   return (
@@ -61,12 +62,10 @@ const JobHero = () => {
       </div>
 
       {/* Image section */}
-      <div className="hidden lg:flex w-full flex justify-center mb-20 p-5 items-center mt-4">
-        <div className="relative md:mt-10 mt-5" data-aos={"fade-left"} >
-          <Safari
-              url="wwww.souhaittraveladvisors.com"
-              className="size-full"
-              videoSrc="/safari.mp4"
+      <div className=" w-full flex justify-center mb-20 p-5 items-center mt-4">
+        <div className="relative md:mt-10 mt-5 w-full"  data-aos={"fade-left"} >
+          <Browser
+
           />
         </div>
       </div>
