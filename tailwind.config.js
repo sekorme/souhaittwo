@@ -141,9 +141,9 @@ export default {
   		},
 		backgroundImage:{
 
-			'custom-gradient': 'linear-gradient(to top right, #ec4899, #fbbf24)',
+			'custom-gradient': 'linear-gradient(to bottom right, #ec4899, #fbbf24)',
 			'dark-gradient': 'linear-gradient(to right, #000000, #434343)',
-			'white-gradient': 'linear-gradient(to right, #e0eafc, #cfdef3)',
+			'white-gradient': 'linear-gradient(to right, #ece9e6, #ffffff)',
 		}
   	}
   },
