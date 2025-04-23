@@ -9,14 +9,14 @@ const JobHero = () => {
   return (
     <div className="w-full  bg-white-gradient dark:bg-dark-gradient grid grid-cols-1 md:grid-cols-2  justify-center items-center" >
       <div className="w-full flex flex-col  mt-10 p-5 ">
-        <h1 className="md:text-4xl text-xl font-semibold sm:text-centr capitalize" data-aos={"fade-up"}>
+        <h1 className="md:text-4xl text-xl font-semibold sm:text-center text-gray-500 capitalize" data-aos={"fade-up"}>
           There are <span className={"text-[#00d346]"}> <NumberTicker
             value={489565}
             className="whitespace-pre-wrap text-xl md:text-4xl font-medium tracking-tighter text-[#00d346] dark:text-[#00d346]"/>
         </span> jobs
           waiting for you!
         </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-300 mt-5" data-aos={"fade-up"}>
+        <p className="text-sm text-gray-500 dark:text-gray-500 mt-5" data-aos={"fade-up"}>
           Find jobs, Employment & Career Opportunities.
         </p>
         <div
@@ -51,10 +51,10 @@ const JobHero = () => {
           </Button>
         </div>
         <div className="flex flex-row items-center justify-start mt-10 md:mt-5">
-          <p className="font-bold text-sm dark:text-gray-300 text-gray-500" data-aos={"fade-up"}>
+          <p className="font-bold text-sm dark:text-gray-500 text-gray-500" data-aos={"fade-up"}>
             Popular Searches:
           </p>
-          <p className="text-xs dark:text-gray-300 text-gray-500 ml-2" data-aos={"fade-down"}>
+          <p className="text-xs dark:text-gray-500 text-gray-500 ml-2" data-aos={"fade-down"}>
             Care Worker, Skill Worker, Carpenter, Nurse, Truck Driver, Developer{" "}
           </p>
         </div>

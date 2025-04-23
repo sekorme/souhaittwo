@@ -20,7 +20,7 @@ const BottomNavbar = () => {
   const pathname = usePathname(); // Get the current path dynamically
 let color: tryColor = (pathname.split("/")[2] as tryColor) || "documents";
   return (
-      <nav className="fixed bottom-0 bg-white left-0 w-full dark:bg-black border-t-4 rounded-t-2xl border-[#00D748] shadow-lg flex justify-around py-3 z-100">
+      <nav className="fixed bottom-0 bg-white left-0 w-full dark:bg-black border-t-4 rounded-t-2xl border-[#00D748] shadow-lg flex justify-around py-3 z-100" >
         {navItems.map((item) => {
           const isActive = pathname === item.href ||`${item.href}/${color}` === pathname;
 

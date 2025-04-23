@@ -98,6 +98,7 @@ export default async function RootLayout({
                 <Footer />
               </footer>
           ) : (
+
               <BottomNavbar />
           )}
         </div>
