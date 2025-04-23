@@ -150,7 +150,7 @@ export function Safari({
         )}
         {videoSrc && (
           <foreignObject
-            x="0"
+            x="1"
             y="52"
             width="1200"
             height="700"
@@ -158,7 +158,7 @@ export function Safari({
             clipPath="url(#roundedBottom)"
           >
             <video
-              className="size-full overflow-hidden md:object-cover"
+              className="size-full overflow-hidden object-cover"
               src={videoSrc}
               autoPlay
               loop
