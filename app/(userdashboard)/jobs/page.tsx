@@ -1,6 +1,7 @@
 import React from 'react'
 import JobHero from "@/components/jobcomponent/JobHero";
 import JobCategories from "@/components/jobcomponent/JobCategories";
+import HowItWorks from "@/components/jobcomponent/HowItWorks";
 
 const Jobs = () => {
     const isPaid = false
@@ -22,6 +23,7 @@ const Jobs = () => {
         <div className={"mb-20"}>
             <JobHero/>
             <JobCategories/>
+            <HowItWorks/>
         </div>
     )
 

@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   metadataBase: new URL("https://souhaittraveladvisors.com"),
   icons: {
-    icon: "/pnglogo.png",
-    shortcut: "/pnglogo.png",
+    icon: "/logo2.PNG",
+    shortcut: "logo2.PNG",
     apple: "/appstore.png",
   },
   manifest: "/manifest.json",

@@ -68,7 +68,7 @@ const JobCategories = () => {
             </div>
 
             <div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 mt-10 rounded-xl shadow-xl">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 mt-10 rounded-xl ">
                     {data.map((category, index) => (
                         <div
                             key={index}
