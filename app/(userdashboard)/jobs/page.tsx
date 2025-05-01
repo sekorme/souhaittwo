@@ -4,8 +4,10 @@ import JobCategories from "@/components/jobcomponent/JobCategories";
 import HowItWorks from "@/components/jobcomponent/HowItWorks";
 import HeaderComp from "@/components/jobcomponent/HeaderComp";
 import SubscriptionPlans from "@/components/jobcomponent/Subscribe";
+import { getCurrentUser } from '@/lib/actions/auth.actions';
 
-const Jobs = () => {
+const Jobs = async() => {
+    const user = await getCurrentUser();
     const isPaid = false
 
 
@@ -27,7 +29,7 @@ const Jobs = () => {
             <JobHero/>
             <JobCategories/>
             <HowItWorks/>
-            <SubscriptionPlans/>
+            <SubscriptionPlans email={user.email} userId={user.id}/>
 
         </div>
     )

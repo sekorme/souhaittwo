@@ -4,11 +4,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {BorderBeam} from "@/components/magicui/border-beam";
 import React from "react";
+import PaystackButton from "@/components/PaystackButton";
 
 const subscriptionPlans = [
     {
         title: "1 Month Subscription",
-        price: "$15",
+        price: 15,
         description: "Full access to all job listings for 1 month.",
         duration: "1 month",
         benefits: [
@@ -19,7 +20,7 @@ const subscriptionPlans = [
     },
     {
         title: "3 Months Subscription",
-        price: "$39",
+        price: 39,
         description: "Enjoy premium access for 3 months and stay ahead.",
         duration: "3 months",
         benefits: [
@@ -31,7 +32,7 @@ const subscriptionPlans = [
     },
     {
         title: "1 Year Subscription",
-        price: "$99",
+        price: 99,
         description: "Best value: full-year access to thousands of jobs.",
         duration: "12 months",
         benefits: [
@@ -44,11 +45,11 @@ const subscriptionPlans = [
     },
 ];
 
-export default function SubscriptionPlans() {
+export default function SubscriptionPlans({userId, email}: {userId: string, email: string}) {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-br from-blue-50 to-blue-100">
             <motion.h1
-                className="text-4xl font-bold mb-10 text-center"
+                className="text-4xl font-bold mb-5 text-center"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
@@ -69,7 +70,7 @@ export default function SubscriptionPlans() {
                         <Card className="rounded-2xl shadow-lg hover:shadow-2xl transition-all">
                             <CardContent className="flex flex-col items-center text-center p-6">
                                 <h2 className="text-2xl font-semibold mb-4">{plan.title}</h2>
-                                <p className="text-4xl font-bold text-blue-600 mb-4">{plan.price}</p>
+                                <p className="text-4xl font-bold text-blue-600 mb-4">${plan.price}</p>
                                 <p className="text-gray-600 mb-6">{plan.description}</p>
                                 <ul className="text-left mb-6 space-y-2">
                                     {plan.benefits.map((benefit, idx) => (
@@ -78,7 +79,7 @@ export default function SubscriptionPlans() {
                                         </li>
                                     ))}
                                 </ul>
-                                <Button className="w-full">Subscribe Now</Button>
+                                <PaystackButton email={email} plan={plan.title} amount={plan.price} userId={userId}/>
                                 <BorderBeam
                                     duration={6}
                                     size={400}
