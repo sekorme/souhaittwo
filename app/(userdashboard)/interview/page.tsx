@@ -21,7 +21,7 @@ const Interview = async() => {
                       <h2 className={"text-white text-3xl font-semibold"}>Get Interview-Ready with AI-Powered Practice & Feedback</h2>
                       <p className={"text-lg text-white"}>Practice on real interview questions and get instant feedback on your answers</p>
                       <Button asChild className={"w-fit !bg-primary-200 !text-dark-100 hover:!bg-primary-200/80 !rounded-full !font-bold px-5 cursor-pointer min-h-10 max-sm:w-full"} variant={"secondary"} >
-                          <Link href={"/interview/new"}>Start an Interview</Link>
+                          <Link href={"/interview/assistant"}>Start an Interview</Link>
                       </Button>
 
 

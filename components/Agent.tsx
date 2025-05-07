@@ -126,44 +126,26 @@ const Agent = ({
   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
 
-    try {
-      if (!vapi || typeof vapi.start !== "function") {
-        throw new Error("Vapi is not initialized properly.");
+    if (type === "generate") {
+      await vapi.start("055a490e-006d-46b5-9129-edb39d90209c", {
+        variableValues: {
+          username: userName,
+          userid: userId,
+        },
+      });
+    } else {
+      let formattedQuestions = "";
+      if (questions) {
+        formattedQuestions = questions
+            .map((question) => `- ${question}`)
+            .join("\n");
       }
 
-      let callOptions: any;
-
-      if (type === "generate") {
-        callOptions = {
-          variableValues: {
-            username: userName || "Guest",
-            userid: userId || "unknown",
-            account: "five",
-            category: "Travel Advisory",
-            focus: "Visa Applications",
-          },
-        };
-
-        const callId = "055a490e-006d-46b5-9129-edb39d90209c"; // Ensure this call ID is correct
-
-         vapi.start(callId, callOptions);
-      } else {
-        let formattedQuestions =
-          questions?.map((q) => `- ${q}`).join("\n") || "";
-
-        callOptions = {
-          variableValues: {
-            questions: formattedQuestions,
-          },
-        };
-
-        await vapi.start(interviewer, callOptions);
-      }
-
-      setCallStatus(CallStatus.ACTIVE);
-    } catch (error) {
-      console.error("Error starting the call:", error);
-      setCallStatus(CallStatus.INACTIVE);
+      await vapi.start(interviewer, {
+        variableValues: {
+          questions: formattedQuestions,
+        },
+      });
     }
   };
 
@@ -245,7 +227,7 @@ const Agent = ({
         {callStatus !== "ACTIVE" ? (
           <Button
             className="relative inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-green-500 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-green-600 hover:bg-green-500 min-w-28 cursor-pointer items-center justify-center overflow-visible"
-            onClick={() => handleCall()}
+            onPress={() => handleCall()}
           >
             <span
               className={cn(
