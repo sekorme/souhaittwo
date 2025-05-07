@@ -392,7 +392,19 @@
   .otp-close-button {
     @apply absolute -right-1 -top-7 cursor-pointer sm:-right-2 sm:-top-4  !important;
   }
+  .root-layouttwo {
+    @apply flex mx-auto max-w-7xl flex-col gap-12 my-12 px-16 max-sm:px-4 max-sm:my-8;
+  }
+  .card-cta {
+    @apply flex flex-row bg-gradient-to-b from-[#171532] to-[#08090D] rounded-3xl px-16 py-6 items-center justify-between max-sm:px-4;
+  }
+  .card-interview {
+    @apply bg-gradient-to-b from-[#1A1C20] to-[#08090D] rounded-2xl min-h-full flex flex-col p-6 relative overflow-hidden gap-10 justify-between;
 
+    .badge-text {
+      @apply text-sm font-semibold capitalize;
+    }
+  }
   /* Search */
   .search {
     @apply relative w-full md:max-w-[480px] !important;
@@ -455,6 +467,13 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+.blue-gradient-dark {
+  @apply bg-gradient-to-b from-[#171532] to-[#08090D];
+}
+
+ .blue-gradient {
+  @apply bg-gradient-to-l from-[#FFFFFF] to-[#CAC5FE];
 }
 
 .animate-fadeIn {

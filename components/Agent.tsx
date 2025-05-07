@@ -108,7 +108,7 @@ const Agent = ({
       });
 
       if (success && id) {
-        router.push(`/interview/${interviewId}/feedback`);
+        router.push(`/assistant/${interviewId}/feedback`);
       } else {
         console.log("Error saving feedback");
         router.push("/");
@@ -117,7 +117,7 @@ const Agent = ({
 
     if (callStatus === CallStatus.FINISHED) {
       if (type === "generate") {
-        router.push("/");
+        router.push("/interview");
       } else {
         handleGenerateFeedback(messages);
       }
@@ -244,7 +244,7 @@ const Agent = ({
       <div className={"w-full flex justify-center"}>
         {callStatus !== "ACTIVE" ? (
           <Button
-            className="relative inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-green-700 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-green-600 hover:bg-green-500 min-w-28 cursor-pointer items-center justify-center overflow-visible"
+            className="relative inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-green-500 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-green-600 hover:bg-green-500 min-w-28 cursor-pointer items-center justify-center overflow-visible"
             onClick={() => handleCall()}
           >
             <span

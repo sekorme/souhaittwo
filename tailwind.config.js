@@ -32,7 +32,7 @@ export default {
 			},
 			red: '#FF7474',
 			error: '#b80000',
-			green: '#3DD9B3',
+
 			blue: '#56B8FF',
 			pink: '#EEA8FD',
 			orange: '#F9AB72',
@@ -144,6 +144,7 @@ export default {
 			'custom-gradient': 'linear-gradient(to bottom right, #ec4899, #fbbf24)',
 			'dark-gradient': 'linear-gradient(to right, #000000, #434343)',
 			'white-gradient': 'linear-gradient(to right, #ece9e6, #ffffff)',
+			'blue-dark-gradient': 'linear-gradient(to bottom, #171532, #08090D)',
 		}
   	}
   },
