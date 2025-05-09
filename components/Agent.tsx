@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
-import { createFeedback } from "@/lib/actions/general.actioin";
+import { createFeedback } from "@/lib/actions/general.action";
 import { interviewer } from "@/constants";
 
 interface AgentProps {
@@ -187,7 +187,7 @@ const Agent = ({
 
         <div
           className={
-            "border-gradient p-0.5 rounded-2xl flex-1 sm:basis-1/2 w-full h-[400px] max-md:hidden shadow-xl"
+            "bg-white dark:bg-black p-0.5 rounded-2xl flex-1 sm:basis-1/2 w-full h-[400px] max-md:hidden shadow-xl"
           }
         >
           <div
