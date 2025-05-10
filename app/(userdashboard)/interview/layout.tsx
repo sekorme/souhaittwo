@@ -7,7 +7,7 @@ const Layout = ({children}: { children: ReactNode }) => {
         <div className={"root-layouttwo"}>
             <nav>
                 <Link href={"/dashboard"}>
-                    <Image src={"/logo2.png"} alt={"Souhait"} width={50} height={50} className={"rounded-xl"}/>
+                    <Image src={"/logo2.PNG"} alt={"Souhait"} width={50} height={50} className={"rounded-xl"}/>
                 </Link>
             </nav>
             {children}
