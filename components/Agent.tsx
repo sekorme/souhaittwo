@@ -109,7 +109,7 @@ const Agent = ({
       });
 
       if (success && id) {
-        router.push(`/assistant/${interviewId}/feedback`);
+        router.push(`/interview/assistant/${interviewId}/feedback`);
       } else {
         console.log("Error saving feedback");
         router.push("/");

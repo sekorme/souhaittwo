@@ -57,7 +57,7 @@ const Interview = async () => {
       <section className="flex flex-col gap-6 mt-8">
         <h2>Your Interviews</h2>
 
-        <div className="interviews-section">
+        <div className="interviews-section flex flex-wrap gap-4 max-lg:flex-col w-full items-stretch;">
           {hasPastInterviews ? (
             userInterviews?.map((interview) => (
               <InterviewCard
@@ -78,7 +78,7 @@ const Interview = async () => {
       <section className="flex flex-col gap-6 mt-8">
         <h2>Take Interviews</h2>
 
-        <div className="interviews-section">
+        <div className="interviews-section flex flex-wrap gap-4 max-lg:flex-col w-full items-stretch">
           {hasUpcomingInterviews ? (
             allInterview?.map((interview) => (
               <InterviewCard
