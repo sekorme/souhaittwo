@@ -49,7 +49,8 @@ const Agent = ({
       setCallStatus(CallStatus.ACTIVE);
     };
 
-    const onCallEnd = () => {
+    const onCallEnd = (reason?: string) => {
+      console.log("Call ended. Reason:", reason || "Unknown");
       setCallStatus(CallStatus.FINISHED);
     };
 
@@ -127,12 +128,24 @@ const Agent = ({
     setCallStatus(CallStatus.CONNECTING);
 
     if (type === "generate") {
-      await vapi.start("055a490e-006d-46b5-9129-edb39d90209c", {
-        variableValues: {
-          username: userName,
-          userid: userId,
-        },
-      });
+      try {
+        const response = await vapi.start("9481d81d-8313-4941-9ea8-22afc7cec0c8", {
+          variableValues: {
+            username: userName,
+            userid: userId,
+          },
+        });
+
+        if (!response || Object.keys(response).length === 0) {
+          console.warn("Vapi returned empty response:", response);
+          throw new Error("Failed to start Vapi voice interaction. Check flow ID or user info.");
+        }
+
+        console.log("Vapi started successfully:", response);
+      } catch (error) {
+        console.error("Vapi start failed:", error);
+        // Optionally show user-facing error
+      }
     } else {
       let formattedQuestions = "";
       if (questions) {

@@ -1,8 +1,9 @@
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
 
-import { db } from "@/firebase/admin";
+import { db } from "@/firebase/client";
 import { getRandomInterviewCover } from "@/lib/utils";
+import {addDoc, collection} from "firebase/firestore";
 
 export async function POST(request: Request) {
     const { type, role, level, techstack, amount, userid } = await request.json();
@@ -47,8 +48,18 @@ Thank you!
             coverImage: getRandomInterviewCover(),
             createdAt: new Date().toISOString(),
         };
+        if (!interview || typeof interview !== "object") {
+            throw new Error("Invalid interview object: Must be a non-null object.");
+        }
 
-        await db.collection("interviews").add(interview);
+        if (!interview.role || !interview.type || !interview.level || !interview.techstack || !interview.questions || !interview.userId) {
+            throw new Error("Missing required fields in the interview object.");
+        }
+
+
+        await addDoc(collection(db, 'interviews'), {
+   interview
+        });
 
         return Response.json({ success: true }, { status: 200 });
     } catch (error) {
