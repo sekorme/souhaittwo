@@ -22,8 +22,7 @@ For the job interview:
 - The tech stack used is: ${techstack}
 - The focus between behavioral and technical questions should lean towards: ${type}
 
-For the visa mock interview and visa process:
-- Include questions about purpose of travel, ties to home country, financial readiness, intended duration of stay, and understanding of visa rules.
+
 
 The total number of questions required is: ${amount}
 
