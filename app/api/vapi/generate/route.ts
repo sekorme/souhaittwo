@@ -13,8 +13,7 @@ export async function POST(request: Request) {
       prompt: `Prepare a set of questions for the following mock interview types:
 
 1. Job interview
-2. Visa mock interview
-3. Visa process requirements
+
 
 For the job interview:
 - The job role is ${role}
@@ -27,7 +26,7 @@ For the job interview:
 The total number of questions required is: ${amount}
 
 Please return only the questions, without any additional explanation or formatting characters. These questions will be read aloud by a voice assistant, so avoid using slashes, asterisks, or any symbols that could break speech rendering.
-
+The questions are going to be read by a voice assistant so do not use "/" or "*" or any other special characters which might break
 Format your response like this:
 ["Question 1", "Question 2", "Question 3", ...]
 

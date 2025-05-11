@@ -29,7 +29,7 @@ const Jobs = async() => {
             <JobHero/>
             <JobCategories/>
             <HowItWorks/>
-            <SubscriptionPlans email={user.email} userId={user.id}/>
+            {user && <SubscriptionPlans email={user.email} userId={user.id}/>}
 
         </div>
     )
