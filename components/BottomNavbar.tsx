@@ -14,7 +14,7 @@ const navItems = [
   { name: "Files", href: "/files", icon: ArchiveRestore },
   { name: "Interview", href: "/interview", icon: Mic },
 ];
-type tryColor = "documents" | "images" | "media"  | "others";
+type tryColor = "documents" | "images" | "media"  | "others"| "assistant" | "feedback" | "assistant/[id]/" | "feedback/[id]/" | "interview/[id]/" | "interview/assistant/[id]/" | "interview/feedback/[id]/feedback" | "interview/assistant";
 
 const BottomNavbar = () => {
   const pathname = usePathname(); // Get the current path dynamically

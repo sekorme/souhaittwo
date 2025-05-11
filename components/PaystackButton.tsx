@@ -74,7 +74,7 @@ export default function PaystackButton({
   };
 
   return (
-    <Button className="w-full bg-black text-white dark:text-black dark:bg-white" onClick={handlePay}>
+    <Button className="w-full bg-black text-white dark:text-black dark:bg-white" onPress={handlePay}>
       Pay Now
     </Button>
   );

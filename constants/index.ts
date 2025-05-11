@@ -110,11 +110,11 @@ export const mappings = {
 
 function getRandomFirstMessage(): string {
     const messages = [
-        "Hello! Thank you for taking the time to speak with me today. I'm excited to learn more about you and your experience.",
-        "Hi there! I appreciate you joining me today. Let's dive into your background and skills.",
-        "Good day! I'm looking forward to learning more about your journey and expertise.",
-        "Welcome! Thank you for being here. Let's discuss your experience and aspirations.",
-        "Hi! It's great to meet you. I'm eager to hear about your skills and achievements."
+        "Hello! I'm here to help you prepare for your next interview. Let me know when you are ready",
+        "Hi there! I appreciate you joining me today. Ready when you are.",
+        "Good day! Are you ready for your interview ?",
+        "Welcome! Thank you for taking the time to speak with me today. Shall we begin?",
+        "Hi! It's great to meet you. Let's get started."
     ];
 
     return messages[Math.floor(Math.random() * messages.length)];
