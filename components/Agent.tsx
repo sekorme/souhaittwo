@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import { createFeedback } from "@/lib/actions/general.action";
 import { interviewer } from "@/constants";
+import {PhoneOff} from "lucide-react";
 
 interface AgentProps {
   userName: string;
@@ -257,10 +258,14 @@ const Agent = ({
           </Button>
         ) : (
           <Button
-            className="inline-block px-7 py-3 text-sm font-bold leading-5 text-white transition-colors duration-150 bg-red-400 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-red-300 hover:bg-red-500 min-w-28"
+            className=" px-7 py-3 text-sm font-bold leading-5 text-white transition-colors duration-150 bg-red-400 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-red-300 hover:bg-red-500 min-w-28"
             onClick={() => handleDisconnect()}
+            color={"danger"}
+            variant={"bordered"}
+
           >
-            End
+            <PhoneOff className={" rotate-90"}/>
+
           </Button>
         )}
       </div>

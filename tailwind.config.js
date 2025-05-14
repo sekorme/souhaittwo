@@ -30,7 +30,7 @@ export default {
 				'100': '#00D630',
 				DEFAULT: '#00D748'
 			},
-			red: '#FF7474',
+
 			error: '#b80000',
 
 			blue: '#56B8FF',
