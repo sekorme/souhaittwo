@@ -6,7 +6,7 @@ import { getRandomInterviewCover } from "@/lib/utils";
 
 export async function POST(request: Request) {
   const { type, role, level, techstack, amount, userid } = await request.json();
-
+  const techStackArray = techstack ? techstack.split(",") : [];
   try {
     const { text: questions } = await generateText({
       model: google("gemini-2.0-flash-001"),
@@ -38,7 +38,7 @@ Thank you!
       role: role,
       type: type,
       level: level,
-      techstack: techstack.split(","),
+       techStackArray,
       questions: JSON.parse(questions),
       userId: userid,
       finalized: true,
