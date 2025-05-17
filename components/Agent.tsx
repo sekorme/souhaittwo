@@ -50,8 +50,8 @@ const Agent = ({
       setCallStatus(CallStatus.ACTIVE);
     };
 
-    const onCallEnd = (reason?: string) => {
-      console.log("Call ended. Reason:", reason || "Unknown");
+    const onCallEnd = () => {
+
       setCallStatus(CallStatus.FINISHED);
     };
 
