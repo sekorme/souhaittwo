@@ -2,12 +2,14 @@ import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
 import { db } from "@/firebase/admin";
 import { getRandomInterviewCover } from "@/lib/utils";
+import {getCurrentUser} from "@/lib/actions/auth.actions";
 
 // Import Response if not global (uncomment if needed)
 // import { NextResponse as Response } from "next/server";
 
 export async function POST(request: Request) {
-  const { type, role, level, techstack, amount, userid } = await request.json();
+  const user = await getCurrentUser()
+  const { type, role, level, techstack, amount } = await request.json();
   const techStackArray = techstack ? techstack.split(",") : [];
   try {
     const { text: questions } = await generateText({
@@ -47,7 +49,7 @@ Thank you!
       level,
       techstack: techStackArray,
       questions: parsedQuestions,
-      userId: userid,
+      userId: user?.id,
       finalized: true,
       coverImage: getRandomInterviewCover(),
       createdAt: new Date().toISOString(),

@@ -47,6 +47,7 @@
   "ai": "^4.2.10",
   "aos": "^2.3.4",
   "appwrite": "^17.0.0",
+  "axios": "^1.9.0",
   "bcrypt": "^5.1.1",
   "canvas-confetti": "^1.9.3",
   "class-variance-authority": "^0.7.1",

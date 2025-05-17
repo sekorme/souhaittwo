@@ -116,33 +116,34 @@ export async function getFeedbackByInterviewId(
 
 export async function getLatestInterviews(
     params: GetLatestInterviewsParams
-): Promise<Interview[] | null> {
+): Promise<Interview[]> {
   const { userId, limit = 20 } = params;
 
-  const interviews = await db
+  const snapshot = await db
       .collection("interviews")
-      .orderBy("createdAt", "desc")
+      .where("userId", "==", userId)
       .where("finalized", "==", true)
-      .where("userId", "!=", userId)
+      .orderBy("createdAt", "desc")
       .limit(limit)
       .get();
 
-  return interviews.docs.map((doc) => ({
+  return snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   })) as Interview[];
 }
 
+
 export async function getInterviewsByUserId(
     userId: string
-): Promise<Interview[] | null> {
-  const interviews = await db
+): Promise<Interview[]> {
+  const snapshot = await db
       .collection("interviews")
       .where("userId", "==", userId)
       .orderBy("createdAt", "desc")
       .get();
 
-  return interviews.docs.map((doc) => ({
+  return snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   })) as Interview[];

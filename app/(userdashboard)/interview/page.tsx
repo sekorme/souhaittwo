@@ -9,6 +9,7 @@ import {
   getInterviewsByUserId,
   getLatestInterviews,
 } from "@/lib/actions/general.action";
+import InterviewForm from "@/components/InterviewForm";
 
 const Interview = async () => {
   const user = await getCurrentUser();
@@ -35,15 +36,7 @@ const Interview = async () => {
             Practice on real interview questions and get instant feedback on
             your answers
           </p>
-          <Button
-            asChild
-            className={
-              "w-fit !bg-primary-200 !text-dark-100 hover:!bg-primary-200/80 !rounded-full !font-bold px-5 cursor-pointer min-h-10 max-sm:w-full"
-            }
-            variant={"secondary"}
-          >
-            <Link href={"/interview/assistant"}>Start an Interview</Link>
-          </Button>
+            <InterviewForm/>
         </div>
         <Image
           alt={"robot"}
