@@ -1,8 +1,10 @@
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
-
 import { db } from "@/firebase/admin";
 import { getRandomInterviewCover } from "@/lib/utils";
+
+// Import Response if not global (uncomment if needed)
+// import { NextResponse as Response } from "next/server";
 
 export async function POST(request: Request) {
   const { type, role, level, techstack, amount, userid } = await request.json();
@@ -14,14 +16,11 @@ export async function POST(request: Request) {
 
 1. Job interview
 
-
 For the job interview:
 - The job role is ${role}
 - The experience level is ${level}
 - The tech stack used is: ${techstack}
 - The focus between behavioral and technical questions should lean towards: ${type}
-
-
 
 The total number of questions required is: ${amount}
 
@@ -34,12 +33,20 @@ Thank you!
     `,
     });
 
+    let parsedQuestions;
+    try {
+      parsedQuestions = JSON.parse(questions);
+      if (!Array.isArray(parsedQuestions)) throw new Error("Questions is not an array");
+    } catch (e) {
+      return Response.json({ success: false, error: "Invalid questions format from AI" }, { status: 500 });
+    }
+
     const interview = {
-      role: role,
-      type: type,
-      level: level,
-       techStackArray,
-      questions: JSON.parse(questions),
+      role,
+      type,
+      level,
+      techstack: techStackArray,
+      questions: parsedQuestions,
       userId: userid,
       finalized: true,
       coverImage: getRandomInterviewCover(),
@@ -51,8 +58,7 @@ Thank you!
     return Response.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
-
-    return Response.json({ success: false, error: error }, { status: 500 });
+    return Response.json({ success: false, error: String(error) }, { status: 500 });
   }
 }
 

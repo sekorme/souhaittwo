@@ -122,31 +122,22 @@ const Agent = ({
         router.push("/interview");
       } else {
         handleGenerateFeedback(messages);
+
       }
     }
   }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
+
+
   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
 
     if (type === "generate") {
-      try {
-        const response = await vapi.start("9481d81d-8313-4941-9ea8-22afc7cec0c8", {
-          variableValues: {
-            username: userName,
-            userid: userId,
-          },
-        });
-
-        if (!response || Object.keys(response).length === 0) {
-          console.warn("Vapi returned empty response:", response);
-          throw new Error("Failed to start Vapi voice interaction. Check flow ID or user info.");
-        }
-
-        console.log("Vapi started successfully:", response);
-      } catch (error) {
-        console.error("Vapi start failed:", error);
-        // Optionally show user-facing error
-      }
+      await vapi.start( "9481d81d-8313-4941-9ea8-22afc7cec0c8", {
+        variableValues: {
+          username: userName,
+          userid: userId,
+        },
+      });
     } else {
       let formattedQuestions = "";
       if (questions) {
