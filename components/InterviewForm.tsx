@@ -52,7 +52,7 @@ const InterviewForm = () => {
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
         axios.post('/api/vapi/generate', data).then(() => {
-            toast.success("New Member Added");
+            toast.success("New Interview Generated");
             router.refresh();
             window.location.reload();
             setIsLoading(false);

@@ -12,6 +12,7 @@
   "@ai-sdk/google": "^1.2.5",
   "@google-cloud/text-to-speech": "^6.0.1",
   "@google/generative-ai": "^0.24.1",
+  "@heroicons/react": "^2.2.0",
   "@heroui/button": "2.2.13",
   "@heroui/card": "^2.2.15",
   "@heroui/code": "2.2.10",

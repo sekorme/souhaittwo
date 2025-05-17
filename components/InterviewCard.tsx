@@ -9,6 +9,7 @@ import { getRandomInterviewCover } from "@/lib/utils";
 import { InterviewCardProps } from "@/types";
 import DisplayTechIcons from "@/components/DisplayTechIcons";
 import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
+import DeleteConfirm from "@/components/DeleteConfirm";
 
 const InterviewCard = async ({
   interviewId,
@@ -96,6 +97,7 @@ const InterviewCard = async ({
             </Link>
           </Button>
         </div>
+        <DeleteConfirm interviewId={interviewId ?? ""} userId={userId ?? ""}/>
       </div>
     </div>
   );

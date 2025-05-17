@@ -22,7 +22,7 @@ const Interview = async () => {
   const hasUpcomingInterviews = allInterview?.length! > 0;
 
   return (
-    <>
+    <div className={"mb-10"}>
       <section
         className={
           "flex flex-row bg-blue-dark-gradient  rounded-3xl px-16 py-6 items-center justify-between max-sm:px-4"
@@ -89,7 +89,7 @@ const Interview = async () => {
           )}
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
