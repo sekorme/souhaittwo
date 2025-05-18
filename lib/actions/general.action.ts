@@ -2,6 +2,14 @@
 
 import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  limit,
+} from "firebase/firestore";
 
 import { db } from "@/firebase/admin";
 import { feedbackSchema } from "@/constants";
@@ -10,7 +18,7 @@ import {
   Feedback,
   GetFeedbackByInterviewIdParams,
   GetLatestInterviewsParams,
-  Interview
+  Interview,
 } from "@/types";
 
 export async function createFeedback(params: CreateFeedbackParams) {
@@ -18,11 +26,11 @@ export async function createFeedback(params: CreateFeedbackParams) {
 
   try {
     const formattedTranscript = transcript
-        .map(
-            (sentence: { role: string; content: string }) =>
-                `- ${sentence.role}: ${sentence.content}\n`
-        )
-        .join("");
+      .map(
+        (sentence: { role: string; content: string }) =>
+          `- ${sentence.role}: ${sentence.content}\n`,
+      )
+      .join("");
 
     const { object } = await generateObject({
       model: google("gemini-2.0-flash-001", {
@@ -59,7 +67,7 @@ NEVER say you are just an AI. Always act like a confident assistant working on b
         - **Confidence & Clarity**: Confidence in responses, engagement, and clarity. highlight strengths, and clearly point out weaknesses or any red flags that may affect the candidate's success
         `,
       system:
-          "You are a professional interviewer analyzing a mock interview, visa application process, and visa mock interviews. Your task is to evaluate the candidate based on structured categories",
+        "You are a professional interviewer analyzing a mock interview, visa application process, and visa mock interviews. Your task is to evaluate the candidate based on structured categories",
     });
 
     const feedback = {
@@ -86,6 +94,7 @@ NEVER say you are just an AI. Always act like a confident assistant working on b
     return { success: true, feedbackId: feedbackRef.id };
   } catch (error) {
     console.error("Error saving feedback:", error);
+
     return { success: false };
   }
 }
@@ -97,54 +106,62 @@ export async function getInterviewById(id: string): Promise<Interview | null> {
 }
 
 export async function getFeedbackByInterviewId(
-    params: GetFeedbackByInterviewIdParams
+  params: GetFeedbackByInterviewIdParams,
 ): Promise<Feedback | null> {
   const { interviewId, userId } = params;
 
   const querySnapshot = await db
-      .collection("feedback")
-      .where("interviewId", "==", interviewId)
-      .where("userId", "==", userId)
-      .limit(1)
-      .get();
+    .collection("feedback")
+    .where("interviewId", "==", interviewId)
+    .where("userId", "==", userId)
+    .limit(1)
+    .get();
 
   if (querySnapshot.empty) return null;
 
   const feedbackDoc = querySnapshot.docs[0];
+
   return { id: feedbackDoc.id, ...feedbackDoc.data() } as Feedback;
 }
 
-export async function getLatestInterviews(
-    params: GetLatestInterviewsParams
-): Promise<Interview[]> {
-  const { userId, limit = 20 } = params;
-
+export async function getLatestInterviews({
+  userId,
+  limit: resultLimit = 20,
+}: GetLatestInterviewsParams): Promise<Interview[]> {
   const snapshot = await db
-      .collection("interviews")
-      .where("userId", "==", userId)
-      .where("finalized", "==", true)
-      .orderBy("createdAt", "desc")
-      .limit(limit)
-      .get();
+    .collection("interviews")
+    .where("shared", "==", true)
+    .orderBy("createdAt", "desc")
+    .limit(resultLimit)
+    .get();
+
+  return snapshot.docs
+    .map((doc) => ({ id: doc.id, ...doc.data() }))
+    .filter((doc) => (doc as any).userId !== userId) as Interview[];
+}
+
+export async function getInterviewsByUserId(
+  userId: string,
+): Promise<Interview[]> {
+  const snapshot = await db
+    .collection("interviews")
+    .where("userId", "==", userId)
+    .orderBy("createdAt", "desc")
+    .get();
 
   return snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   })) as Interview[];
 }
-
-
-export async function getInterviewsByUserId(
-    userId: string
-): Promise<Interview[]> {
+export async function getFeedbackByUserId(userId: string) {
   const snapshot = await db
-      .collection("interviews")
+      .collection("feedback")
       .where("userId", "==", userId)
-      .orderBy("createdAt", "desc")
       .get();
 
   return snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
-  })) as Interview[];
+  }));
 }
