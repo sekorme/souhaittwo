@@ -14,6 +14,7 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs";
+import image from "next/image";
 
 const Interview = async () => {
     const user = await getCurrentUser();
@@ -63,10 +64,11 @@ const Interview = async () => {
 
                     {/* Awaiting Feedback */}
                     <TabsContent value="awaiting">
-                        <section className="flex flex-col gap-6 mt-8">
-                            <h2>Completed Interviews Awaiting Feedback</h2>
-                            <div className="interviews-section gap-4 grid grid-cols-1 md:grid-cols-2 w-full items-stretch">
+                        <section className="flex  flex-col gap-6 mt-8">
+                            <h2 className={"font-semibold text-2xl text-green-600"}>{awaitingFeedback.length > 0 ? "Upcoming Interviews" : "No Upcoming Interviews"}</h2>
+                            <div className="  gap-4 grid grid-cols-1 md:grid-cols-3 w-full ">
                                 {awaitingFeedback.length > 0 ? (
+
                                     awaitingFeedback.map((interview:any) => (
                                         <InterviewCard
                                             key={interview.id}
@@ -80,7 +82,17 @@ const Interview = async () => {
                                         />
                                     ))
                                 ) : (
-                                    <p>You have no interviews awaiting feedback.</p>
+
+                                    <div className="flex justify-center items-center w-full col-span-3">
+                                        <Image
+                                            src="/Astronot.gif"
+                                            alt="no interviews"
+                                            width={400}
+                                            height={400}
+                                            className="object-cover"
+                                        />
+                                    </div>
+
                                 )}
                             </div>
                         </section>
@@ -89,8 +101,8 @@ const Interview = async () => {
                     {/* With Feedback */}
                     <TabsContent value="taken">
                         <section className="flex flex-col gap-6 mt-8">
-                            <h2>Your Completed Interviews (With Feedback)</h2>
-                            <div className="interviews-section gap-4 grid grid-cols-1 md:grid-cols-2 w-full items-stretch">
+                            <h2 className={"font-semibold text-2xl text-green-600"}>{withFeedback.length > 0 ? "Received Feedback" : "No Feedback"}</h2>
+                            <div className="interviews-section gap-4 grid grid-cols-1 md:grid-cols-3 w-full items-stretch">
                                 {withFeedback.length > 0 ? (
                                     withFeedback.map((interview: any) => (
                                         <InterviewCard
@@ -105,7 +117,15 @@ const Interview = async () => {
                                         />
                                     ))
                                 ) : (
-                                    <p>You haven&apos;t received feedback on any interviews yet.</p>
+                                    <div className="flex justify-center items-center w-full col-span-3">
+                                        <Image
+                                            src="/Astronot.gif"
+                                            alt="no feedbacks"
+                                            width={400}
+                                            height={400}
+                                            className="object-cover"
+                                        />
+                                    </div>
                                 )}
                             </div>
                         </section>

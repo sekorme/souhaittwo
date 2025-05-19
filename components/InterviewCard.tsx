@@ -34,7 +34,7 @@ const InterviewCard = async ({
   return (
     <div
       className={
-        "bg-gradient-to-b from-[#4B4D4F] to-[#4B4D4F33] p-0.5 rounded-2xl w-fit w-[360px] max-sm:w-full "
+        "bg-gradient-to-b from-[#4B4D4F] to-[#4B4D4F33]  p-0.5 rounded-2xl w-fit  max-sm:w-full "
       }
     >
       <div className={"card-interview "}>
