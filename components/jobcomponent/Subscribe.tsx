@@ -80,17 +80,7 @@ export default function SubscriptionPlans({userId, email}: {userId: string, emai
                                     ))}
                                 </ul>
                                 <PaystackButton email={email} plan={plan.title} amount={plan.price} userId={userId}/>
-                                <BorderBeam
-                                    duration={6}
-                                    size={400}
-                                    className="from-transparent via-amber-500 to-transparent"
-                                />
-                                <BorderBeam
-                                    duration={6}
-                                    delay={3}
-                                    size={400}
-                                    className="from-transparent via-blue-500 to-transparent"
-                                />
+
                             </CardContent>
 
                         </Card>
