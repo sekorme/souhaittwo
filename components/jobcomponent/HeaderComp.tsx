@@ -5,6 +5,7 @@ import Notification from "@/components/Notification";
 import SignOut from "@/components/SignOut";
 import SettingsDrawer from "@/components/SettingsDrawer";
 import {getCurrentUser} from "@/lib/actions/auth.actions"
+import NotificationBell from "@/components/NotificationBell";
 const HeaderComp = async() => {
 
     const userDetails = await getCurrentUser()
@@ -34,7 +35,7 @@ const HeaderComp = async() => {
                     </div>
                     <div className={"flex items-center w-full justify-end gap-4"} data-aos={"fade-right"}>
 
-                        <Notification/>
+                        <NotificationBell userId={userDetails?.id!}/>
                         <SignOut/>
                         <SettingsDrawer/>
                     </div>

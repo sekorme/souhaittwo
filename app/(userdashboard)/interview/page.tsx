@@ -101,7 +101,7 @@ const Interview = async () => {
                     {/* With Feedback */}
                     <TabsContent value="taken">
                         <section className="flex flex-col gap-6 mt-8">
-                            <h2 className={"font-semibold text-2xl text-green-600"}>{withFeedback.length > 0 ? "Received Feedback" : "No Feedback"}</h2>
+                            <h2 className={"font-semibold text-2xl text-green-600"}>{withFeedback.length > 0 ? "Received Feedback" : "No Feedback Available"}</h2>
                             <div className="interviews-section gap-4 grid grid-cols-1 md:grid-cols-3 w-full items-stretch">
                                 {withFeedback.length > 0 ? (
                                     withFeedback.map((interview: any) => (

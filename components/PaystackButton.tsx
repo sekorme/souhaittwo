@@ -57,6 +57,7 @@ export default function PaystackButton({
                 description:
                     "Your payment was successful. You can now access the paid services.",
             });
+            window.location.reload()
         } else {
           alert("Payment Failed.");
         }
