@@ -4,12 +4,14 @@ import MobileNavigation from "@/components/filecomponent/MobileNavigation";
 import Header from "@/components/Header";
 import {Toaster} from "@/components/ui/toaster";
 import {getCurrentUser} from "@/lib/actions/auth.actions";
+import {isSubscribed} from "@/lib/actions/checkSubscription";
 
 const Layout = async({children}: {children: React.ReactNode}) => {
     const user = await getCurrentUser();
     if (!user) return null;
 
-    const isPaid = false
+    const isPaid = await isSubscribed(user?.id!);
+
 
     if(isPaid){
         return (

@@ -8,6 +8,8 @@ import SubscriptionPlans from "@/components/jobcomponent/Subscribe";
 import { getCurrentUser } from "@/lib/actions/auth.actions";
 import { isSubscribed } from "@/lib/actions/checkSubscription";
 import {checkAndNotifySubscription} from "@/lib/actions/CheckNotificationSubscription";
+import {Button} from "@/components/ui/button";
+import Link from "next/link";
 
 const Jobs = async () => {
   const user = await getCurrentUser();
@@ -17,6 +19,10 @@ const Jobs = async () => {
   return hasAccess ? (
     <div className={"mb-20 mt-10"}>
       <h1 className={"text-4xl text-center"}>Paid Services activated</h1>
+        <Link href={"/jobs/search"} className={"flex justify-center mt-5"}>
+
+        <Button>Search for jobs</Button>
+        </Link>
     </div>
   ) : (
     <div className={"mb-20"}>

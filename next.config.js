@@ -24,6 +24,7 @@ const nextConfig = {
             { protocol: 'https', hostname: 'i.imgur.com' },
             { protocol: 'https', hostname: 'github.com' },
             { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
+            {protocol: 'https', hostname: "logo.clearbit.com"},
             {
                 protocol: 'https',
                 hostname: 'avatar.vercel.sh',
