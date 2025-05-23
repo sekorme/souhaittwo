@@ -797,3 +797,14 @@ const Interview = async () => {
 };
 
 export default Interview;
+
+
+
+
+async function fetchAdzunaJobs() {
+    const response = await fetch(
+        `https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=6cf3a985&app_key=85df65836cb63da9c8be340f00b3676e&results_per_page=50&content-type=application/json`
+    );
+    const data = await response.json();
+    return data.results;
+}

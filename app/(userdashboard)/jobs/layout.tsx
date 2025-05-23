@@ -5,7 +5,8 @@ import Header from "@/components/Header";
 import {Toaster} from "@/components/ui/toaster";
 import {getCurrentUser} from "@/lib/actions/auth.actions";
 import {isSubscribed} from "@/lib/actions/checkSubscription";
-
+import {JobProvider} from "@/context/JobContext";
+import {TanProvider} from "@/providers/TanProvider";
 const Layout = async({children}: {children: React.ReactNode}) => {
     const user = await getCurrentUser();
     if (!user) return null;
@@ -15,6 +16,8 @@ const Layout = async({children}: {children: React.ReactNode}) => {
 
     if(isPaid){
         return (
+            <TanProvider>
+            <JobProvider>
             <main className={"flex h-screen mb-10"}>
                 <Sidebar {...user} />
                 <section className={"flex h-full flex-1 flex-col"}>
@@ -30,6 +33,8 @@ const Layout = async({children}: {children: React.ReactNode}) => {
                 </section>
                 <Toaster/>
             </main>
+            </JobProvider>
+            </TanProvider>
         )
     }
 
@@ -37,7 +42,11 @@ const Layout = async({children}: {children: React.ReactNode}) => {
 
     return(
         <>
+        <TanProvider>
+            <JobProvider>
             {children}
+        </JobProvider>
+        </TanProvider>
         </>
     )
 }
