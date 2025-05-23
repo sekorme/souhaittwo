@@ -47,14 +47,15 @@ const Files = async () => {
                     {usageSummary.map((summary: any) => (
                         <Link href={summary.url} key={summary.title} className="dashboard-summary-card">
                             <div className="space-y-4">
+                                <Image
+                                    src={summary.icon}
+                                    width={100}
+                                    height={100}
+                                    alt="uploaded image"
+                                    className="summary-type-icon dark:opacity-0 dark:rounded-full dark:-left-2 dark:top-[-12px] dark:w-[150px] "
+                                />
                                 <div className="flex  justify-between gap-3">
-                                    <Image
-                                        src={summary.icon}
-                                        width={100}
-                                        height={100}
-                                        alt="uploaded image"
-                                        className="summary-type-icon "
-                                    />
+
                                     <h4 className="summary-type-size">{formatSize(totalSize || 0)}</h4>
                                 </div>
                                 <h5 className="summary-type-title">{summary.title}</h5>

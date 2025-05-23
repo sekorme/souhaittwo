@@ -13,7 +13,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
 
 
     return (
-        <main className={"flex h-screen mb-10"}>
+        <main className={"flex dark:bg-neutral-900 h-screen mb-10"}>
             <Sidebar {...user} />
             <section className={"flex h-full flex-1 flex-col"}>
                 <MobileNavigation
