@@ -26,7 +26,7 @@ const sidebarItems = [
   { name: "My Resume", icon: FileText, href: "/resume" },
   { name: "Applied Jobs", icon: Briefcase, href: "/jobs/applied" },
   { name: "Job Alerts", icon: AlertCircle, href: "/jobs/search" },
-  { name: "Shortlisted Jobs", icon: Bookmark, href: "/shortlist" },
+  { name: "Saved Jobs", icon: Bookmark, href: "/jobs/saved" },
   { name: "CV Manager", icon: FileText, href: "/cv-manager" },
   { name: "Packages", icon: Briefcase, href: "/packages" },
   { name: "Messages", icon: MessageSquare, href: "/messages" },

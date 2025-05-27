@@ -32,6 +32,19 @@ const data = [
   { name: "May", views: 190 },
   { name: "June", views: 240 },
 ];
+// Reusable fadeIn animation
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  }),
+};
 
 export default function JobDashboard() {
   const appliedJobs = useJobContext();
@@ -39,17 +52,18 @@ export default function JobDashboard() {
 
   return (
     <div className="p-2 space-y-6">
-      <h1 className="text-3xl font-light text-indigo-600  mb-6">
+      <h1 className="text-3xl font-light text-indigo-600  mb-6" data-aos="fade-right">
         Job Dashboard
       </h1>
-      <p className="mt-10 text-sm">Welcome to your job dashboard!</p>
+      <p className="mt-10 text-sm" data-aos="fade-right">Welcome to your job dashboard!</p>
       {/* Statistic Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2" data-aos="fade-left">
         <StatCard
           color="bg-blue-100"
           icon={<Briefcase />}
           label="Applied Jobs"
           value="22"
+
         />
         <StatCard
           color="bg-red-100"
@@ -75,10 +89,10 @@ export default function JobDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Profile Views Chart */}
         <motion.div
-          animate={{ opacity: 1, y: 0 }}
+          animate="visible"
           className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-xl"
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
+          initial="hidden"
+          variants={fadeIn}
         >
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
@@ -149,9 +163,9 @@ export default function JobDashboard() {
           </ul>
         </motion.div>
       </div>
-      <Card>
+      <Card >
         <CardHeader><h2 className={"text-2xl font-light text-indigo-600"}>Jobs Applied Recently </h2></CardHeader>
-        <CardBody>
+        <CardBody >
           {appliedJobs.appliedJobs && appliedJobs.appliedJobs.length > 0 ? (
             <div className="w-full mx-auto px-4 py-10">
 
@@ -159,10 +173,11 @@ export default function JobDashboard() {
                 {appliedJobs.appliedJobs.map((job: any, idx: number) => (
                   <motion.div
                     key={job.id}
-                    animate={{ opacity: 1, y: 0 }}
+                    animate={"visible"}
                     className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow border border-green-200 dark:border-green-700 hover:shadow-lg transition cursor-pointer"
-                    initial={{ opacity: 0, y: 20 }}
-                    transition={{ delay: idx * 0.1 }}
+                    initial={"hidden"}
+
+                    variants={fadeIn}
                     onClick={() => router.push(`/jobs/${job.id}`)}
                   >
                     <div className="flex justify-between items-center mb-2">

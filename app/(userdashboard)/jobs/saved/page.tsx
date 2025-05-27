@@ -4,7 +4,7 @@ import React from "react";
 import { useJobContext } from "@/context/JobContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Briefcase, MapPin, Clock } from "lucide-react";
+import { Briefcase, MapPin, Clock, ArrowLeft } from "lucide-react";
 
 export default function SavedJobsPage() {
     const { savedJobs } = useJobContext();
@@ -15,7 +15,13 @@ export default function SavedJobsPage() {
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-4 py-10">
+        <div className="max-w-5xl mx-auto px-4 py-5">
+            <button
+                onClick={() => router.back()}
+                className="flex items-center text-blue-600 hover:underline mb-4"
+            >
+                <ArrowLeft className="mr-2" /> Back
+            </button>
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Saved Jobs</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {savedJobs.map((job, idx) => (

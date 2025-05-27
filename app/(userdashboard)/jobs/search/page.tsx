@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, MapPin } from "lucide-react";
+import {Search, MapPin, ArrowLeft} from "lucide-react";
 import AdzunaJobList from "@/components/jobcomponent/AdzunaJobList";
+import {useRouter} from "next/navigation";
 
 export default function JobSearchLayout() {
     const [filters, setFilters] = useState({
@@ -12,9 +13,16 @@ export default function JobSearchLayout() {
         category: "",
         salary_min: "",
     });
+    const router = useRouter();
 
     return (
-        <main className="min-h-screen bg-gray-50 dark:bg-gray-950 py-12">
+        <main className="min-h-screen bg-gray-50 dark:bg-gray-950 py-5">
+            <button
+                onClick={() => router.back()}
+                className="flex items-center text-blue-600 hover:underline mb-4"
+            >
+                <ArrowLeft className="mr-2"/> Back
+            </button>
             <section className="max-w-7xl mx-auto px-4">
                 {/* Header */}
                 <div className="text-center mb-10">
@@ -27,25 +35,26 @@ export default function JobSearchLayout() {
                 </div>
 
                 {/* Filter Bar */}
-                <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow grid grid-cols-1 md:grid-cols-5 gap-4 mb-10">
+                <div
+                    className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow grid grid-cols-1 md:grid-cols-5 gap-4 mb-10">
                     <div className="relative">
-                        <Search className="absolute top-3 left-3 text-gray-400 dark:text-gray-500" size={18} />
+                        <Search className="absolute top-3 left-3 text-gray-400 dark:text-gray-500" size={18}/>
                         <input
                             type="text"
                             placeholder="Job title or keyword"
                             value={filters.what}
-                            onChange={(e) => setFilters({ ...filters, what: e.target.value })}
+                            onChange={(e) => setFilters({...filters, what: e.target.value})}
                             className="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
 
                     <div className="relative">
-                        <MapPin className="absolute top-3 left-3 text-gray-400 dark:text-gray-500" size={18} />
+                        <MapPin className="absolute top-3 left-3 text-gray-400 dark:text-gray-500" size={18}/>
                         <input
                             type="text"
                             placeholder="Location"
                             value={filters.locationN}
-                            onChange={(e) => setFilters({ ...filters, locationN: e.target.value })}
+                            onChange={(e) => setFilters({...filters, locationN: e.target.value})}
                             className="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -54,7 +63,7 @@ export default function JobSearchLayout() {
                         <select
                             value={filters.contract_type}
                             onChange={(e) =>
-                                setFilters({ ...filters, contract_type: e.target.value })
+                                setFilters({...filters, contract_type: e.target.value})
                             }
                             className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
@@ -71,7 +80,7 @@ export default function JobSearchLayout() {
                         <select
                             value={filters.category}
                             onChange={(e) =>
-                                setFilters({ ...filters, category: e.target.value })
+                                setFilters({...filters, category: e.target.value})
                             }
                             className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
@@ -89,7 +98,7 @@ export default function JobSearchLayout() {
                             placeholder="Min Salary"
                             value={filters.salary_min}
                             onChange={(e) =>
-                                setFilters({ ...filters, salary_min: e.target.value })
+                                setFilters({...filters, salary_min: e.target.value})
                             }
                             className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
@@ -97,7 +106,7 @@ export default function JobSearchLayout() {
                 </div>
 
                 {/* Job List */}
-                <AdzunaJobList filters={filters} />
+                <AdzunaJobList filters={filters}/>
             </section>
         </main>
     );
