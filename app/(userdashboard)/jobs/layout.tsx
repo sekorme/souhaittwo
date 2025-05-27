@@ -1,53 +1,44 @@
-import React from 'react'
+import React from "react";
 import Sidebar from "@/components/Sidebar";
 import MobileNavigation from "@/components/filecomponent/MobileNavigation";
 import Header from "@/components/Header";
-import {Toaster} from "@/components/ui/toaster";
-import {getCurrentUser} from "@/lib/actions/auth.actions";
-import {isSubscribed} from "@/lib/actions/checkSubscription";
-import {JobProvider} from "@/context/JobContext";
-import {TanProvider} from "@/providers/TanProvider";
-const Layout = async({children}: {children: React.ReactNode}) => {
+import { Toaster } from "@/components/ui/toaster";
+import { getCurrentUser } from "@/lib/actions/auth.actions";
+import { isSubscribed } from "@/lib/actions/checkSubscription";
+import ClientProviders from "@/providers/ClientProviders";
+import {redirect} from "next/navigation";
+import JobSideBar from "@/components/jobcomponent/JobSideBar";
+import JobNavBar from "@/components/jobcomponent/JobNavBar";
+
+const Layout = async ({ children }: { children: React.ReactNode }) => {
     const user = await getCurrentUser();
     if (!user) return null;
 
-    const isPaid = await isSubscribed(user?.id!);
+    const isPaid = await isSubscribed(user.id);
 
 
-    if(isPaid){
+    if (isPaid) {
         return (
-            <TanProvider>
-            <JobProvider>
-            <main className={"flex h-screen mb-10"}>
-                <Sidebar {...user} />
-                <section className={"flex h-full flex-1 flex-col"}>
-                    <MobileNavigation
-                        email={user.email}
-                        fullName={user.name}
-                        avatar="/assets/icons/profile-placeholder.svg"
-                        $id={user.id}
-                        accountId={user.id}
-                    />
-                    <Header userId={"1"} accountId={"join me"}/>
-                    <div className={"main-content"}>{children}</div>
-                </section>
-                <Toaster/>
-            </main>
-            </JobProvider>
-            </TanProvider>
-        )
+            <ClientProviders>
+                <main className={"flex h-screen mb-10"}>
+                    <JobSideBar/>
+                    <section className={"flex h-full flex-1 flex-col"}>
+
+                        <JobNavBar name={user.name}  email={user.email}/>
+
+                        <div className={"main-content"}>{children}</div>
+                    </section>
+                    <Toaster />
+                </main>
+            </ClientProviders>
+        );
     }
 
-
-
-    return(
-        <>
-        <TanProvider>
-            <JobProvider>
+    return (
+        <ClientProviders>
             {children}
-        </JobProvider>
-        </TanProvider>
-        </>
-    )
-}
-export default Layout
+        </ClientProviders>
+    );
+};
+
+export default Layout;

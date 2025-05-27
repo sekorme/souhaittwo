@@ -77,7 +77,7 @@ export default function AdzunaJobList({ filters }:any) {
                     >
                         <div className="bg-gray-100 p-2 rounded-xl">
                             <Image
-                                src={job.company?.logo || "/logo-placeholder.png"}
+                                src={job.company?.logo || "/logo2.PNG"}
                                 alt={job.company?.display_name || "Company"}
                                 width={40}
                                 height={40}

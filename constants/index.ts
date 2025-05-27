@@ -120,6 +120,7 @@ function getRandomFirstMessage(): string {
     return messages[Math.floor(Math.random() * messages.length)];
 }
 export const interviewer: CreateAssistantDTO = {
+    clientMessages: [], serverMessages: [],
     name: "Interviewer",
     firstMessage: getRandomFirstMessage(),
     transcriber: {
@@ -173,7 +174,7 @@ End the conversation on a polite and positive note.
 - This is a voice conversation, so keep your responses short, like in a real conversation. Don't ramble for too long.`,
             },
         ],
-    },
+    }
 };
 
 export const feedbackSchema = z.object({

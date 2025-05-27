@@ -1,125 +1,80 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-
-const jobs = [
-  {
-    title: "Software Engineer (Android), Libraries",
-    company: "Segment",
-    logo: "https://logo.clearbit.com/segment.com",
-    location: "London, UK",
-    time: "11 hours ago",
-    salary: "$35k - $45k",
-    type: ["Full Time", "Private", "Urgent"],
-  },
-  {
-    title: "Recruiting Coordinator",
-    company: "Catalyst",
-    logo: "https://logo.clearbit.com/catalyst.io",
-    location: "London, UK",
-    time: "11 hours ago",
-    salary: "$35k - $45k",
-    type: ["Freelancer", "Private", "Urgent"],
-  },
-  {
-    title: "Senior Product Designer",
-    company: "Upwork",
-    logo: "https://logo.clearbit.com/upwork.com",
-    location: "London, UK",
-    time: "11 hours ago",
-    salary: "$35k - $45k",
-    type: ["Temporary", "Private", "Urgent"],
-  },
-  {
-    title: "Senior Full Stack Engineer, Creator Success",
-    company: "Medium",
-    logo: "https://logo.clearbit.com/medium.com",
-    location: "London, UK",
-    time: "11 hours ago",
-    salary: "$35k - $45k",
-    type: ["Full Time", "Private", "Urgent"],
-  },
-];
+import React, { useEffect, useState } from "react";
+import { fetchJobs } from "@/lib/fetchJobs";
+import { useRouter } from "next/navigation";
+import { Bookmark, BookmarkCheck } from "lucide-react";
+import { useJobContext } from "@/context/JobsContexts";
 
 export default function JobList() {
+  const [jobs, setJobs] = useState([]);
+  const [page, setPage] = useState(1);
+  const router = useRouter();
+  const { saveJob, unsaveJob, savedJobs } = useJobContext();
+
+  useEffect(() => {
+    fetchJobs(page).then(setJobs).catch(console.error);
+  }, [page]);
+
+  const isSaved = (id: string) => savedJobs.some((j) => j.id === id);
+
   return (
-    <div className="w-full lg:w-3/4 grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up">
-      {jobs.map((job, index) => (
-        <motion.div
-          key={index}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border border-gray-100"
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ delay: index * 0.1 }}
-        >
-          <div className="flex items-start justify-between">
-            <div className="flex gap-4">
-              <Image
-                alt={job.company}
-                className="rounded"
-                height={40}
-                src={job.logo}
-                width={40}
-              />
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {job.title}
-                </h3>
-                <div className="flex items-center text-sm text-gray-500 gap-2">
-                  <span>{job.company}</span>
-                  <span>•</span>
-                  <span>{job.location}</span>
-                  <span>•</span>
-                  <span>{job.time}</span>
-                  <span>•</span>
-                  <span>{job.salary}</span>
-                </div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {job.type.map((tag, i) => (
-                    <span
-                      key={i}
-                      className={`px-3 py-1 rounded-full text-xs font-medium text-white ${
-                        tag === "Full Time"
-                          ? "bg-blue-500"
-                          : tag === "Freelancer"
-                            ? "bg-purple-500"
-                            : tag === "Temporary"
-                              ? "bg-sky-500"
-                              : tag === "Private"
-                                ? "bg-green-500"
-                                : tag === "Urgent"
-                                  ? "bg-yellow-500 text-black"
-                                  : "bg-gray-400"
-                      }`}
-                    >
-                      {tag}
-                    </span>
-                  ))}
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {jobs.map((job: any) => (
+              <div
+                  key={job.id}
+                  className="bg-white p-6 rounded-xl border shadow hover:shadow-md transition cursor-pointer relative"
+                  onClick={() => router.push(`/jobs/${job.id}`)}
+              >
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-lg font-semibold">{job.title}</h3>
+                    <p className="text-sm text-gray-600">{job.company}</p>
+                    <p className="text-sm text-gray-500">
+                      {job.city}, {job.state}, {job.countryCode}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Salary: {job.salaryCurrency}{" "}
+                      {job.minSalary?.toLocaleString()} -{" "}
+                      {job.maxSalary?.toLocaleString()}
+                    </p>
+                    <p className="text-sm text-gray-500 line-clamp-2">
+                      {job.description}
+                    </p>
+                  </div>
+                  <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        isSaved(job.id)
+                            ? unsaveJob(job.id)
+                            : saveJob({ ...job, id: job.id });
+                      }}
+                  >
+                    {isSaved(job.id) ? <BookmarkCheck /> : <Bookmark />}
+                  </button>
                 </div>
               </div>
-            </div>
+          ))}
+        </div>
 
-            <button className="text-gray-400 hover:text-blue-600">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={1.5}
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M17.25 6.75L6.75 17.25M6.75 6.75l10.5 10.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
-        </motion.div>
-      ))}
-    </div>
+        {/* Pagination Controls */}
+        <div className="flex justify-center gap-4 pt-4">
+          <button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              className="px-4 py-2 border rounded disabled:opacity-50"
+              disabled={page === 1}
+          >
+            Previous
+          </button>
+          <span className="text-lg font-semibold">Page {page}</span>
+          <button
+              onClick={() => setPage((prev) => prev + 1)}
+              className="px-4 py-2 border rounded"
+          >
+            Next
+          </button>
+        </div>
+      </div>
   );
 }

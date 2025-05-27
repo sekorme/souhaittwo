@@ -33,7 +33,7 @@ export default {
 
 			error: '#b80000',
 
-			blue: '#56B8FF',
+
 			pink: '#EEA8FD',
 			orange: '#F9AB72',
 			light: {
