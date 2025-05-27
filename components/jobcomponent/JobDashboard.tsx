@@ -39,9 +39,10 @@ export default function JobDashboard() {
 
   return (
     <div className="p-2 space-y-6">
-      <h1 className="text-3xl font-bold text-indigo-600  mb-6">
+      <h1 className="text-3xl font-light text-indigo-600  mb-6">
         Job Dashboard
       </h1>
+      <p className="mt-10 text-sm">Welcome to your job dashboard!</p>
       {/* Statistic Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         <StatCard
@@ -149,7 +150,7 @@ export default function JobDashboard() {
         </motion.div>
       </div>
       <Card>
-        <CardHeader><h2 className={"text-2xl font-semibold text-indigo-600"}>Applied Jobs</h2></CardHeader>
+        <CardHeader><h2 className={"text-2xl font-light text-indigo-600"}>Jobs Applied Recently </h2></CardHeader>
         <CardBody>
           {appliedJobs.appliedJobs && appliedJobs.appliedJobs.length > 0 ? (
             <div className="w-full mx-auto px-4 py-10">

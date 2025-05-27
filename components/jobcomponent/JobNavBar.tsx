@@ -63,7 +63,7 @@ export default function JobNavBar({ name, avatarUrl, email }: JobNavBarProps) {
           >
             <Menu />
           </Button>
-          <span className="ml-2 font-semibold text-xl text-gray-800 dark:text-white">
+          <span className="ml-2 font-light text-xl text-gray-800 dark:text-white">
             Howdy, {name?.split(" ")[0] ?? "Jerome"}!!
           </span>
         </div>
