@@ -163,14 +163,14 @@ export default function JobDashboard() {
           </ul>
         </motion.div>
       </div>
-      <Card >
+      <Card className={"bg-white dark:bg-neutral-700 shadow-xl rounded-2xl"}>
         <CardHeader><h2 className={"text-2xl font-light text-indigo-600"}>Jobs Applied Recently </h2></CardHeader>
         <CardBody >
           {appliedJobs.appliedJobs && appliedJobs.appliedJobs.length > 0 ? (
-            <div className="w-full mx-auto px-4 py-10">
+            <div className="w-full  px-4 py-10">
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {appliedJobs.appliedJobs.map((job: any, idx: number) => (
+                {appliedJobs.appliedJobs.slice(0,8).map((job: any, idx: number) => (
                   <motion.div
                     key={job.id}
                     animate={"visible"}

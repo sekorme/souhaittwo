@@ -18,7 +18,7 @@ const Jobs = async () => {
   await checkAndNotifySubscription(user?.id!);
 
   return hasAccess ? (
-    <div className={"mb-20 mt-5"}>
+    <div className={"mb-20 "}>
     <JobDashboard/>
     </div>
   ) : (

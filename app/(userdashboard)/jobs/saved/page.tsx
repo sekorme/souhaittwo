@@ -15,7 +15,7 @@ export default function SavedJobsPage() {
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-4 py-5">
+        <div className="w-full  px-4 py-5">
             <button
                 onClick={() => router.back()}
                 className="flex items-center text-blue-600 hover:underline mb-4"

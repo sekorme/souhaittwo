@@ -20,7 +20,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
     if (isPaid) {
         return (
             <ClientProviders>
-                <main className={"flex h-screen mb-10"}>
+                <main className={"flex h-screen bg-light-400 dark:bg-neutral-800 "}>
                     <JobSideBar/>
                     <section className={"flex h-full flex-1 flex-col"}>
 
