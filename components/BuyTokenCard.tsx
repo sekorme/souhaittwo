@@ -2,14 +2,19 @@
 
 import React from "react";
 import { Button } from "@heroui/react";
+import BuyTokensButton from "@/components/BuyTokenButton";
 
 export default function BuyTokenCard({
                                          tokens,
                                          price,
+                                         userId,
+                                         email
 
                                      }: {
-    tokens: number;
-    price: number;
+    tokens: number ;
+    price: number ;
+    userId: string;
+    email: string
 
 }) {
     return (
@@ -24,12 +29,9 @@ export default function BuyTokenCard({
                 <div className="text-lg font-semibold text-gray-800 dark:text-white mb-6">
                     GHS {price.toFixed(2)}
                 </div>
-                <Button
+                <BuyTokensButton tokenAmount={tokens} price={price} userId={userId} email={email}/>
 
-                    className="w-full bg-indigo-600 text-white hover:bg-indigo-700"
-                >
-                    Buy Now
-                </Button>
+
             </div>
         </div>
     );

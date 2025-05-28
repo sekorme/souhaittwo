@@ -24,7 +24,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
                     <JobSideBar/>
                     <section className={"flex h-full flex-1 flex-col"}>
 
-                        <JobNavBar name={user.name}  email={user.email}/>
+                        <JobNavBar name={user.name}  email={user.email} userid={user.id}/>
 
                         <div className={"main-content"}>{children}</div>
                     </section>

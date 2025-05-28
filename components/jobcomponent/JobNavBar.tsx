@@ -19,6 +19,7 @@ import clsx from "clsx";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import {TokenBalance} from "@/components/TokenBalance";
 
 const sidebarItems = [
   { name: "Dashboard", icon: User, href: "/jobs" },
@@ -39,9 +40,10 @@ interface JobNavBarProps {
   name?: string;
   avatarUrl?: string;
   email?: string;
+  userid?:string
 }
 
-export default function JobNavBar({ name, avatarUrl, email }: JobNavBarProps) {
+export default function JobNavBar({ name, avatarUrl, email, userid }: JobNavBarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -67,7 +69,9 @@ export default function JobNavBar({ name, avatarUrl, email }: JobNavBarProps) {
             Howdy, {name?.split(" ")[0] ?? "Jerome"}!!
           </span>
         </div>
+
         <div className="flex items-center gap-4">
+          <TokenBalance userId={userid!}/>
           <Bell className="text-blue-600 dark:text-blue-400" />
           {avatarUrl ? (
             <img

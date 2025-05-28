@@ -6,6 +6,7 @@ import SignOut from "@/components/SignOut";
 import SettingsDrawer from "@/components/SettingsDrawer";
 import {getCurrentUser} from "@/lib/actions/auth.actions"
 import NotificationBell from "@/components/NotificationBell";
+import {TokenBalance} from "@/components/TokenBalance";
 const HeaderComp = async() => {
 
     const userDetails = await getCurrentUser()
@@ -34,7 +35,7 @@ const HeaderComp = async() => {
                                height={40} className={"rounded-full"}/>
                     </div>
                     <div className={"flex items-center w-full justify-end gap-4"} data-aos={"fade-right"}>
-
+                        <TokenBalance userId={userDetails?.id!}/>
                         <NotificationBell userId={userDetails?.id!}/>
                         <SignOut/>
                         <SettingsDrawer/>

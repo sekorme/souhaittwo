@@ -12,6 +12,7 @@ import SettingsDrawer from "@/components/SettingsDrawer";
 import {Avatar} from "@heroui/react";
 import Notification from "@/components/Notification";
 import BuyTokenCard from "@/components/BuyTokenCard";
+import {TokenBalance} from "@/components/TokenBalance";
 
 const Dashboard = async() => {
 
@@ -56,10 +57,11 @@ const Dashboard = async() => {
             </h1>
 
         </div>
+
         <ActivityCard/>
         <div className={" w-full h-full p-4 mt-4 gap-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 bg-gray-200 dark:bg-neutral-900 shadow-2xl rounded-2xl"}>
-         <BuyTokenCard  tokens={100} price={100}/>
-            <BuyTokenCard  tokens={100} price={100}/>
+         <BuyTokenCard  tokens={100} price={100} userId={userDetails?.id!} email={userDetails?.email!}/>
+            <BuyTokenCard  tokens={100} price={100} userId={userDetails?.id!} email={userDetails?.email!}/>
         </div>
 
     </div>

@@ -2,6 +2,7 @@
 import { cookies } from "next/headers";
 
 import { db, auth } from "@/firebase/admin";
+import {serverTimestamp} from "firebase/firestore";
 
 interface SignInParams {
   email: string;
@@ -18,6 +19,7 @@ interface SignUpParams {
   phone?: string;
   country?: string;
   email: string;
+
 }
 
 export async function setSessionCookie(idToken: string) {
@@ -52,8 +54,9 @@ export async function signUp(params: SignUpParams) {
       phone,
 
       country,
+        email,
+      tokenBalance: 15
 
-      email,
     });
 
     return {

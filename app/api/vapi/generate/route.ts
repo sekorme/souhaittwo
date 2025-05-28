@@ -3,6 +3,7 @@ import { google } from "@ai-sdk/google";
 import { db } from "@/firebase/admin";
 import { getRandomInterviewCover } from "@/lib/utils";
 import {getCurrentUser} from "@/lib/actions/auth.actions";
+import {deductTokens} from "@/lib/actions/deductTokens";
 
 // Import Response if not global (uncomment if needed)
 // import { NextResponse as Response } from "next/server";
@@ -56,7 +57,7 @@ Thank you!
     };
 
     await db.collection("interviews").add(interview);
-
+    await deductTokens(user?.id!,10)
     return Response.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
