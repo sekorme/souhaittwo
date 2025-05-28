@@ -44,7 +44,7 @@ const Dashboard = async() => {
                     <Image src={"https://i.pravatar.cc/150?u=a04258114e29026702d"} alt={"User image"} width={40} height={40} className={"rounded-full"} />
                 </div>
                 <div className={"flex items-center w-full justify-end gap-4"} data-aos={"fade-right"}>
-
+                <TokenBalance userId={userDetails?.id!}/>
                 <Notification/>
                 <SignOut/>
                 <SettingsDrawer/>
