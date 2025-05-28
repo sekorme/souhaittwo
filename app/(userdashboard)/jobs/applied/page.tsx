@@ -1,14 +1,45 @@
 "use client";
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useJobContext } from "@/context/JobContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {Briefcase, MapPin, Clock, CheckCircle2, ArrowLeft} from "lucide-react";
+import {getCurrentUser} from "@/lib/actions/auth.actions";
+import {isSubscribed} from "@/lib/actions/checkSubscription";
 
 export default function AppliedJobsPage() {
     const { appliedJobs } = useJobContext();
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
+
+    useEffect(() => {
+        const checkAccess = async () => {
+            const user = await getCurrentUser();
+            if (!user) {
+                router.push("/login");
+                return;
+            }
+
+            const subscribed = await isSubscribed(user.id);
+            if (!subscribed) {
+                router.push("/jobs");
+            } else {
+                setLoading(false);
+            }
+        };
+
+        checkAccess();
+    }, [router]);
+
+    // Early return for loading state
+    if (loading) {
+        return (
+            <main className="min-h-screen flex items-center justify-center text-gray-500 dark:text-gray-400">
+
+            </main>
+        );
+    }
 
     if (appliedJobs.length === 0) {
         return (

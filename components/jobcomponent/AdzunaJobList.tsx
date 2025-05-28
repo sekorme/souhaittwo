@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
+import confetti from "canvas-confetti";
 import {
     MapPin,
     Briefcase,
@@ -27,7 +28,7 @@ function mapFiltersToAdzunaParams(filters: any) {
     if (filters.category) mapped["category"] = filters.category;
 
     if (filters.where) {
-        mapped["location0"] = "UK"; // Adjust as needed
+        mapped["location0"] = "UK";
         mapped["location1"] = filters.where;
     }
 
@@ -43,9 +44,42 @@ async function fetchAdzunaJobs(filters: any) {
     return data.results;
 }
 
+// 🎉 Confetti trigger
+function triggerConfetti() {
+    const end = Date.now() + 2 * 1000;
+    const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
+
+    const frame = () => {
+        if (Date.now() > end) return;
+
+        confetti({
+            particleCount: 2,
+            angle: 60,
+            spread: 55,
+            startVelocity: 60,
+            origin: { x: 0, y: 0.5 },
+            colors,
+        });
+
+        confetti({
+            particleCount: 2,
+            angle: 120,
+            spread: 55,
+            startVelocity: 60,
+            origin: { x: 1, y: 0.5 },
+            colors,
+        });
+
+        requestAnimationFrame(frame);
+    };
+
+    frame();
+}
+
 export default function AdzunaJobList({ filters }: any) {
     const router = useRouter();
-    const { user, savedJobs, saveJob, unsaveJob } = useJobContext();
+    const { savedJobs, saveJob, unsaveJob } = useJobContext();
+
     const {
         data: jobs = [],
         isLoading,
@@ -55,16 +89,34 @@ export default function AdzunaJobList({ filters }: any) {
         queryFn: () => fetchAdzunaJobs(filters),
     });
 
-    const isSaved = (id: any) => savedJobs.some((job) => job.id === id);
+    const isSaved = (id: string) => savedJobs.some((job) => job.id === id);
+
+    const toggleSave = (job: any) => {
+        if (isSaved(job.id)) {
+            unsaveJob(job.id);
+        } else {
+            saveJob({ ...job, id: job.id });
+            triggerConfetti();
+        }
+    };
 
     if (isLoading)
-        return <p className="text-center text-gray-500 dark:text-gray-400">Loading jobs...</p>;
+        return (
+            <p className="text-center text-gray-500 dark:text-gray-400">
+                Loading jobs...
+            </p>
+        );
+
     if (isError)
-        return <p className="text-center text-red-500 dark:text-red-400">Failed to load jobs.</p>;
+        return (
+            <p className="text-center text-red-500 dark:text-red-400">
+                Failed to load jobs.
+            </p>
+        );
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {jobs.map((job: any, idx: any) => (
+            {jobs.map((job: any, idx: number) => (
                 <motion.div
                     key={job.id || idx}
                     initial={{ opacity: 0, y: 20 }}
@@ -74,16 +126,17 @@ export default function AdzunaJobList({ filters }: any) {
                 >
                     {/* Save/Unsave Button */}
                     <button
-                        onClick={() =>
-                            isSaved(job.id)
-                                ? unsaveJob(job.id)
-                                : saveJob({ ...job, id: job.id })
-                        }
+                        onClick={() => toggleSave(job)}
                         className="absolute top-4 right-4 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     >
-                        {isSaved(job.id) ? <BookmarkCheck size={20} /> : <Bookmark size={20} />}
+                        {isSaved(job.id) ? (
+                            <BookmarkCheck size={20} />
+                        ) : (
+                            <Bookmark size={20} />
+                        )}
                     </button>
 
+                    {/* Job Info */}
                     <div
                         className="flex items-start gap-4 cursor-pointer"
                         onClick={() => router.push(`/jobs/${job.id}`)}
