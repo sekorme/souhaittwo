@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Search from "@/components/filecomponent/Search";
 import FileUploader from "@/components/filecomponent/FileUploader";
 import { signOutUser } from "@/lib/actions/users.actions";
+import {TokenBalance} from "@/components/TokenBalance";
 
 const Header = ({
   accountId,
@@ -18,6 +19,7 @@ const Header = ({
       <Search />
       <div className={"header-wrapper"}>
         <FileUploader accountId={accountId} ownerId={userId} />
+          <TokenBalance userId={userId}/>
         <form
           action={async () => {
             "use server";
@@ -34,6 +36,7 @@ const Header = ({
             />
           </Button>
         </form>
+
       </div>
     </header>
   );

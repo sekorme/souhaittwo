@@ -17,7 +17,7 @@ export function TokenBalance({ userId }: { userId: string }) {
     return (
         <div className="flex flex-col items-center">
             <Badge color={color} content={tokens} size={"sm"}>
-                <Avatar radius="full" src="/binance.png" className={"w-6 h-6"} />
+                <Avatar radius="full" src="/binance.png" className={"w-8 h-8"} />
             </Badge>
             <p className={"text-xs"}>Tokens</p>
         </div>

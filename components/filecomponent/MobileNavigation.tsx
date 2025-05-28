@@ -15,7 +15,8 @@ import { navItems } from "@/constants";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import FileUploader from "@/components/filecomponent/FileUploader";
-import { signOut } from "@/lib/actions/auth.actions"; // ← use Firebase logout
+import { signOut } from "@/lib/actions/auth.actions";
+import {TokenBalance} from "@/components/TokenBalance"; // ← use Firebase logout
 
 interface Props {
     avatar: string;
@@ -105,6 +106,7 @@ const MobileNavigation = ({
                     <Separator className="my-5 bg-light-200/20" />
 
                     <div className="flex flex-col justify-between gap-5">
+                        <TokenBalance userId={ownerId} />
                         <FileUploader ownerId={ownerId} accountId={accountId} />
                         <Button
                             type="button"
