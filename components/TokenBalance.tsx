@@ -3,7 +3,7 @@ import {Badge, Avatar} from "@heroui/react";
 import { useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase/client";
-
+import Image from "next/image";
 export function TokenBalance({ userId }: { userId: string }) {
     const [tokens, setTokens] = useState<number>(0);
 
@@ -15,11 +15,11 @@ export function TokenBalance({ userId }: { userId: string }) {
     }, [userId]);
   const color = tokens > 20 ? "success" : "danger";
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col mt-3 items-center">
             <Badge color={color} content={tokens} size={"sm"}>
-                <Avatar radius="full" src="/binance.png" className={"w-8 h-8"} />
+                <Image     alt="binance"  src="/binance.png" width={50} height={50} className={"w-15 h-15"} />
             </Badge>
-            <p className={"text-xs"}>Tokens</p>
+
         </div>
     );
 }

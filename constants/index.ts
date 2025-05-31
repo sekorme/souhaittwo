@@ -119,7 +119,10 @@ function getRandomFirstMessage(): string {
 
     return messages[Math.floor(Math.random() * messages.length)];
 }
+// @ts-ignore
+// @ts-ignore
 export const interviewer: CreateAssistantDTO = {
+    // @ts-ignore
     clientMessages: [], serverMessages: [],
     name: "Interviewer",
     firstMessage: getRandomFirstMessage(),
@@ -336,7 +339,6 @@ export const sortTypes = [
     },
 ];
 
-export const avatarPlaceholderUrl =
-    "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg";
+export const avatarPlaceholderUrl = "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg";
 
 export const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
