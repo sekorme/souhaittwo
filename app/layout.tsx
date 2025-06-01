@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import { Providers } from "./providers";
 import { siteConfig } from "@/config/site";
-import {fontJost, fontPoppins, fontSans} from "@/config/fonts";
+import { fontJost } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/Footer";
 import ToasterProvider from "@/providers/ToastProvider";
@@ -13,8 +13,13 @@ import BottomNavbar from "@/components/BottomNavbar";
 import { ToastProvider } from "@heroui/toast";
 import LayoutTrans from "@/components/LayoutTrans";
 import AosProviders from "@/providers/AosProvider";
+import { isColorDark } from "@/utils/theme";
 
+// 👇 Your primary theme color
+const brandColor = "#00d346";
 
+// 👇 Set theme contrast color based on brandColor
+const themeContrastColor = isColorDark(brandColor) ? "black" : "white";
 
 export const metadata: Metadata = {
   title: {
@@ -54,11 +59,11 @@ export const metadata: Metadata = {
   },
 };
 
-
+// 👇 Dynamic theme-color based on brandColor luminance
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: "(prefers-color-scheme: light)", color: themeContrastColor },
+    { media: "(prefers-color-scheme: dark)", color: themeContrastColor },
   ],
 };
 
@@ -74,7 +79,7 @@ export default async function RootLayout({
       <head>
         {/* 🌐 Web Manifest & Theme Color */}
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#00d346" />
+        <meta name="theme-color" content={themeContrastColor} />
       </head>
       <body
           className={clsx(
@@ -84,27 +89,25 @@ export default async function RootLayout({
       >
       <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
         <AosProviders>
-        <ToasterProvider />
-        <ToastProvider placement="top-center" />
-        <div className="relative flex flex-col">
-          {!isUserAuthenticated && <Navbar />}
+          <ToasterProvider />
+          <ToastProvider placement="top-center" />
+          <div className="relative flex flex-col">
+            {!isUserAuthenticated && <Navbar />}
 
-          <main className="w-full flex-grow">
-            <LayoutTrans>{children}</LayoutTrans>
-          </main>
+            <main className="w-full flex-grow">
+              <LayoutTrans>{children}</LayoutTrans>
+            </main>
 
-          {!isUserAuthenticated ? (
-              <footer className="w-full">
-                <Footer />
-              </footer>
-          ) : (
-
-              <BottomNavbar />
-          )}
-        </div>
+            {!isUserAuthenticated ? (
+                <footer className="w-full">
+                  <Footer />
+                </footer>
+            ) : (
+                <BottomNavbar />
+            )}
+          </div>
         </AosProviders>
       </Providers>
-
       </body>
       </html>
   );
