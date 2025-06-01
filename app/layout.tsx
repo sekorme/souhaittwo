@@ -13,13 +13,6 @@ import BottomNavbar from "@/components/BottomNavbar";
 import { ToastProvider } from "@heroui/toast";
 import LayoutTrans from "@/components/LayoutTrans";
 import AosProviders from "@/providers/AosProvider";
-import { isColorDark } from "@/utils/theme";
-
-// 👇 Your primary theme color
-const brandColor = "#00d346";
-
-// 👇 Set theme contrast color based on brandColor
-const themeContrastColor = isColorDark(brandColor) ? "black" : "white";
 
 export const metadata: Metadata = {
   title: {
@@ -59,12 +52,8 @@ export const metadata: Metadata = {
   },
 };
 
-// 👇 Dynamic theme-color based on brandColor luminance
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: themeContrastColor },
-    { media: "(prefers-color-scheme: dark)", color: themeContrastColor },
-  ],
+  themeColor: "black", // Always black regardless of theme
 };
 
 export default async function RootLayout({
@@ -77,9 +66,8 @@ export default async function RootLayout({
   return (
       <html suppressHydrationWarning lang="en">
       <head>
-        {/* 🌐 Web Manifest & Theme Color */}
+        <meta name="theme-color" content="white" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content={themeContrastColor} />
       </head>
       <body
           className={clsx(
@@ -87,7 +75,7 @@ export default async function RootLayout({
               fontJost.variable
           )}
       >
-      <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+      <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
         <AosProviders>
           <ToasterProvider />
           <ToastProvider placement="top-center" />
