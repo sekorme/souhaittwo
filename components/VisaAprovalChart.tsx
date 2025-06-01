@@ -2,13 +2,12 @@
 
 import { TrendingUp } from "lucide-react"
 import {
-    Label,
     PolarGrid,
     PolarRadiusAxis,
     RadialBar,
     RadialBarChart,
+    Label,
 } from "recharts"
-
 import {
 
     CardContent,
@@ -19,14 +18,20 @@ import {
 } from "@/components/ui/card"
 import {Card} from "@heroui/react"
 import { ChartConfig, ChartContainer } from "@/components/ui/chart"
-import {BorderBeam} from "@/components/magicui/border-beam";
-import React from "react";
-
-export const description = "A radial chart with text"
-
-const chartData = [
-    { browser: "safari", rating: 200, fill: "green" },
-]
+import { BorderBeam } from "@/components/magicui/border-beam"
+import React, { useEffect, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { getCurrentUser } from "@/lib/actions/auth.actions"
+import { db } from "@/firebase/client"
+import {
+    collection,
+    query,
+    where,
+    orderBy,
+    limit,
+    getDocs,
+} from "firebase/firestore"
+import dayjs from "dayjs"
 
 const chartConfig = {
     ratings: {
@@ -38,13 +43,113 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-export function VisaApprovalChart() {
+
+
+export async function getLatestInterviewIdByUserId(userId: string): Promise<string | null> {
+    try {
+        const interviewsRef = collection(db, "interviews")
+        const q = query(
+            interviewsRef,
+            where("userId", "==", userId),
+            orderBy("createdAt", "desc"),
+            limit(1)
+        )
+        const snapshot = await getDocs(q)
+
+        if (!snapshot.empty) {
+            const doc = snapshot.docs[0]
+            return doc.id
+        }
+
+        return null
+    } catch (error) {
+        console.error("Error fetching latest interview:", error)
+        return null
+    }
+}
+
+
+
+export default function VisaApprovalChart() {
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const interviewId = searchParams.get("id")
+
+    const [score, setScore] = useState<number | null>(null)
+    const [time, setTime] = useState<string | null>(null)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const user = await getCurrentUser()
+                console.log(user)
+
+                if (!user) {
+                    router.push("/auth/login")
+                    return
+                }
+
+                // If no interviewId in query, fetch latest
+                let resolvedInterviewId = interviewId
+                if (!resolvedInterviewId) {
+                    resolvedInterviewId = await getLatestInterviewIdByUserId(user.id)
+                    if (!resolvedInterviewId) {
+                        router.push("/dashboard")
+                        return
+                    }
+                }
+
+                const feedbackRef = collection(db, "feedback")
+                const q = query(
+                    feedbackRef,
+                    where("interviewId", "==", resolvedInterviewId),
+                    where("userId", "==", user.id),
+                    limit(1)
+                )
+
+                const snapshot = await getDocs(q)
+
+                if (!snapshot.empty) {
+                    const doc = snapshot.docs[0]
+                    const data = doc.data()
+
+                    setScore(data?.totalScore || 0)
+                    setTime(
+                        data?.createdAt
+                            ? dayjs(data.createdAt.toDate?.() || data.createdAt).format("MMM D, YYYY h:mm A")
+                            : "N/A"
+                    )
+                } else {
+                    setScore(0)
+                    setTime("N/A")
+                }
+            } catch (err) {
+                console.error("Error loading chart data", err)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchData()
+    }, [interviewId, router])
+
+
+    const chartData = [
+        {
+            browser: "safari",
+            rating: score || 0,
+            fill: "green",
+        },
+    ]
+
+    if (loading) return <p className="text-center">Loading chart...</p>
 
     return (
-        <Card className="flex  flex-col">
+        <Card className="flex flex-col">
             <CardHeader className="items-center pb-0">
-                <CardTitle>Visa Aproval - Chances</CardTitle>
-                <CardDescription>January - June 2024</CardDescription>
+                <CardTitle>Visa Approval - Chances</CardTitle>
+                <CardDescription>{time}</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-0">
                 <ChartContainer
@@ -62,7 +167,6 @@ export function VisaApprovalChart() {
                             gridType="circle"
                             radialLines={false}
                             stroke="none"
-                            className="first:fill-muted last:fill-background"
                             polarRadius={[86, 74]}
                         />
                         <RadialBar dataKey="rating" background cornerRadius={10} />
@@ -102,12 +206,14 @@ export function VisaApprovalChart() {
             </CardContent>
             <CardFooter className="flex-col gap-2 text-sm">
                 <div className="flex items-center gap-2 leading-none font-medium">
-                    This Data is based on your last performance <TrendingUp className="h-4 w-4" />
+                    This data is based on your last performance{" "}
+                    <TrendingUp className="h-4 w-4" />
                 </div>
                 <div className="text-muted-foreground leading-none">
                     May change depending on your performance in the next interview
                 </div>
             </CardFooter>
+
             <BorderBeam
                 duration={6}
                 size={400}

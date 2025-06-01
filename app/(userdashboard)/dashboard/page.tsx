@@ -24,7 +24,7 @@ import { Tooltip } from "recharts";
 import { Card, CardHeader, CardBody } from "@heroui/card";
 import PieChartComponent from "@/components/PieChartComponent";
 import VisaChartComponent from "@/components/VisaChartComponent";
-import {VisaApprovalChart} from "@/components/VisaAprovalChart";
+import VisaApprovalChart from "@/components/VisaAprovalChart";
 import NewCellCom from "@/components/NewCellCom";
 
 
