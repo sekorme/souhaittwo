@@ -24,9 +24,9 @@ import { Tooltip } from "recharts";
 import { Card, CardHeader, CardBody } from "@heroui/card";
 import PieChartComponent from "@/components/PieChartComponent";
 import VisaChartComponent from "@/components/VisaChartComponent";
-import NewLineComponent from "@/components/NewLineComponent";
+import {VisaApprovalChart} from "@/components/VisaAprovalChart";
 import NewCellCom from "@/components/NewCellCom";
-import LineChartComponent from "@/components/NewLineComponent";
+
 
 
 
@@ -109,13 +109,9 @@ const Dashboard = async() => {
                   className="text-xl font-bold">3,210</h3></CardBody></Card>
               <Card><CardBody className="p-4"><p className="text-gray-400">Customers</p><h3
                   className="text-xl font-bold">1,800</h3></CardBody></Card>
-              <Card>
-                  <CardBody className="p-4">
-                      <p className="text-gray-400">Approval Rate</p>
-                    <LineChartComponent/>
-                      <p className="text-sm mt-2">Visa 65%</p>
-                  </CardBody>
-              </Card>
+              <div className={""}>
+                 <VisaApprovalChart />
+              </div>
           </div>
 
           {/* Charts */}
