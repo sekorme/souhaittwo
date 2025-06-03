@@ -4,7 +4,7 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import {getStorage} from "@firebase/storage";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, isSupported } from "firebase/messaging";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -28,3 +28,7 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
  export const storage = getStorage(app);
 
+export const getFirebaseMessaging = async () => {
+    const supported = await isSupported()
+    return supported ? getMessaging(app) : null
+}

@@ -26,6 +26,7 @@ import PieChartComponent from "@/components/PieChartComponent";
 import VisaChartComponent from "@/components/VisaChartComponent";
 import VisaApprovalChart from "@/components/VisaAprovalChart";
 import NewCellCom from "@/components/NewCellCom";
+import NotificationSetup from "@/components/NotificationSetup";
 
 
 
@@ -58,7 +59,9 @@ const Dashboard = async() => {
 
     const userDetails = await getCurrentUser();
   return (
+
       <div className={" mt-5 px-4 mb-20"}>
+          <NotificationSetup/>
           <div className={"fixed relative flex w-ful items-center border-2 shadow-xl rounded-2xl p-3 justify-between"}>
               <div className={"hidden md:flex w-full"}>
                   <Image src={"/logo2.png"} alt={"Souhait"} width={50} height={50} className={"rounded-xl"}/>

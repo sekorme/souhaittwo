@@ -8,6 +8,7 @@ import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
 import { AnimatedTestimonialsDemo } from "@/components/AnimatedTes";
 import { isAuthenticated } from "@/lib/actions/auth.actions";
+import NotificationSetup from "@/components/NotificationSetup";
 
 export default async function Home() {
   const isUserAuthenticated = await isAuthenticated();
@@ -16,6 +17,7 @@ export default async function Home() {
 
   return (
     <div className="h-full">
+
       <Hero />
       <WhyChooseUs />
       <Appreciation />

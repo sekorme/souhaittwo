@@ -59,7 +59,7 @@
   "clsx": "^2.1.1",
   "dayjs": "^1.11.13",
   "firebase": "^11.5.0",
-  "firebase-admin": "^13.2.0",
+  "firebase-admin": "^13.4.0",
   "framer-motion": "^12.12.1",
   "intl-messageformat": "^10.5.0",
   "lucide-react": "^0.488.0",

@@ -21,7 +21,7 @@ export default function ActivityCard() {
       description: "Draft Your Documents",
       avatarUrl: <FileText  size={24} />,
       action: "Draft",
-      path: "/draft",
+      path: "/admin",
     },
     {
       id: 3,
