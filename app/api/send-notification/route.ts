@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import admin from 'firebase-admin';
+import {sendPushNotification} from "@/lib/sendNotification";
 
 if (!admin.apps.length) {
     admin.initializeApp({
@@ -40,7 +41,7 @@ export async function POST(req: Request) {
                 body,
             },
         });
-
+ await sendPushNotification(tokens[0], title, body);
         return NextResponse.json({ success: true, response });
     } catch (error: any) {
         console.error('Notification error:', error);

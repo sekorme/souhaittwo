@@ -1,6 +1,6 @@
 // lib/firebase.ts
 import { initializeApp, getApps } from "firebase/app";
-import { getMessaging, onMessage as firebaseOnMessage } from "firebase/messaging";
+import { getMessaging, getToken, onMessage as firebaseOnMessage } from "firebase/messaging";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,

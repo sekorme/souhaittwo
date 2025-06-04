@@ -12,19 +12,17 @@ if (!admin.apps.length) {
 }
 
 export async function POST(req: Request) {
+    const { token } = await req.json();
+
+    if (!token) {
+        return NextResponse.json({ success: false, error: "Missing token" }, { status: 400 });
+    }
+
     try {
-        const { token } = await req.json();
-
-        if (!token) {
-            return NextResponse.json({ success: false, error: 'Token is required' }, { status: 400 });
-        }
-
-        // Save token as document ID for quick existence check
-        await admin.firestore().collection('fcmTokens').doc(token).set({ createdAt: admin.firestore.FieldValue.serverTimestamp() });
-
+        await admin.firestore().collection('fcmTokens').doc(token).set({ createdAt: Date.now() });
         return NextResponse.json({ success: true });
     } catch (error: any) {
-        console.error('Save token error:', error);
+        console.error("Error saving token:", error);
         return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 }

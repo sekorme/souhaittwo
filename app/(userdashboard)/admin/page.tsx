@@ -1,68 +1,109 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getDocs, collection } from 'firebase/firestore';
+import axios from 'axios';
+import { db } from '@/firebase/client';
 
-export default function AdminDashboard() {
+type UserType = {
+    id: string;
+    name?: string;
+    email?: string;
+    fcmToken?: string;  // or string[] if multiple tokens per user
+};
+
+export default function AdminNotificationPage() {
+    const [users, setUsers] = useState<UserType[]>([]);
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState('');
+    const [sending, setSending] = useState(false);
 
-    const sendNotification = async () => {
-        setLoading(true);
-        setMessage('');
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const usersRef = collection(db, 'users');
+            const snapshot = await getDocs(usersRef);
+            const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as UserType));
+            setUsers(data.filter(u => !!u.fcmToken));
+        };
+
+        fetchUsers();
+    }, []);
+
+    const sendNotification = async (token: string) => {
+        setSending(true);
         try {
-            const res = await fetch('/api/send-notification', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ title, body }),
-            });
-
-            const data = await res.json();
-            if (data.success) {
-                setMessage('✅ Notification sent successfully!');
-                setTitle('');
-                setBody('');
-            } else {
-                setMessage(`❌ Failed: ${data.error}`);
-            }
-        } catch (error) {
-            setMessage('❌ An error occurred.');
-        } finally {
-            setLoading(false);
+            await axios.post('/api/notify', { token, title, body });
+            alert('Notification sent!');
+        } catch (err) {
+            console.error(err);
+            alert('Failed to send notification.');
         }
+        setSending(false);
+    };
+
+    const sendToAll = async () => {
+        if (!title || !body) return alert('Enter both title and message');
+        if (users.length === 0) return alert('No users with tokens found');
+
+        setSending(true);
+        try {
+            const tokens = users.map(u => u.fcmToken!).filter(Boolean);
+            await axios.post('/api/send-notification', { tokens, title, body });
+            alert('Bulk notification sent!');
+        } catch (err) {
+            console.error(err);
+            alert('Failed to send bulk notification.');
+        }
+        setSending(false);
     };
 
     return (
-        <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md space-y-4">
-            <h1 className="text-2xl font-bold">📢 Send Push Notification</h1>
+        <div className="max-w-2xl mx-auto py-10 px-4">
+            <h1 className="text-2xl font-bold mb-4">📢 Admin Push Notifications</h1>
 
-            <input
-                type="text"
-                placeholder="Notification Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
-            />
+            <div className="space-y-4">
+                <input
+                    className="w-full p-2 border rounded"
+                    placeholder="Notification Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                <textarea
+                    className="w-full p-2 border rounded"
+                    placeholder="Notification Body"
+                    value={body}
+                    onChange={(e) => setBody(e.target.value)}
+                />
+                <button
+                    disabled={sending}
+                    onClick={sendToAll}
+                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                >
+                    🚀 Send to All Users
+                </button>
+            </div>
 
-            <textarea
-                placeholder="Notification Body"
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded h-28"
-            />
-
-            <button
-                onClick={sendNotification}
-                disabled={loading || !title || !body}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
-            >
-                {loading ? 'Sending...' : 'Send Notification'}
-            </button>
-
-            {message && <p className="text-sm text-gray-700">{message}</p>}
+            <h2 className="text-lg font-semibold mt-6 mb-2">Users with FCM Tokens:</h2>
+            <div className="space-y-2">
+                {users.map((user) => (
+                    <div
+                        key={user.id}
+                        className="p-3 border rounded flex items-center justify-between"
+                    >
+                        <div>
+                            <p className="font-medium">{user.name || user.email}</p>
+                            <p className="text-sm text-gray-500 truncate">{user.fcmToken}</p>
+                        </div>
+                        <button
+                            disabled={sending}
+                            onClick={() => user.fcmToken && sendNotification(user.fcmToken)}
+                            className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                        >
+                            Send
+                        </button>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
